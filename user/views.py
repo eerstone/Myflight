@@ -1,27 +1,42 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
-# Create your views here.
+from . import models
+import requests
 import hashlib
-
-def hash_code(s, salt='mysite'):# 加点盐
-    h = hashlib.sha256()
-    s += salt
-    h.update(s.encode())  # update方法只接收bytes类型
-    return h.hexdigest()
-
+import json
 
 def login(request):
-    pass
-    return render(request, 'user/index.html')
+    # TBD:already login
+    #if request.session.get('is_login', None):
+    #    return redirect('/')
+    if request.method == 'POST':
+        json_data = request.json()
+        data = json.loads(json_data)
+        ltype = data['type']
+        phone_num = data['phone_num']
+        # VerifiedCode TBD
+        psw = data['psw']
+        
+        if ltype == 0:
+            try:
+                user = models.User_Auth.objects.get(identifier=phone_num)
+                if user.credential == psw:
+                    ret_msg = {'user_id':user.user_id, 'login_status':0}
+                    return render(request, '/', json.dumps(ret_msg))
+                else:
+                    ret_msg = {'user_id':user.user_id, 'login_status':1}
+                    return render(request, '/user/login.html', json.dumps(ret_msg))
+            except:
+                ret_msg = {'user_id':-1, 'login_status':2}
+                return render(request, '/user/login.html', json.dumps(ret_msg))
 
 def register(request):
     pass
     return render(request, 'user/index.html')
 
 def getVerifiedCodeapi(request):
-    pass
-
+    
     return JsonResponse()
 
 

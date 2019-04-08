@@ -25,8 +25,9 @@ class User_Auth(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
     Identity_type = (
         ('phone',"手机"),
+        ('username',"用户名"),
         #添加其他类型的登录方式
     )
     identity_type = models.CharField(max_length=32,choices=Identity_type,default="手机")
-    identifier = models.CharField(max_length=256)
+    identifier = models.CharField(max_length=256,unique=True)
     credential = models.CharField(max_length=256)#password or token
