@@ -12,10 +12,10 @@ class YunPian(object):
             'text':'【潘冠东】感谢您注册航班出行小助手，您的验证码是{code}'.format(code=code)
         }
 
-        print(parmas['text'])
+        # print(parmas['text'])
         #text必须要跟云片后台的模板内容 保持一致，不然发送不出去！
-        r=requests.post(self.single_send_url,data=parmas
-        print(r.json())
+        r=requests.post(self.single_send_url,data=parmas)
+        # print(r.json())
         return r
 
 

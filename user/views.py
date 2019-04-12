@@ -52,8 +52,8 @@ def login(request):
                 # return JsonResponse(json.dumps(ret_msg),safe=False)
         # return JsonResponse(json.dumps({'user_id':-1, 'login_status':2}),safe=False)
     else:
-        ret_msg = {'user_id':-1, 'login_status':2}
-        return render(request, 'user/login.html',{})
+        return render(request, 'user/login.html',locals())
+
 def register(request):
     pass
     return render(request, 'user/index.html')

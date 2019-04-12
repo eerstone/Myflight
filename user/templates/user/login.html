@@ -49,7 +49,7 @@ setTimeout(function() {
         $.ajax({
             cache:false,
             type:"POST",
-            url:"{% url 'users:forcode' %}",
+            url:"{% url 'user:forcode' %}",
             data:{
                csrfmiddlewaretoken:$('[name="csrfmiddlewaretoken"]').val(),
                mobile:$("#mobile").val()
