@@ -31,3 +31,7 @@ class User_Auth(models.Model):
     identity_type = models.CharField(max_length=32,choices=Identity_type,default="手机")
     identifier = models.CharField(max_length=254,unique=True)
     credential = models.CharField(max_length=254)#password or token
+
+class VerifyCode(models.Model):
+    mobile = models.CharField(max_length=32)
+    code = models.CharField(max_length=8)

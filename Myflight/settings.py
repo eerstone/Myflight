@@ -14,6 +14,16 @@ import os
 
 APIKEY='5aa19590f824fcaf4a76f9039c812da6'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',# 缓存使用redis数据库储存
+        'LOCATION': 'redis://127.0.0.1:6379/5',# 使用本地的6379端口(redis的默认端口)第五个数据库(redis共有16个数据库0-15)
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",# 使用django_redis的默认参数
+        },
+    },
+}
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,6 +41,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +54,7 @@ INSTALLED_APPS = [
     'login',
     'captcha',
     'user',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
