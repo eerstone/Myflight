@@ -14,10 +14,10 @@ user/
 			    type:int(0:psw;1:code)
 			    phone_num:String
 			    VerifiedCode:String
-			    psw:String	
+			    psw:String
 		  	output:
 			    user_id:int
-			    login_status:0,1,2(0:success,1:error verified,2:else_error)	
+			    login_status:0,1,2(0:success,1:error verified,2:else_error)
 	register/
 		getVerifiedCodeapi/
 		    input:
@@ -25,7 +25,7 @@ user/
 		    output:
 
 		postregisterapi/
-		  	input:
+		  	input:	
 			    phone_num:String
 			    passwd:String
 			    VerifiedCode:String
