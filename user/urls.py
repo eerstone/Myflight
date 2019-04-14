@@ -6,8 +6,8 @@ from user import  views
 app_name = 'user'
 urlpatterns = [
 
-    url('/', views.login),
     url(r'^login/', views.login),
+    url(r'^register/', views.register),
     url(r'^getVerifiedCodeapi/', views.getVerifiedCodeapi),
     url(r'^forcode/',ForCodeView.as_view(),name='forcode'),
 ]

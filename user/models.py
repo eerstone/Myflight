@@ -9,10 +9,10 @@ class User(models.Model):
     )
     # id = models.AutoField() Django 默认创建自增主键
     nickname = models.CharField(max_length=32)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(default="123@qq.com",unique=True)
     sex = models.CharField(max_length=32,choices=gender,default="保密")
-    birthday = models.DateField()
-    access = models.IntegerField()
+    birthday = models.DateField(default="1998-06-02")
+    access = models.IntegerField(default=1)
     def __str__(self):
         return self.id
     def create_newuser(self,i_type,identifier,pwd):
@@ -28,10 +28,10 @@ class User_Auth(models.Model):
         ('username',"用户名"),
         #添加其他类型的登录方式
     )
-    identity_type = models.CharField(max_length=32,choices=Identity_type,default="手机")
-    identifier = models.CharField(max_length=254,unique=True)
-    credential = models.CharField(max_length=254)#password or token
+    identity_type = models.CharField(max_length=32,choices=Identity_type,default="手机",primary_key=True)
+    identifier = models.CharField(max_length=254,unique=True,primary_key=True)
+    credential = models.CharField(max_length=254,primary_key=True)#password or token
 
 class VerifyCode(models.Model):
-    mobile = models.CharField(max_length=32)
-    code = models.CharField(max_length=8)
+    mobile = models.CharField(max_length=32,primary_key=True)
+    code = models.CharField(max_length=8,primary_key=True)

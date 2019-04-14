@@ -55,8 +55,32 @@ def login(request):
         return render(request, 'user/login.html',locals())
 
 def register(request):
-    pass
-    return render(request, 'user/index.html')
+    print(1)
+    if request.method == 'POST':
+        print(2)
+        phone_num = request.POST.get('phone_num')
+        passwd = request.POST.get('passwd')
+        verifycode = request.POST.get('VerifyCode')
+        ret_msg = {}
+        flag = (phone_num!=None and passwd!=None and verifycode!=None)
+        print(flag)
+        if not flag:
+            ret_msg['register_status'] = 3
+            ret_msg['user_id']=None
+            return JsonResponse(ret_msg,safe=False)
+        else:
+            #手机号与验证码匹配验证
+            #验证成功，添加该字段进数据库
+            one_user = models.User.objects.create()
+            user_id = one_user.id
+            user_auth = models.User_Auth.objects.create(user_id=one_user,identity_type="手机"
+                                                        ,identifier=phone_num,credential=passwd)
+            one_user.save()
+            user_auth.save()
+            ret_msg['register_status']=0
+            ret_msg['user_id']=user_id
+            return JsonResponse(ret_msg,safe=False)
+    return render(request, 'user/login.html')
 
 def getVerifiedCodeapi(request):
     print("get")
