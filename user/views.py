@@ -24,7 +24,7 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'user/login.html')
 
-def postloginapi(request):
+def postlogin(request):
     # TBD:already login
     #if request.session.get('is_login', None):
     #    return redirect('/')
@@ -38,7 +38,7 @@ def postloginapi(request):
         ltype = request.POST.get('type')
         print(ltype)
         phone_num = request.POST.get('phone_num')
-        psw = request.POST.get('psw')
+        psw = request.POST.get('pwd')
         if ltype == 0:
             try:
                 user = models.User_Auth.objects.get(identifier=phone_num)
@@ -59,9 +59,12 @@ def postloginapi(request):
         render(request, 'user/login.html')
 
 def register(request):
-    print(1)
+    if request.method=='GET':
+        return render(request,"user/register.html")
+
+
+def postregister(request):
     if request.method == 'POST':
-        print(2)
         phone_num = request.POST.get('phone_num')
         passwd = request.POST.get('passwd')
         verifycode = request.POST.get('VerifyCode')
@@ -86,7 +89,13 @@ def register(request):
             return JsonResponse(ret_msg,safe=False)
     return render(request, 'user/login.html')
 
-def getVerifiedCodeapi(request):
+def getVerifiedCode(request):
+    print("get")
+    example =  {'String':'wejfwi'}
+    example = json.dumps(example)
+    return JsonResponse(example,safe=False)
+
+def apitest(request):
     print("get")
     example =  {'String':'wejfwi'}
     example = json.dumps(example)
@@ -103,7 +112,7 @@ def postModifyIcon(request):
             user.update(icon=newicon)
             ret_msg['issucceed'] = 0
             return JsonResponse(json.dumps(ret_msg),safe=False)
-        except:
+        except Exception as e:
             ret_msg['issucceed'] = 1
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
@@ -166,9 +175,9 @@ class ForCodeView(View):
             if res:
                 #生成手机验证码
                 #通过redis存储验证码
-                redis_conn = get_redis_connection("default")
+                # redis_conn = get_redis_connection("default")
                 c=random.randint(1000,9999)
-                redis_conn.setex(mobile,60,str(c))
+                # redis_conn.setex(mobile,60,str(c))
                 #通过自建的数据库存储验证码
                 code=VerifyCode()
                 code.mobile=mobile

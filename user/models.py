@@ -1,5 +1,5 @@
 from django.db import models
-
+from airplane import models as airplanemodels
 # Create your models here.
 class User(models.Model):
     gender = (
@@ -13,7 +13,7 @@ class User(models.Model):
     sex = models.CharField(max_length=32,choices=gender,default="保密")
     birthday = models.DateField(default="1998-06-02")
     access = models.IntegerField(default=1)
-    icon = models.ImageField()
+    icon = models.ImageField(null=True)
     def __str__(self):
         return self.id
     def create_newuser(self,i_type,identifier,pwd):
@@ -36,3 +36,7 @@ class User_Auth(models.Model):
 class VerifyCode(models.Model):
     mobile = models.CharField(max_length=32,primary_key=True)
     code = models.CharField(max_length=8,primary_key=True)
+
+class mytrip(models.Model):
+    user_ID = models.ForeignKey(User,on_delete=models.CASCADE)
+    flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
