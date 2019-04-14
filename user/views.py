@@ -21,6 +21,10 @@ from rest_framework.response import Response
 import random
 
 def login(request):
+    if request.method == 'GET':
+        return render(request, 'user/login.html')
+
+def postloginapi(request):
     # TBD:already login
     #if request.session.get('is_login', None):
     #    return redirect('/')
@@ -40,19 +44,19 @@ def login(request):
                 user = models.User_Auth.objects.get(identifier=phone_num)
                 if user.credential == psw:
                     ret_msg = {'user_id':user.user_id, 'login_status':0}
-                    return render(request, '/', json.dumps(ret_msg))
-                    # return JsonResponse(json.dumps(ret_msg),safe=False)
+                    # return render(request, '/', json.dumps(ret_msg))
+                    return JsonResponse(json.dumps(ret_msg),safe=False)
                 else:
                     ret_msg = {'user_id':user.user_id, 'login_status':1}
-                    return render(request, 'user/login.html', json.dumps(ret_msg))
-                    # return JsonResponse(json.dumps(ret_msg),safe=False)
+                    # return render(request, 'user/login.html', json.dumps(ret_msg))
+                    return JsonResponse(json.dumps(ret_msg),safe=False)
             except:
                 ret_msg = {'user_id':-1, 'login_status':2}
-                return render(request, 'user/login.html', json.dumps(ret_msg))
-                # return JsonResponse(json.dumps(ret_msg),safe=False)
+                # return render(request, 'user/login.html', json.dumps(ret_msg))
+                return JsonResponse(json.dumps(ret_msg),safe=False)
         # return JsonResponse(json.dumps({'user_id':-1, 'login_status':2}),safe=False)
     else:
-        return render(request, 'user/login.html',locals())
+        render(request, 'user/login.html')
 
 def register(request):
     print(1)
@@ -88,6 +92,68 @@ def getVerifiedCodeapi(request):
     example = json.dumps(example)
     return JsonResponse(example,safe=False)
 
+def postModifyIcon(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        newicon = request.POST.get('icon')
+        
+        try:
+            user = models.User.objects.get(id=user_id)
+            user.update(icon=newicon)
+            ret_msg['issucceed'] = 0
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+        except:
+            ret_msg['issucceed'] = 1
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+    else:
+        return render(request, 'user/login.html')
+
+def postBasicInfo(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        newuser_name = request.POST.get('user_name')
+        newphone_num = request.POST.get('phone_num')
+        newgender = request.POST.get('gender')
+        newemail = request.POST.get('email')
+        newbirthday = request.POST.get('birthday')
+        
+        try:
+            user = models.User.objects.get(id=user_id)
+            user.update(nickname=newuser_name)
+            user_auth = models.User_Auth.objects.get(user_id=user_id)
+            user_auth.update(identifier=newphone_num)
+            user.update(sex=newgender)
+            user.update(email=newemail)
+            user.update(birthday=newbirthday)
+            ret_msg['issucceed'] = 0
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+        except:
+            ret_msg['issucceed'] = 1
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+    else:
+        return render(request, 'user/login.html')
+    
+def postUpdatePassword(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        oldpsw = request.POST.get('oldpsw')
+        newpsw = request.POST.get('psw')
+        
+        user_auth = models.User_Auth.objects.get(user_id=user_id)
+        
+        if user_auth.credential == oldpsw:
+            user_auth.update(credential=newpsw)
+            ret_msg['issucceed'] = 0
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+        else:
+            ret_msg['issucceed'] = 1
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+    else:
+        return render(request, 'user/login.html')
+    
 class ForCodeView(View):
     """获取手机验证码"""
     def post(self,request):

@@ -13,6 +13,7 @@ class User(models.Model):
     sex = models.CharField(max_length=32,choices=gender,default="保密")
     birthday = models.DateField(default="1998-06-02")
     access = models.IntegerField(default=1)
+    icon = models.ImageField()
     def __str__(self):
         return self.id
     def create_newuser(self,i_type,identifier,pwd):
