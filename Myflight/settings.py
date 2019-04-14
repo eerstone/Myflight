@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'captcha',
-    'admin',
     'airplane',
     'airport',
     'login',
@@ -101,7 +100,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Myflight',
-        'HOST': 'localhost',
+        'HOST': '114.115.134.188',
         'USER': 'root',
         'PASSWORD': 'wodehangban',
         'PORT': '3306',
