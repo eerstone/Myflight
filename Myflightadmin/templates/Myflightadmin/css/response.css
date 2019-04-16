@@ -1,0 +1,83 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*此样式在窗口小于768px的时候生效*/
+@media screen and (max-width:640px) {
+.content,.index-heaad-nei,.user-head-nei,.header-nei,.comment-mess-nei{
+	width:100%;
+	}
+.eject .eject-cont{
+	width:94%;
+	}
+}
+/*此样式在窗口小于360px的时候生效*/
+@media screen and (max-width: 480px) {
+}
+/*此样式在窗口小于420px的时候生效*/
+@media screen and (max-width: 420px) {
+
+}
+/*此样式在窗口小于360px的时候生效*/
+@media screen and (max-width: 380px) {
+.user-invit-num{
+	margin-top:36%;
+ }
+}
+
+@media screen and (max-width: 350px) {
+/*猜你喜欢*/
+.index-like{
+	padding:5px;	
+	}
+.index-like dl{
+	height:77px;
+	padding-left:145px;	
+	}
+.index-like dt{
+	width:140px;
+	height:77px;	
+	}
+.index-like-ti{
+	padding:5px 0;
+	}
+.index-like-link{
+	top:5px;
+	}
+.index-like-text{
+	margin-top:4px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	}
+	
+/*发现图库搜索*/
+.find-search .find-sea-text{
+	width:71%;
+	}
+.buy-price .buy-link{
+	top:4px;
+	height:26px;
+	line-height:26px;
+	}
+/*值得买详情*/	
+.trial-dl{
+	width:96%;
+	}
+.buy-price{
+	padding:0 10px;
+	height:26px;
+	line-height:26px;
+	font-size:1.4rem;
+	}
+.buy-btn{
+	padding:0 10px;
+	height:26px;
+	line-height:24px;
+	font-size:1.4rem;
+	}
+}
+
+
+
+
