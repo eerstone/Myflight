@@ -38,7 +38,7 @@ user/
 				user_id:int
 				icon:image
 			output:
-				issucceed:int
+				issucceed:int(1成功0失败）
 		postBasicInfo/
 			input:
 				user_id:int
@@ -62,7 +62,7 @@ user/
 				user_id:int
 			output:
 				trips:{trip...}
-					trip = trip_id + flight + user_type
+					trip = trip_id + flight + user_type(0送1乘2接)
 		postDelete/
 			input:
 				user_id:int

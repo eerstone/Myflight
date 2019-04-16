@@ -38,5 +38,7 @@ class VerifyCode(models.Model):
     code = models.CharField(max_length=8,primary_key=True)
 
 class mytrip(models.Model):
+    # id = models.AutoField()
     user_ID = models.ForeignKey(User,on_delete=models.CASCADE)
     flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
+    user_trip = models.Integerfield(default=1)

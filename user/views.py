@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.forms.models import model_to_dict
 from . import models
 import requests
 import hashlib
@@ -20,6 +21,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import random
 
+from airplane import models as airplanemodels
+
+#login
 def login(request):
     if request.method == 'GET':
         return render(request, 'user/login.html')
@@ -58,10 +62,10 @@ def postlogin(request):
     else:
         render(request, 'user/login.html')
 
+#register
 def register(request):
     if request.method=='GET':
         return render(request,"user/register.html")
-
 
 def postregister(request):
     if request.method == 'POST':
@@ -101,6 +105,11 @@ def apitest(request):
     example = json.dumps(example)
     return JsonResponse(example,safe=False)
 
+#management
+def management(request):
+    if request.method == 'GET':
+        return render(request, 'user/management.html')
+
 def postModifyIcon(request):
     ret_msg = {}
     if request.method == 'POST':
@@ -110,10 +119,10 @@ def postModifyIcon(request):
         try:
             user = models.User.objects.get(id=user_id)
             user.update(icon=newicon)
-            ret_msg['issucceed'] = 0
+            ret_msg['issucceed'] = 1
             return JsonResponse(json.dumps(ret_msg),safe=False)
         except Exception as e:
-            ret_msg['issucceed'] = 1
+            ret_msg['issucceed'] = 0
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
         return render(request, 'user/login.html')
@@ -136,10 +145,10 @@ def postBasicInfo(request):
             user.update(sex=newgender)
             user.update(email=newemail)
             user.update(birthday=newbirthday)
-            ret_msg['issucceed'] = 0
+            ret_msg['issucceed'] = 1
             return JsonResponse(json.dumps(ret_msg),safe=False)
         except:
-            ret_msg['issucceed'] = 1
+            ret_msg['issucceed'] = 0
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
         return render(request, 'user/login.html')
@@ -155,13 +164,44 @@ def postUpdatePassword(request):
         
         if user_auth.credential == oldpsw:
             user_auth.update(credential=newpsw)
-            ret_msg['issucceed'] = 0
+            ret_msg['issucceed'] = 1
             return JsonResponse(json.dumps(ret_msg),safe=False)
         else:
-            ret_msg['issucceed'] = 1
+            ret_msg['issucceed'] = 0
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
         return render(request, 'user/login.html')
+    
+#mytrip
+def getFavorateFlight(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        trip = models.mytrip.objects.get(user_ID=user_id)
+        flight = airplanemodels.Flight.objects.get(flight_id=trip.flight_ID)
+        ret_msg['user_id'] = user_id
+        ret_msg['flight'] = model_to_dict(flight)
+        ret_msg['user_type'] = trip.user_trip
+        return JsonResponse(json.dumps(ret_msg),safe=False)
+    else:
+        pass
+
+def postDelete(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        trip_id = request.POST.get('trip_id')
+        trip = models.mytrip.objects.get(id=trip_id)
+        
+        if (user_id == trip.user_ID):
+            airplanemodels.Flight.objects.filter(flight_id=trip.flight_ID).delete()
+            ret_msg['issucceed'] = 1
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+        else:
+            ret_msg['issucceed'] = 0
+            return JsonResponse(json.dumps(ret_msg),safe=False)
+    else:
+        pass
     
 class ForCodeView(View):
     """获取手机验证码"""
