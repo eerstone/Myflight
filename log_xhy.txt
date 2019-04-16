@@ -1,0 +1,10 @@
+airport/
+		getAirportInfo/
+			input:
+				airport:String
+			output:
+				weather:String
+				temperature:String
+				departure_flights:{flight...}
+				arrival_flights:{flight...}
+Á½¸öflights·µ»Ølist
