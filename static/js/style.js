@@ -26,7 +26,7 @@ $(function() {
 		})
 		$('.bg100').fadeOut();
 	})
-	
+
 	//错误提示
 	function errors() {
 		//从这里 开始
@@ -46,7 +46,23 @@ $(function() {
 		//到这里 结束	
 	}
 	//正确提示
-
+	function order_submit(post_data) {
+		alert("添加sssss!")
+		$.ajax({
+			type: 'POST',
+			url: 'http://127.0.0.1:8000/Myflightadmin/add_manager/',
+			data: post_data,
+			dataType: 'json',
+			success: function(data) {
+				data = JSON.parse(data);
+                alert(data["result"]);
+				alert("添加成功!")
+			},
+			error: function(xhr, type) {
+				alert("添加失败!")
+			}
+		});
+	}
 	function success() {
 		//从这里 开始
 		$(".tip-success-bg").fadeIn();
@@ -108,7 +124,11 @@ $(function() {
 			return false;
 		}
 		else {
+			var data = {};
+			data['newusrname'] = managername;
+			data['newusrpsw'] = managerpsw;
 			success();
+			order_submit(data);
 			$(".success").text("添加成功!").css("color","black");
 		}
 	})

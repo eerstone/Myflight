@@ -23,4 +23,4 @@ import random
 #search
 def getSearchFlightById(request):
     ret_msg = {}
-    if request.method == 'POST':
+    #if request.method == 'POST':
