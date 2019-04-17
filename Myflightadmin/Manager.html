@@ -1,0 +1,32 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>后台管理系统</title>
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/response.css' %}" rel="stylesheet">
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="javascript:;" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">返回</i></a>
+			<h2 class="header-title">后台管理系统</h2>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+	<ul class="nav">
+	 <li><a href="/Myflightadmin/Manager/add_manager/">添加管理</a></li>
+     <li><a href="/Myflightadmin/Manager/add_flight/">添加航班</a></li>
+     <li><a href="/Myflightadmin/Manager/mod_flight/">修改航班</a></li>
+     <li><a href="/Myflightadmin/Manager/add_airport/">添加机场</a></li>
+     <li><a href="/Myflightadmin/Manager/mod_airport/">修改机场</a></li>
+    </ul>
+</div>
+<!--content/-->
+</body>
+</html>

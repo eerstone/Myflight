@@ -1,0 +1,56 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>添加航班</title>
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/response.css' %}" rel="stylesheet">
+</head>
+<body class="bg">
+<div class="content">
+	<div class="header">
+		<div class="header-nei">
+			<a href="javascript:;" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">返回</i></a>
+			<h2 class="header-title">添加航班</h2>
+		</div>
+	</div>
+	<!--head/-->
+	<div class="head-height">&nbsp;</div>
+    <!--录入校验在style.js  搜order-btn-->
+	<div class="login-reg" style="padding-top:16px;">
+		<div class="log-reg-list"><input type="text" class="log-reg-text2 order-takeoff" placeholder="起飞地"/><span>*</span></div>
+        <div class="log-reg-list"><input type="text" class="log-reg-text2 order-landing" placeholder="降落地"/><span>*</span></div>
+        <div class="log-reg-list"><input type="text" class="log-reg-text2 order-flightname" placeholder="航班号"/><span>*</span></div>
+        <div class="log-reg-list"><input type="text" class="log-reg-text2 order-PDtime" placeholder="计划起飞时间"/><span>*</span></div>
+        <div class="log-reg-list"><input type="text" class="log-reg-text2 order-PLtime" placeholder="计划降落时间"/><span>*</span></div>
+        <div class="log-reg-list"><input type="text" class="log-reg-text2 order-airlinename" placeholder="航班公司"/><span>*</span></div>
+        <div class="log-reg-sub">
+			<a href="javascript:;" class = "log-reg-btn order-btn-add-flight">添加</a>
+		</div>
+	</div>
+</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont">&#xe614;</i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont" style="color:#0F0;">&#xe611;</i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="js/jquery.min.js"></script>
+<script src="js/style.js"></script>
+</body>
+</html>
