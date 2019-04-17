@@ -22,7 +22,7 @@ from rest_framework.response import Response
 import random
 
 #airport
-def getAirportInfo(request):
+def getAirportInfo(request):#TBD:model2dict
     ret_msg = {}
     if request.method == 'POST':
         airport = request.POST.get('airport')
