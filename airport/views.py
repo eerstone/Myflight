@@ -31,11 +31,19 @@ def getAirportInfo(request):#TBD:model2dict
         temperature = airport.temperature
         departure_flights = airplanemodels.objects.filter(boarding_port=airport)
         arrival_flights = airplanemodels.objects.filter(arriving_port=airport)
+        departure_flights_dicts = []
+        arrival_flights_dicts = []
+        
+        for item in departure_flights:
+            departure_flights_dicts.append(model_to_dict(item))
+            
+        for item in arrival_flights:
+            arrival_flights_dicts.append(model_to_dict(item))
         
         ret_msg['weather'] = weather
         ret_msg['temperature'] = temperature
-        ret_msg['departure_flights'] = departure_flights
-        ret_msg['arrival_flights'] = arrival_flights
+        ret_msg['departure_flights'] = departure_flights_dicts
+        ret_msg['arrival_flights'] = arrival_flights_dicts
         
         return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
