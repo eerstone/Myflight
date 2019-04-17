@@ -12,7 +12,6 @@ import random
 from utils.yunpian import YunPian
 from Myflight.settings import APIKEY
 from django.views import View
-from .models import VerifyCode
 from django_redis import get_redis_connection
 
 
@@ -42,6 +41,83 @@ def getSearchFlightById(request):
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
         pass
+
+def  gS_FC(request):
+    json = {
+    "is_exist": 1,
+    "flight":
+    [
+    {
+        "flight_id": "CA1835",
+        "company": "中国航空",
+        "plan_departure_time": "08:05",
+        "plan_arrival_time": "10:15",
+        "actual_departure_time": "",
+        "actual_arrival_time": "",
+        "flight_status": "计划",
+        "departure": "北京首都",
+        "arrival": "上海浦东",
+        "punctuality_rate": "0.87",
+        "delay_time": "",
+        "check_in": "B,F,J,K,L",
+        "boarding_port": "",
+        "arriving_port": "",
+        "Baggage_num": "36"
+    },
+    {
+        "flight_id": "CA1835",
+        "company": "中国航空",
+        "plan_departure_time": "08:05",
+        "plan_arrival_time": "10:15",
+        "actual_departure_time": "",
+        "actual_arrival_time": "",
+        "flight_status": "计划",
+        "departure": "北京首都",
+        "arrival": "上海浦东",
+        "punctuality_rate": "0.87",
+        "delay_time": "",
+        "check_in": "B,F,J,K,L",
+        "boarding_port": "",
+        "arriving_port": "",
+        "Baggage_num": "36"
+    },
+    {
+        "flight_id": "CA1835",
+        "company": "中国航空",
+        "plan_departure_time": "08:05",
+        "plan_arrival_time": "10:15",
+        "actual_departure_time": "",
+        "actual_arrival_time": "",
+        "flight_status": "计划",
+        "departure": "北京首都",
+        "arrival": "上海浦东",
+        "punctuality_rate": "0.87",
+        "delay_time": "",
+        "check_in": "B,F,J,K,L",
+        "boarding_port": "",
+        "arriving_port": "",
+        "Baggage_num": "36"
+    },
+    {
+        "flight_id": "CA1835",
+        "company": "中国航空",
+        "plan_departure_time": "08:05",
+        "plan_arrival_time": "10:15",
+        "actual_departure_time": "",
+        "actual_arrival_time": "",
+        "flight_status": "计划",
+        "departure": "北京首都",
+        "arrival": "上海浦东",
+        "punctuality_rate": "0.88",
+        "delay_time": "",
+        "check_in": "B,F,J,K,L",
+        "boarding_port": "",
+        "arriving_port": "",
+        "Baggage_num": "36"
+    }
+    ]
+}
+    return JsonResponse(json,safe=False)
 
 def getSearchFlightByCity(request):
     ret_msg = {}

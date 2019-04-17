@@ -28,6 +28,23 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'user/login.html')
 
+def postloginapi(request):
+    json =  {
+	"login_status" : 0,
+	"info" : "access by psw",
+	"user" :{
+		"user_id": 0,
+		"phone_num":"18701618598",
+		"user_name":"bill",
+		"gender":"male",
+		"email":"kingiy12138@gmail.com",
+		"birthday":"1997.6.3",
+		"icon":"pic1"
+	}
+}
+    return JsonResponse(json,safe=False)
+
+
 def postlogin(request):
     # TBD:already login
     #if request.session.get('is_login', None):
