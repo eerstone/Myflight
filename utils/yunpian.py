@@ -9,7 +9,7 @@ class YunPian(object):
         parmas={
             'apikey':self.api_key,
             'mobile':mobile,
-            'text':'【潘冠东】感谢您注册航班出行小助手，您的验证码是{code}'.format(code=code)
+            'text':'【潘冠东】感谢您注册小助手，您的验证码是{code}'.format(code=code)
         }
 
         # print(parmas['text'])

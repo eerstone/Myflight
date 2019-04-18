@@ -28,6 +28,23 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'user/login.html')
 
+def postloginapi(request):
+    json =  {
+	"login_status" : 0,
+	"info" : "access by psw",
+	"user" :{
+		"user_id": 0,
+		"phone_num":"18701618598",
+		"user_name":"bill",
+		"gender":"male",
+		"email":"kingiy12138@gmail.com",
+		"birthday":"1997.6.3",
+		"icon":"pic1"
+	}
+}
+    return JsonResponse(json,safe=False)
+
+
 def postlogin(request):
     # TBD:already login
     #if request.session.get('is_login', None):
@@ -67,10 +84,10 @@ def register(request):
     if request.method=='GET':
         return render(request,"user/register.html")
 
-def postregister(request):
+def postregister(request):#调试成功
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
-        passwd = request.POST.get('passwd')
+        passwd = request.POST.get('pwd')
         verifycode = request.POST.get('VerifyCode')
         ret_msg = {}
         flag = (phone_num!=None and passwd!=None and verifycode!=None)
@@ -80,14 +97,23 @@ def postregister(request):
             ret_msg['user_id']=None
             return JsonResponse(ret_msg,safe=False)
         else:
+            #判断手机号是否已经存在
+            phone = models.User_Auth.objects.filter(identifier=phone_num)
+            if phone.count()>0:
+                ret_msg['register_status'] = 1
+                ret_msg['user_id']=None
+                return JsonResponse(ret_msg,safe=False)
             #手机号与验证码匹配验证
+            code = VerifyCode.objects.filter(mobile=phone_num).first().code
+            if code!=verifycode:
+                ret_msg['register_status'] = 2
+                ret_msg['user_id']=None
+                return JsonResponse(ret_msg,safe=False)
             #验证成功，添加该字段进数据库
             one_user = models.User.objects.create()
             user_id = one_user.id
             user_auth = models.User_Auth.objects.create(user_id=one_user,identity_type="手机"
                                                         ,identifier=phone_num,credential=passwd)
-            one_user.save()
-            user_auth.save()
             ret_msg['register_status']=0
             ret_msg['user_id']=user_id
             return JsonResponse(ret_msg,safe=False)
@@ -203,11 +229,12 @@ def postDelete(request):
     else:
         pass
     
-class ForCodeView(View):
+class ForCodeView(View):#调试成功
     """获取手机验证码"""
     def post(self,request):
-        mobile=request.POST.get('mobile','')
+        mobile=request.POST.get('phone_num','')
         print(mobile)
+        ret_msg = {}
         if mobile:
             #验证是否为有效手机号
             mobile_pat=re.compile('^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$')
@@ -228,10 +255,16 @@ class ForCodeView(View):
                 sms_status=yunpian.send_sms(code=code,mobile=mobile)
                 sms_status = sms_status.json()
                 msg=sms_status["msg"]
-                return HttpResponse(msg)
+                ret_msg["CodeStatus"] = 0
+                ret_msg["msg"] = msg
+                return JsonResponse(ret_msg,safe=False)
             else:
                 msg='请输入有效手机号码!'
-                return HttpResponse(msg)
+                ret_msg["CodeStatus"] = 1
+                ret_msg["msg"] = msg
+                return JsonResponse(ret_msg,safe=False)
         else:
             msg='手机号不能为空！'
-            return HttpResponse(msg)
+            ret_msg["CodeStatus"] = 1
+            ret_msg["msg"] = msg
+            return JsonResponse(ret_msg,safe=False)

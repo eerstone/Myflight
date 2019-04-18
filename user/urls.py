@@ -8,9 +8,10 @@ urlpatterns = [
 
     url(r'^login/', views.login),
     url(r'^postlogin/', views.postlogin),
+    url(r'^postLoginapi/', views.postloginapi),
     url(r'^register/', views.register),
-    url(r'^postregister/', views.postregister),
-    url(r'^getVerifiedCode/',ForCodeView.as_view(),name='forcode'),
+    url(r'^postRegister/', views.postregister),
+    url(r'^postVerifiedCode/',ForCodeView.as_view(),name='forcode'),
     url(r'^getVerifiedCode/', views.getVerifiedCode),
     url(r'^apitest/', views.apitest),
 ]

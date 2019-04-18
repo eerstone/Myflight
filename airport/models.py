@@ -13,3 +13,11 @@ class airport(models.Model):
         ("4","雾"),
     )
     weather = models.CharField(max_length=10,choices=weather_status)
+
+def add_airport(newairport,city,temperature,weather=None):
+    if(temperature>=100 or temperature<-100):
+        return None
+    ap = airport.objects.get_or_create(airport=newairport,city=city,temperature=temperature,weather="晴")
+
+
+
