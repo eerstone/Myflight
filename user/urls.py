@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^postLoginapi/', views.postloginapi),
     url(r'^register/', views.register),
     url(r'^postRegister/', views.postregister),
-    url(r'^getVerifiedCode/',ForCodeView.as_view(),name='forcode'),
+    url(r'^postVerifiedCode/',ForCodeView.as_view(),name='forcode'),
     url(r'^getVerifiedCode/', views.getVerifiedCode),
     url(r'^apitest/', views.apitest),
 ]
