@@ -46,17 +46,64 @@ $(function() {
 		//到这里 结束	
 	}
 	//正确提示
-	function order_submit(post_data) {
-		alert("添加sssss!")
+	function add_submit(post_data,url) {
+		//alert("添加sssss!")
 		$.ajax({
 			type: 'POST',
-			url: 'http://127.0.0.1:8000/Myflightadmin/add_manager/',
+			url: url,
 			data: post_data,
 			dataType: 'json',
 			success: function(data) {
 				data = JSON.parse(data);
-                alert(data["result"]);
-				alert("添加成功!")
+				console.log(data);
+                if (data["status"] == "1")
+					alert("添加成功111!")
+				else if (data["status"] == "2")
+					alert("已存在，添加失败111!")
+				else
+					alert("未知错误，添加失败111!")
+			},
+			error: function(xhr, type) {
+				alert("添加失败111!")
+			}
+		});
+	}
+	
+	function search_airport_submit(post_data,url){
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: post_data,
+			dataType: 'json',
+			success: function(data) {
+				data = JSON.parse(data);
+                if (data["status"] == "1")
+					alert("添加成功!")
+				else if (data["status"] == "2")
+					alert("已有该机场，添加失败!")
+				else
+					alert("未知错误，添加失败!")
+			},
+			error: function(xhr, type) {
+				alert("添加失败!")
+			}
+		});
+	}
+
+	function search_flight_submit(post_data,url){
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: post_data,
+			dataType: 'json',
+			success: function(data) {
+				data = JSON.parse(data);
+                if (data["status"] == "1")
+					alert("添加成功!")
+				else if (data["status"] == "2")
+					alert("已有该机场，添加失败!")
+				else
+					alert("未知错误，添加失败!")
 			},
 			error: function(xhr, type) {
 				alert("添加失败!")
@@ -109,7 +156,7 @@ $(function() {
 		//alert("fsd")
 		$(".two").toggle();
 	})
-	//定单校验
+	//校验
 	$(".order-btn-add_manager").on('click',function() {
 		var managername = $(".order-manager_name").val();
 		var managerpsw = $(".order-manager_psw").val();
@@ -118,18 +165,19 @@ $(function() {
 			$(".errors").text("请输入管理名!").css("color","black");
 			return false;
 		}
-		if (managerpsw== "") {
+		if (managerpsw == "") {
 			errors();
 			$(".errors").text("请输入管理密码!").css("color","black");
 			return false;
 		}
 		else {
 			var data = {};
+			var url = 'http://127.0.0.1:8000/Myflightadmin/add_manager/';
 			data['newusrname'] = managername;
 			data['newusrpsw'] = managerpsw;
-			success();
-			order_submit(data);
-			$(".success").text("添加成功!").css("color","black");
+			//success();
+			add_submit(data,url);
+			//$(".success").text("添加成功!").css("color","black");
 		}
 	})
 	//添加航班校检
@@ -171,8 +219,17 @@ $(function() {
 			return false;
 		}
 		else {
-			success();
-			$(".success").text("添加成功!").css("color","black");
+			//success();
+			var post_data = {};
+			var url = 'http://127.0.0.1:8000/Myflightadmin/add_flight/';
+			post_data['takeoff'] = takeoff;
+			post_data['landing'] = landing;
+			post_data['flightname'] = flightname;
+			post_data['PDtime'] = PDtime;
+			post_data['PLtime'] = PLtime;
+			post_data['airlinename'] = airlinename;
+			add_submit(post_data,url);
+			//$(".success").text("添加成功!").css("color","black");
 		}
 	})
 	//添加机场校检
@@ -202,8 +259,15 @@ $(function() {
 			return false;
 		}
 		else {
-			success();
-			$(".success").text("添加成功!").css("color","black");
+			var post_data = {};
+			var url = 'http://127.0.0.1:8000/Myflightadmin/add_airport/';
+			post_data['airport_name'] = airport_name;
+			post_data['airport_city'] = airport_city;
+			post_data['airport_tem'] = airport_tem;
+			post_data['airport_wea'] = airport_wea;
+			add_airport_submit(post_data,url);
+ 			//success();
+			//$(".success").text("添加成功!").css("color","black");
 		}
 	})
 	//按城市查找机场校检
@@ -215,8 +279,12 @@ $(function() {
 			return false;
 		}
 		else {
-			success();
-			$(".success").text("查找成功!").css("color","black");
+			//success();
+			var post_data = {};
+			var url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_City/';
+			post_data['airport_city'] = airport_city;
+			search_airport_submit(post_data,url);
+			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
 	//按机场名称查找机场校检
@@ -229,26 +297,34 @@ $(function() {
 		}
 		else {
 			success();
-			$(".success").text("查找成功!").css("color","black");
+			var post_data = {};
+			var url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_Id/';
+			post_data['airport_name'] = airport_name;
+			search_airport_submit(post_data,url);
+			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
 	//按航班号查找航班校检
 	$(".order-btn-search_flight-name").on('click',function() {
-		var flight_name = $(".order-flightname").val();
-		if (flight_name == "") {
+		var flightname = $(".order-flightname").val();
+		if (flightname == "") {
 			errors();
 			$(".errors").text("请输入航班号!").css("color","black");
 			return false;
 		}
 		else {
 			success();
-			$(".success").text("查找成功!").css("color","black");
+			var post_data = {};
+			post_data['flightname'] = flightname;
+			search_flight_by_id_submit(post_data);
+			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
 	//按起降地查找航班校检
 	$(".order-btn-search_flight-tofrom").on('click',function() {
 		var takeoff = $(".order-takeoff").val();
 		var landing = $(".order-landing").val();
+		var date = $(".order-date").val();
 		if (takeoff == "") {
 			errors();
 			$(".errors").text("请输入起飞地!").css("color","black");
@@ -261,7 +337,11 @@ $(function() {
 		}
 		else {
 			success();
-			$(".success").text("查找成功!").css("color","black");
+			var post_data = {};
+			post_data['takeoff'] = takeoff;
+			post_data['landing'] = landing;
+			search_flight_by_city_submit(post_data);
+			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
 	
