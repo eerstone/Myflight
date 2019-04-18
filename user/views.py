@@ -87,7 +87,7 @@ def register(request):
 def postregister(request):
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
-        passwd = request.POST.get('passwd')
+        passwd = request.POST.get('pwd')
         verifycode = request.POST.get('VerifyCode')
         ret_msg = {}
         flag = (phone_num!=None and passwd!=None and verifycode!=None)
@@ -98,6 +98,7 @@ def postregister(request):
             return JsonResponse(ret_msg,safe=False)
         else:
             #手机号与验证码匹配验证
+
             #验证成功，添加该字段进数据库
             one_user = models.User.objects.create()
             user_id = one_user.id
