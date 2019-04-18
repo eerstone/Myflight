@@ -2,43 +2,34 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
-# from Myflightadmin import administerMagemnet
-# from Myflightadmin import flightManagement
-# from Myadmin import airportManagement
+#from Myflightadmin import administerMagemnet
+#from Myflightadmin import flightManagement
+#from Myadmin import airportManagement
 import json
 # Create your views here.
 from user import models as usermodels
 
-
 def goto_admin_Login(request):
-    return render(request, "Myflightadmin/Database.html")
-
+    return render(request,"Myflightadmin/Database.html")
 
 def goto_admin_Manager(request):
-    return render(request, "Myflightadmin/Manager.html")
-
+    return render(request,"Myflightadmin/Manager.html")
 
 def goto_admin_add_manager(request):
-    # print(1)
-    return render(request, "Myflightadmin/add_manager.html")
-
+    #print(1)
+    return render(request,"Myflightadmin/add_manager.html")
 
 def goto_admin_add_flight(request):
-    return render(request, "Myflightadmin/add_flight.html")
-
+    return render(request,"Myflightadmin/add_flight.html")
 
 def goto_admin_mod_flight(request):
-    return render(request, "Myflightadmin/mod_flight.html")
-
+    return render(request,"Myflightadmin/mod_flight.html")
 
 def goto_admin_add_airport(request):
-    return render(request, "Myflightadmin/add_airport.html")
-
+    return render(request,"Myflightadmin/add_airport.html")
 
 def goto_admin_mod_airport(request):
-    return render(request, "Myflightadmin/mod_airport.html")
-
-
+    return render(request,"Myflightadmin/mod_airport.html")
 """
 def admin_add_admin(username,pwd):
     admin_exist = usermodels.User_Auth.objects.filter(identifier=username)
@@ -48,14 +39,12 @@ def admin_add_admin(username,pwd):
                                             identifier=username, credential=pwd)
         newadmin.save()
         newadminiden.save()
-
+        
         return 1
     else:
     return 2
 
 """
-
-
 def admin_add_manager(request):
     """
         input: json{
@@ -65,11 +54,10 @@ def admin_add_manager(request):
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
     if request.method == "POST":
-        issucceeded = administerMagemnet.postadd(request.POST.get("newusrname"), request.POST.get("newusrpsw"))
+        issucceeded = administerMagemnet.postadd(request.POST.get("newusrname"),request.POST.get("newusrpsw"))
         return JsonResponse(json.dumps({
             "status": issucceeded
-        }), safe=False)
-
+        }),safe=False)
 
 def admin_add_flight(request):
     """
@@ -89,8 +77,7 @@ def admin_add_flight(request):
         print(issuccessed)
         return JsonResponse(json.dumps({
             "status": issuccessed
-        }), safe=False)
-
+        }),safe=False)
 
 def admin_search_flight_by_Id(request):
     """
@@ -102,9 +89,8 @@ def admin_search_flight_by_Id(request):
                         flight{}}
     """
     if request.method == "POST":
-        is_exist, flight = flightManagement.getsearchbyId(request.POST.get("flightname"), request.POST.get("date"))
-        return JsonResponse(json.dumps({flight, is_exist}), safe=False)
-
+        is_exist,flight = flightManagement.getsearchbyId(request.POST.get("flightname"),request.POST.get("date"))
+        return JsonResponse(json.dumps({flight,is_exist}), safe=False)
 
 def admin_search_flight_by_City(request):
     """
@@ -117,10 +103,8 @@ def admin_search_flight_by_City(request):
                         flight{}}
     """
     if request.method == "POST":
-        flight = flightManagement.getSearchFlightByCity(request.POST.get("takeoff"), request.POST.get("landing"),
-                                                        request.POST.get("date"))
-        return JsonResponse(json.dump(flight), safe=False)
-
+        flight = flightManagement.getSearchFlightByCity(request.POST.get("takeoff"),request.POST.get("landing"),request.POST.get("date"))
+        return JsonResponse(json.dump(flight),safe=False)
 
 def admin_mod_flight(request):
     """
@@ -134,7 +118,6 @@ def admin_mod_flight(request):
         return JsonResponse(json.dumps({
             "status": issuccessed
         }), safe=False)
-
 
 def admin_del_flight(request):
     """
@@ -150,7 +133,6 @@ def admin_del_flight(request):
             "status": issuccessed
         }), safe=False)
 
-
 def admin_add_airport(request):
     """
             input: json{
@@ -165,8 +147,7 @@ def admin_add_airport(request):
         issuccessed = add_airport(request.POST)
         return JsonResponse(json.dumps({
             "status": issuccessed
-        }), safe=False)
-
+        }),safe=False)
 
 def admin_search_airport_by_Id(request):
     """
@@ -178,8 +159,7 @@ def admin_search_airport_by_Id(request):
     """
     if request.method == "POST":
         airport = getairportbyId(request.POST)
-        return JsonResponse(json.dump(airport), safe=False)
-
+        return JsonResponse(json.dump(airport),safe=False)
 
 def admin_search_airport_by_City(request):
     """
@@ -191,8 +171,7 @@ def admin_search_airport_by_City(request):
     """
     if request.method == "POST":
         airport = getairportbyCity(request.POST)
-        return JsonResponse(json.dump(airport), safe=False)
-
+        return JsonResponse(json.dump(airport),safe=False)
 
 def admin_mod_airport(request):
     """
@@ -206,7 +185,6 @@ def admin_mod_airport(request):
         return JsonResponse(json.dumps({
             "status": issuccessed
         }), safe=False)
-
 
 def admin_del_airport(request):
     """
