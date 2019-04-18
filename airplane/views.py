@@ -22,23 +22,28 @@ import random
 #search
 def getSearchFlightById(request):
     ret_msg = {}
-    if request.method == 'POST':
-        askflight_id = request.POST.get('flight_id')
-        datetime = request.POST.get('datetime')
-        
+    if request.method == 'GET':
+        askflight_id = request.GET.get('flight_id')
+        datetime = request.GET.get('datetime')
+        print(askflight_id)
         flights = models.Flight.objects.filter(flight_id=askflight_id)
         
-        if flights == []:
+        if  not flights.exists():
             ret_msg['is_exist'] = 0
             ret_flight = {}
             ret_msg['flight'] = json.dumps(ret_flight)
-            
+            None
             return JsonResponse(json.dumps(ret_msg),safe=False)
         else:
+            print(flights)
             ret_flight = model_to_dict(flights[0])
+            ret_flight["plan_departure_time"] = str(ret_flight["plan_departure_time"])
+            ret_flight["plan_arrival_time"] = str(ret_flight["plan_arrival_time"])
+            ret_flight["actual_departure_time"] = str(ret_flight["plan_departure_time"])
+            ret_flight["actual_arrival_time"] = str(ret_flight["actual_arrival_time"])
             ret_msg['is_exist'] = 1
-            ret_msg['flight'] = json.dumps(ret_flight)
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            ret_msg['flight'] = json.dumps(ret_flight,ensure_ascii=False)
+            return JsonResponse(json.dumps(ret_msg,ensure_ascii=False),safe=False)
     else:
         pass
 

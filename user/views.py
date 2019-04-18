@@ -103,8 +103,6 @@ def postregister(request):
             user_id = one_user.id
             user_auth = models.User_Auth.objects.create(user_id=one_user,identity_type="手机"
                                                         ,identifier=phone_num,credential=passwd)
-            one_user.save()
-            user_auth.save()
             ret_msg['register_status']=0
             ret_msg['user_id']=user_id
             return JsonResponse(ret_msg,safe=False)
