@@ -35,12 +35,13 @@ def getSearchFlightById(request):
             None
             return JsonResponse(json.dumps(ret_msg),safe=False)
         else:
-            print(flights)
-            ret_flight = model_to_dict(flights[0])
-            ret_flight["plan_departure_time"] = str(ret_flight["plan_departure_time"])
-            ret_flight["plan_arrival_time"] = str(ret_flight["plan_arrival_time"])
-            ret_flight["actual_departure_time"] = str(ret_flight["plan_departure_time"])
-            ret_flight["actual_arrival_time"] = str(ret_flight["actual_arrival_time"])
+            ret_flight=[]
+            for i in range(flights.count()):
+                ret_flight.append(model_to_dict(flights[i]))
+                ret_flight[i]['plan_departure_time'] = str(ret_flight[i]['plan_departure_time'])
+                ret_flight[i]["plan_arrival_time"] = str(ret_flight[i]["plan_arrival_time"])
+                ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
+                ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
             ret_msg['is_exist'] = 1
             ret_msg['flight'] = json.dumps(ret_flight,ensure_ascii=False)
             return JsonResponse(json.dumps(ret_msg,ensure_ascii=False),safe=False)

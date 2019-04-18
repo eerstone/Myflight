@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7b2f371-e6b8-4704-9fcd-89f51d728ec7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/excel2mysql.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airplane/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/airplane/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airplane/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/airplane/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airplane/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/airplane/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airport/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/airport/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,12 +32,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="1748" />
+          <entry key="py" value="1842" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="1748" />
+          <entry key="Python" value="1842" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
@@ -145,11 +140,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/airplane/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="564">
-              <caret line="45" column="82" lean-forward="true" selection-start-line="45" selection-start-column="82" selection-end-line="45" selection-end-column="82" />
+            <state relative-caret-position="429">
+              <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <marker date="1555570754681" expanded="true" signature="1702:3760" ph="..." />
+                <marker date="1555573566784" expanded="true" signature="1796:3854" ph="..." />
               </folding>
             </state>
           </provider>
@@ -227,7 +222,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="42" />
     <option name="y" value="8" />
     <option name="width" value="186" />
@@ -798,11 +793,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/airplane/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="45" column="82" lean-forward="true" selection-start-line="45" selection-start-column="82" selection-end-line="45" selection-end-column="82" />
+        <state relative-caret-position="429">
+          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <marker date="1555570754681" expanded="true" signature="1702:3760" ph="..." />
+            <marker date="1555573566784" expanded="true" signature="1796:3854" ph="..." />
           </folding>
         </state>
       </provider>
