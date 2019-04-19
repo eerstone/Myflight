@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms.models import model_to_dict
 
 # Create your models here.
 class Flight(models.Model):
@@ -47,5 +48,29 @@ def add_Fligt(flight_id,mileage,aircraft_models,plan_departure_time,plan_arrival
                                      )
     return 1
 
-
+def airport2flight(airport,isfrom):
+    """
+    输入机场，为出发机场 或到达机场，返回对应航班的列表，
+    :param airport:
+    :param isfrom:
+    :return:
+    """
+    if isfrom:
+        flightset = Flight.objects.filter(departure=airport)
+        flights = []
+        if flightset.exists():
+            for flight in flightset:
+                flights+= model_to_dict(flight)
+            return flights
+        else:
+            return None
+    else:
+        flightset = Flight.objects.filter(arrival=airport)
+        flights = []
+        if flightset.exists():
+            for flight in flightset:
+                flights+= model_to_dict(flight)
+            return flights
+        else:
+            return None
 

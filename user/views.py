@@ -125,6 +125,49 @@ def getVerifiedCode(request):
     example = json.dumps(example)
     return JsonResponse(example,safe=False)
 
+
+class ForCodeView(View):  # 调试成功
+    """获取手机验证码"""
+
+    def post(self, request):
+        mobile = request.POST.get('phone_num', '')
+        print(mobile)
+        ret_msg = {}
+        if mobile:
+            # 验证是否为有效手机号
+            mobile_pat = re.compile('^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$')
+            res = re.search(mobile_pat, mobile)
+            if res:
+                # 生成手机验证码
+                # 通过redis存储验证码
+                # redis_conn = get_redis_connection("default")
+                c = random.randint(1000, 9999)
+                # redis_conn.setex(mobile,60,str(c))
+                # 通过自建的数据库存储验证码
+                code = VerifyCode()
+                code.mobile = mobile
+                code.code = str(c)
+                code.save()
+                code = VerifyCode.objects.filter(mobile=mobile).first().code
+                yunpian = YunPian(APIKEY)
+                sms_status = yunpian.send_sms(code=code, mobile=mobile)
+                sms_status = sms_status.json()
+                msg = sms_status["msg"]
+                ret_msg["CodeStatus"] = 0
+                ret_msg["msg"] = msg
+                return JsonResponse(ret_msg, safe=False)
+            else:
+                msg = '请输入有效手机号码!'
+                ret_msg["CodeStatus"] = 1
+                ret_msg["msg"] = msg
+                return JsonResponse(ret_msg, safe=False)
+        else:
+            msg = '手机号不能为空！'
+            ret_msg["CodeStatus"] = 1
+            ret_msg["msg"] = msg
+            return JsonResponse(ret_msg, safe=False)
+
+
 def apitest(request):
     print("get")
     example =  {'String':'wejfwi'}
@@ -228,43 +271,3 @@ def postDelete(request):
             return JsonResponse(json.dumps(ret_msg),safe=False)
     else:
         pass
-    
-class ForCodeView(View):#调试成功
-    """获取手机验证码"""
-    def post(self,request):
-        mobile=request.POST.get('phone_num','')
-        print(mobile)
-        ret_msg = {}
-        if mobile:
-            #验证是否为有效手机号
-            mobile_pat=re.compile('^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$')
-            res=re.search(mobile_pat,mobile)
-            if res:
-                #生成手机验证码
-                #通过redis存储验证码
-                # redis_conn = get_redis_connection("default")
-                c=random.randint(1000,9999)
-                # redis_conn.setex(mobile,60,str(c))
-                #通过自建的数据库存储验证码
-                code=VerifyCode()
-                code.mobile=mobile
-                code.code=str(c)
-                code.save()
-                code=VerifyCode.objects.filter(mobile=mobile).first().code
-                yunpian=YunPian(APIKEY)
-                sms_status=yunpian.send_sms(code=code,mobile=mobile)
-                sms_status = sms_status.json()
-                msg=sms_status["msg"]
-                ret_msg["CodeStatus"] = 0
-                ret_msg["msg"] = msg
-                return JsonResponse(ret_msg,safe=False)
-            else:
-                msg='请输入有效手机号码!'
-                ret_msg["CodeStatus"] = 1
-                ret_msg["msg"] = msg
-                return JsonResponse(ret_msg,safe=False)
-        else:
-            msg='手机号不能为空！'
-            ret_msg["CodeStatus"] = 1
-            ret_msg["msg"] = msg
-            return JsonResponse(ret_msg,safe=False)

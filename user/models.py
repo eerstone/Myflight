@@ -1,5 +1,6 @@
 from django.db import models
 from airplane import models as airplanemodels
+from django.forms.models import model_to_dict
 # Create your models here.
 class User(models.Model):
     gender = (
@@ -9,9 +10,9 @@ class User(models.Model):
     )
     # id = models.AutoField(primary_key=True) #Django 默认创建自增主键
     nickname = models.CharField(max_length=32)
-    email = models.EmailField(default="123@qq.com",unique=True)
+    email = models.EmailField(default="username@email.com",unique=True)
     sex = models.CharField(max_length=32,choices=gender,default="保密")
-    birthday = models.DateField(default="1998-06-02")
+    birthday = models.DateField(default="2000-01-01")
     access = models.IntegerField(default=1)
     icon = models.ImageField(null=True)
     def __str__(self):
@@ -44,3 +45,22 @@ class mytrip(models.Model):
     flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
     #user_trip = models.Integerfield(default=1)
     user_trip = models.IntegerField(default=1)
+    datetime = models.DateTimeField(default="2000-01-01")
+
+
+def phone2basicinfo(phone_num):
+    user_auth = User_Auth.objects.filter(identifier=phone_num)
+    #默认user_auth只有一个
+    if user_auth.count()==1:
+        user_auth = user_auth[0]
+        user = User.objects.filter(id=user_auth.user_id)
+        user = model_to_dict(user)
+        #修改字典
+        del user["acess"]
+        user["id"] = user.pop("user_id")
+        user["nickname"] = user.pop("user_name")
+        user["phone_num"] = phone_num
+        return user
+    else:
+        return None
+
