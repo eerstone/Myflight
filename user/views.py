@@ -189,10 +189,10 @@ def postModifyIcon(request):
             user = models.User.objects.get(id=user_id)
             user.update(icon=newicon)
             ret_msg['issucceed'] = 1
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         except Exception as e:
             ret_msg['issucceed'] = 0
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/login.html')
 
@@ -215,10 +215,10 @@ def postBasicInfo(request):
             user.update(email=newemail)
             user.update(birthday=newbirthday)
             ret_msg['issucceed'] = 1
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         except:
             ret_msg['issucceed'] = 0
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/login.html')
     
@@ -234,24 +234,24 @@ def postUpdatePassword(request):
         if user_auth.credential == oldpsw:
             user_auth.update(credential=newpsw)
             ret_msg['issucceed'] = 1
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/login.html')
     
 #mytrip
 def getFavorateFlight(request):
     ret_msg = {}
-    if request.method == 'POST':
+    if request.method == 'GET':
         user_id = request.POST.get('user_id')
         trip = models.mytrip.objects.get(user_ID=user_id)
         flight = airplanemodels.Flight.objects.get(flight_id=trip.flight_ID)
         ret_msg['user_id'] = user_id
         ret_msg['flight'] = model_to_dict(flight)
         ret_msg['user_type'] = trip.user_trip
-        return JsonResponse(json.dumps(ret_msg),safe=False)
+        return JsonResponse(ret_msg,safe=False)
     else:
         pass
 
@@ -265,9 +265,9 @@ def postDelete(request):
         if (user_id == trip.user_ID):
             airplanemodels.Flight.objects.filter(flight_id=trip.flight_ID).delete()
             ret_msg['issucceed'] = 1
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
     else:
         pass
