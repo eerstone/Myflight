@@ -127,7 +127,7 @@ airplane/
 				issucceed:int
 
 
-admin/	
+Myflightadmin/	
 	administerMagemnet/
 		postadd/
 			input:
@@ -167,7 +167,7 @@ admin/
 				is_exist:int
 				flights:{json}
 		getSearchFlightByCity/
-			input:
+			input:	
 				city_from:String
 				city_to:String
 				datetime:String
