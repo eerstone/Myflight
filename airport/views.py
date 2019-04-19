@@ -22,9 +22,9 @@ from rest_framework.response import Response
 import random
 
 #airport
-def getAirportInfo(request):#TBD:model2dict
+def getAirportInfo(request):
     ret_msg = {}
-    if request.method == 'POST':
+    if request.method == 'GET':
         airport = request.POST.get('airport')
         
         weather = airport.weather
@@ -34,18 +34,20 @@ def getAirportInfo(request):#TBD:model2dict
         departure_flights_dicts = []
         arrival_flights_dicts = []
         
-        for item in departure_flights:
-            departure_flights_dicts.append(json.dumps(model_to_dict(item)))
-            
-        for item in arrival_flights:
-            arrival_flights_dicts.append(json.dumps(model_to_dict(item)))
+        if departure_flights.exists():
+            for item in departure_flights:
+                departure_flights_dicts.append(model_to_dict(item))
+        
+        if arrival_flights.exists():
+            for item in arrival_flights:
+                arrival_flights_dicts.append(model_to_dict(item))
         
         ret_msg['weather'] = weather
         ret_msg['temperature'] = temperature
         ret_msg['departure_flights'] = departure_flights_dicts
         ret_msg['arrival_flights'] = arrival_flights_dicts
         
-        return JsonResponse(json.dumps(ret_msg),safe=False)
+        return JsonResponse(ret_msg,safe=False)
     else:
         pass
     

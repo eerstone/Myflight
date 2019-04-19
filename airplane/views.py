@@ -31,9 +31,9 @@ def getSearchFlightById(request):
         if  not flights.exists():
             ret_msg['is_exist'] = 0
             ret_flight = {}
-            ret_msg['flight'] = json.dumps(ret_flight)
+            ret_msg['flight'] = ret_flight
             None
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         else:
             ret_flight=[]
             for i in range(flights.count()):
@@ -43,8 +43,8 @@ def getSearchFlightById(request):
                 ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
                 ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
             ret_msg['is_exist'] = 1
-            ret_msg['flight'] = json.dumps(ret_flight,ensure_ascii=False)
-            return JsonResponse(json.dumps(ret_msg,ensure_ascii=False),safe=False)
+            ret_msg['flight'] = ret_flight
+            return JsonResponse(ret_msg,safe=False)
     else:
         pass
 
@@ -127,26 +127,26 @@ def  gS_FC(request):
 
 def getSearchFlightByCity(request):
     ret_msg = {}
-    if request.method == 'POST':
+    if request.method == 'GET':
         city_from = request.POST.get('city_from')
         city_to = request.POST.get('city_to')
         datetime = request.POST.get('datetime')
         
         flights = models.Flight.objects.filter(departure=city_from, arrival=city_to)
         
-        if flights == []:
+        if not flights.exists():
             ret_msg['is_exist'] = 0
             ret_flights = []
             ret_msg['flight'] = ret_flights
             
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
         else:
             ret_flights = []
             for item in flights:
-                ret_flights.append(json.dumps(model_to_dict(item)))
+                ret_flights.append(model_to_dict(item))
             ret_msg['is_exist'] = 1
             ret_msg['flight'] = ret_flight
-            return JsonResponse(json.dumps(ret_msg),safe=False)
+            return JsonResponse(ret_msg,safe=False)
     else:
         pass
     
