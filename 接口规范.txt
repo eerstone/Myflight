@@ -139,6 +139,7 @@ Myflightadmin/
 			input:
 				username:String
 			output:
+                issucceed:int
 				username:String
 				password:String
 		postdelete:

@@ -8,6 +8,8 @@ from django.http import HttpResponse
 import json
 # Create your views here.
 from user import models as usermodels
+from airplane import views as av
+from airplane import models as am
 
 def goto_admin_Login(request):
     return render(request,"Myflightadmin/Database.html")
@@ -199,3 +201,124 @@ def admin_del_airport(request):
             "status": issuccessed
         }), safe=False)
 
+#administerMagemnet
+def postadd(request):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    
+    user = usermodels.User_Auth.objects.filter(identifier=uesrname)
+    if user.count()>0:
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+   
+    user_new = usermodels.User.objects.create()
+    user_au_new = usermodels.User_Auth.objects.create(user_id=user_new,identity_type="用户名"
+                                                        ,identifier=username,credential=password)
+    ret_msg['issucceed'] = 1
+        return JsonResponse(ret_msg, safe=False)
+    
+def getsearch(request):
+    ret_msg = {}
+    if requeset.method != 'GET':
+        ret_msg['issucceed'] = 0
+        ret_msg['username'] = ''
+        ret_msg['password'] = ''
+        return JsonResponse(ret_msg, safe=False)
+    
+    username = request.POST.get('username')
+    users = usermodels.User_Auth.objects.filter(identifier=uesrname)
+    if users.count() == 0:
+        ret_msg['issucceed'] = 0
+        ret_msg['username'] = ''
+        ret_msg['password'] = ''
+        return JsonResponse(ret_msg, safe=False)
+    
+    ret_msg['issucceed'] = 1
+    ret_msg['username'] = users[0].identifier
+    ret_msg['password'] = users[0].credential
+    return JsonResponse(ret_msg, safe=False)
+
+def postdelete(requset):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    users = usermodels.User_Auth.objects.filter(identifier=uesrname, credential=password)
+    
+    if users.exists():
+        users.delete()
+    
+    ret_msg['issucceed'] = 1
+    return JsonResponse(ret_msg, safe=False)
+
+def postupdate(request):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = usermodels.User_Auth.objects.filter(identifier=uesrname)
+    
+    if not user.exists:
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    
+    user[0].update(credential=password)
+    ret_msg['issucceed'] = 1
+    return JsonResponse(ret_msg, safe=False)
+
+#flightManagement
+def postadd(request):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    
+    flight = request.POST.get('flight')
+    flight_dict = json.loads(flight)
+    
+    am.add_Fligt(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
+                 flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'], flight_dict['punctuality_rate'],
+                 flight_dict['delay_time'], flight_dict['company'], flight_dict['is_mon'], flight_dict['is_tue'],
+                 flight_dict['is_wed'], flight_dict['is_thr'], flight_dict['is_fri'], flight_dict['is_sat'], flight_dict['is_sun'])
+    
+    ret_msg['issucceed'] = 1
+    return JsonResponse(ret_msg, safe=False)
+
+def getsearchbyId(request):
+    av.getSearchFlightById(request)
+    
+def getSearchFlightByCity(request):
+    av.getSearchFlightByCity(request)
+    
+def postdelete(request):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    
+    dflight_id = request.POST.get('flight_id')
+    datetime = request.POST.get('datetime')
+    flights = usermodels.User_Auth.objects.filter(flight_id=dflight_id)
+    
+    if flights.exists():
+        flights.delete()
+    
+    ret_msg['issucceed'] = 1
+    return JsonResponse(ret_msg, safe=False)
+
+def postupdate(request):
+    ret_msg = {}
+    if requeset.method != 'POST':
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    pass
