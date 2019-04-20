@@ -64,51 +64,20 @@ $(function() {
 					alert("未知错误，添加失败111!")
 			},
 			error: function(xhr, type) {
-				alert("添加失败111!")
+				alert("添加失败manager!")
 			}
 		});
 	}
 	
 	function search_airport_submit(post_data,url){
-		$.ajax({
-			type: 'POST',
-			url: url,
-			data: post_data,
-			dataType: 'json',
-			success: function(data) {
-				data = JSON.parse(data);
-                if (data["status"] == "1")
-					alert("添加成功!")
-				else if (data["status"] == "2")
-					alert("已有该机场，添加失败!")
-				else
-					alert("未知错误，添加失败!")
-			},
-			error: function(xhr, type) {
-				alert("添加失败!")
-			}
-		});
+		location.href = "/Myflightadmin/Manager/search_airport/?airport=" + post_data['airport'] + "&city=" + post_data['city'];
 	}
 
 	function search_flight_submit(post_data,url){
-		$.ajax({
-			type: 'POST',
-			url: url,
-			data: post_data,
-			dataType: 'json',
-			success: function(data) {
-				data = JSON.parse(data);
-                if (data["status"] == "1")
-					alert("添加成功!")
-				else if (data["status"] == "2")
-					alert("已有该机场，添加失败!")
-				else
-					alert("未知错误，添加失败!")
-			},
-			error: function(xhr, type) {
-				alert("添加失败!")
-			}
-		});
+		location.href = "/Myflightadmin/Manager/search_flight/?flight_id=" + post_data['flight_id'] + "&city_from=" + post_data['city_from'] + "&city_to=" + post_data['city_to']+"&datetime="+ post_data['datetime'];
+	}
+	function get_flight_submit(post_data,url){
+
 	}
 	function success() {
 		//从这里 开始
@@ -173,8 +142,8 @@ $(function() {
 		else {
 			var data = {};
 			var url = 'http://127.0.0.1:8000/Myflightadmin/add_manager/';
-			data['newusrname'] = managername;
-			data['newusrpsw'] = managerpsw;
+			data['username'] = managername;
+			data['password'] = managerpsw;
 			//success();
 			add_submit(data,url);
 			//$(".success").text("添加成功!").css("color","black");
@@ -188,6 +157,7 @@ $(function() {
 		var PDtime = $(".order-PDtime").val();
 		var PLtime = $(".order-PLtime").val();
 		var airlinename = $(".order-airlinename").val();
+		var date = $("#takeoffDate").val();
 		if (takeoff == "") {
 			errors();
 			$(".errors").text("请输入起飞地!").css("color","black");
@@ -218,16 +188,22 @@ $(function() {
 			$(".errors").text("请输入航空公司!").css("color","black");
 			return false;
 		}
+		if (date == ""){
+			errors();
+			$(".errors").text("请选择日期!").css("color","black");
+			return false;
+		}
 		else {
 			//success();
 			var post_data = {};
 			var url = 'http://127.0.0.1:8000/Myflightadmin/add_flight/';
-			post_data['takeoff'] = takeoff;
-			post_data['landing'] = landing;
-			post_data['flightname'] = flightname;
-			post_data['PDtime'] = PDtime;
-			post_data['PLtime'] = PLtime;
-			post_data['airlinename'] = airlinename;
+			post_data['city_from'] = takeoff;
+			post_data['city_to'] = landing;
+			post_data['flight_id'] = flightname;
+			post_data['plan_departure_time'] = PDtime;
+			post_data['plan_arrival_time'] = PLtime;
+			post_data['company'] = airlinename;
+			post_data['date'] = date;
 			add_submit(post_data,url);
 			//$(".success").text("添加成功!").css("color","black");
 		}
@@ -261,10 +237,10 @@ $(function() {
 		else {
 			var post_data = {};
 			var url = 'http://127.0.0.1:8000/Myflightadmin/add_airport/';
-			post_data['airport_name'] = airport_name;
-			post_data['airport_city'] = airport_city;
-			post_data['airport_tem'] = airport_tem;
-			post_data['airport_wea'] = airport_wea;
+			post_data['airport'] = airport_name;
+			post_data['city'] = airport_city;
+			post_data['temperature'] = airport_tem;
+			post_data['weather'] = airport_wea;
 			add_airport_submit(post_data,url);
  			//success();
 			//$(".success").text("添加成功!").css("color","black");
@@ -281,8 +257,9 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_City/';
-			post_data['airport_city'] = airport_city;
+			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			post_data['city'] = airport_city;
+			post_data['airport'] = '';
 			search_airport_submit(post_data,url);
 			//$(".success").text("查找成功!").css("color","black");
 		}
@@ -296,10 +273,11 @@ $(function() {
 			return false;
 		}
 		else {
-			success();
+			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_Id/';
-			post_data['airport_name'] = airport_name;
+			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			post_data['airport'] = airport_name;
+			post_data['city'] = '';
 			search_airport_submit(post_data,url);
 			//$(".success").text("查找成功!").css("color","black");
 		}
@@ -307,16 +285,26 @@ $(function() {
 	//按航班号查找航班校检
 	$(".order-btn-search_flight-name").on('click',function() {
 		var flightname = $(".order-flightname").val();
+		var date = $("#takeoffDate").val();
 		if (flightname == "") {
 			errors();
 			$(".errors").text("请输入航班号!").css("color","black");
 			return false;
 		}
+		if (date == ""){
+			errors();
+			$(".errors").text("请选择日期!").css("color","black");
+			return false;
+		}
 		else {
-			success();
+			//success();
 			var post_data = {};
-			post_data['flightname'] = flightname;
-			search_flight_by_id_submit(post_data);
+			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			post_data['flight_id'] = flightname;
+			post_data['datetime'] = date;
+			post_data['city_from'] = '';
+			post_data['city_to'] = '';
+			search_flight_submit(post_data,url);
 			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
@@ -324,7 +312,7 @@ $(function() {
 	$(".order-btn-search_flight-tofrom").on('click',function() {
 		var takeoff = $(".order-takeoff").val();
 		var landing = $(".order-landing").val();
-		var date = $(".order-date").val();
+		var date = $("#takeoffDate").val();
 		if (takeoff == "") {
 			errors();
 			$(".errors").text("请输入起飞地!").css("color","black");
@@ -335,12 +323,21 @@ $(function() {
 			$(".errors").text("请输入降落地!").css("color","black");
 			return false;
 		}
+		if (date == ""){
+			errors();
+			$(".errors").text("请选择日期!").css("color","black");
+			return false;
+		}
 		else {
-			success();
+			//success();
 			var post_data = {};
-			post_data['takeoff'] = takeoff;
-			post_data['landing'] = landing;
-			search_flight_by_city_submit(post_data);
+			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			post_data['city_from'] = takeoff;
+			post_data['city_to'] = landing;
+			post_data['datetime'] = date;
+			post_data['flight_id'] = '';
+			search_flight_submit(post_data,url);
+
 			//$(".success").text("查找成功!").css("color","black");
 		}
 	})
