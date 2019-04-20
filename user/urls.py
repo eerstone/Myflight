@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^postVerifiedCode/',ForCodeView.as_view(),name='forcode'),
     url(r'^getVerifiedCode/', views.getVerifiedCode),
     url(r'^apitest/', views.apitest),
+    url(r'^getFavorateFlight/', views.getFavorateFlight),
+    url(r'^postBasicInfo/', views.postBasicInfo),
 ]

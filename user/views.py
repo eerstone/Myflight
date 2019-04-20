@@ -207,19 +207,22 @@ def postBasicInfo(request):
         newemail = request.POST.get('email')
         newbirthday = request.POST.get('birthday')
         
-        try:
-            user = models.User.objects.get(id=user_id)
-            user.update(nickname=newuser_name)
-            user_auth = models.User_Auth.objects.get(user_id=user_id)
-            user_auth.update(identifier=newphone_num)
-            user.update(sex=newgender)
-            user.update(email=newemail)
-            user.update(birthday=newbirthday)
-            ret_msg['issucceed'] = 1
-            return JsonResponse(ret_msg,safe=False)
-        except:
-            ret_msg['issucceed'] = 0
-            return JsonResponse(ret_msg,safe=False)
+        #try:
+        user = models.User.objects.get(id=user_id)
+        # models.User.objects.filter(id=user_id).update()
+        user.nickname=newuser_name
+        user.sex=newgender
+        user.email=newemail
+        user.birthday=newbirthday
+        user.save()
+        user_auth = models.User_Auth.objects.get(user_id_id=user_id)
+        user_auth.identifier=newphone_num
+        user_auth.save()
+        ret_msg['issucceed'] = 1
+        return JsonResponse(ret_msg,safe=False)
+        # except:
+        #     ret_msg['issucceed'] = 0
+        #     return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/login.html')
     
@@ -248,9 +251,12 @@ def getFavorateFlight(request):
     if request.method == 'GET':
         user_id = request.GET.get('user_id')
         trip = models.mytrip.objects.get(user_ID=user_id)
-        flight = airplanemodels.Flight.objects.get(flight_id=trip.flight_id)
+        flight = airplanemodels.Flight.objects.filter(flight_id=trip.flight_id)
+        flights =[]
+        for f in flight:
+            flights.append(model_to_dict(f))
         ret_msg['user_id'] = user_id
-        ret_msg['flight'] = model_to_dict(flight)
+        ret_msg['flight'] = flights
         ret_msg['user_type'] = trip.user_trip
         return JsonResponse(ret_msg,safe=False)
     else:
