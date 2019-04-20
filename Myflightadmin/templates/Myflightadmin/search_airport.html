@@ -1,0 +1,117 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>机场查询结果</title>
+<link href="{% static 'css/float.css' %}" rel="stylesheet">
+<link href="{% static 'css/personCenter.css' %}" rel="stylesheet">
+<link href="{% static 'css/widget_new.css' %}" rel="stylesheet">
+<link href="{% static 'css/index_new.css' %}" rel="stylesheet">
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="bg">
+	<div class="header">
+		<div class="header-nei">
+			<a href="javascript:;" style="color: #fff" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">返回</i></a>
+			<h2 class="header-title">机场查询结果</h2>
+            <p type="button" onclick="geturl()" >test</p>
+		</div>
+	</div>
+
+	<div class="airport_list">
+		<div class="li_box" id="li_box">
+			<div class="t_tit" id="t_tit">
+				<p class="w260">机场名</p>
+				<p class="w150">机场所在城市</p>
+				<p class="w150">机场温度</p>
+				<p class="w150">机场天气</p>
+				<p class="w150">保存</p>
+				<p class="w150">修改</p>
+				<p class="w150">删除</p>
+				<div class="clear"></div>
+			</div>
+			<ul id="list">
+					<li style="position: relative;">
+					<div class="li_com">
+						<span class="w260">
+							<b>
+								<a href="javascript:void(0);"
+								   title="东方航空">东方航空</a>
+								<a href="javascript:void(0);"
+								   title="MU5183">MU5183</a>
+							</b>
+						</span>
+						<span class="w150" id="t1" dplan="07:35">07:35</span>
+						<span class="w150" id="t2" dplan="07:35">07:35</span>
+						<span class="w150" id="t3">北京首都T2</span>
+						<span class="w150" id="t4" aplan="09:50">09:50</span>
+						<span class="w150" id="t5" aplan="09:50">09:50</span>
+						<span class="w150" id="t6">上海浦东T1</span>
+						<span class="w150" id="t7" aplan="90%">90%</span>
+						<span class="w150 gre_cor" id="t2">到达</span>
+						<span class="w150">
+							<a href="javascript:;" onclick="cg()">修改</a>
+						</span>
+						<span class="fob">
+							<a href="javascript:;" class="log-reg-btn forbiddenBtn" style="color:#red;z-index:6;position: relative;">[删除航班]</a>
+						</span>
+						<div class="clear"></div>
+					</div>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+<!--content/-->
+<div class="bg100"></div>
+<!--错误提示-->
+<div class="tip-errors-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont">&#xe614;</i><em class="errors">错误提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<!--正确提示-->
+<div class="tip-success-bg">
+	<div class="tip-tip-box-nei">
+		<strong><i class="iconfont" style="color:#0F0;">&#xe611;</i><em class="success">正确提示</em></strong>
+	</div>
+	<!--tip-tip-box/-->
+</div>
+<!--tip-success-bg/-->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/style.js' %}"></script>
+<script>
+function geturl(){
+	var url = decodeURI(window.location.href);
+    var url = url.split("?")[1];
+    var para = url.split("&");
+    var len = para.length;
+    var res = {};
+    var arr = [];
+    for(var i=0;i<len;i++){
+        arr = para[i].split("=");
+        res[arr[0]] = arr[1];
+        alert(arr[0]);
+    }
+    return res;
+}
+cg = function () {
+	for (var i = 1;i<8;i++){
+		var o = document.getElementById("t" + String(i));
+		if (o.childNodes[0].value) {
+			o.innerHTML = o.childNodes[0].value;
+		} 
+		else {
+			o.innerHTML = "<input type='text' value='" + document.getElementById("t" + String(i)).innerHTML + "' />";
+		}
+	}
+}
+</script>
+</body>
+</html>

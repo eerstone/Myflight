@@ -50,7 +50,7 @@
 				</form>
 			</div>
 		</div>
-
+        <script src="{% static 'js/jquery.min.js' %}"></script>
 		<script type="text/javascript" type="text/javascript">	
 
 			function checkForm(){
@@ -83,9 +83,30 @@
 		        }else{
 		        	passError.style.cssText='display:none;';
 		            userError.style.cssText='display:none;';
-		    		
-		    		//ajax后台post登录请求 （假设登录成功）
-		    		window.location.href="/Myflightadmin/Manager/"
+		            var post_data = {};
+		            post_data['username'] = username;
+		            post_data['password'] = password;
+		    		$.ajax({
+                        type: 'POST',
+                        url: 'http://127.0.0.1:8000/Myflightadmin/Adminlogin/',
+                        data: post_data,
+                        dataType: 'json',
+                        success: function(data) {
+                            data = JSON.parse(data);
+                            console.log(data);
+                            if (data["status"] == "1") {
+                                alert("登录成功!")
+                                location.href = "/Myflightadmin/Manager/";
+                            }
+                            else if (data["status"] == "2")
+                                alert("游客无法登录后台!")
+                            else
+                                alert("未知错误，登录!")
+                        },
+                        error: function(xhr, type) {
+                            alert("服务器繁忙,登录失败!");
+                        }
+                    });
 		    	
 		        }
 
