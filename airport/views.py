@@ -13,7 +13,6 @@ import random
 from utils.yunpian import YunPian
 from Myflight.settings import APIKEY
 from django.views import View
-from .models import VerifyCode
 from django_redis import get_redis_connection
 
 
@@ -49,5 +48,9 @@ def getAirportInfo(request):
         
         return JsonResponse(ret_msg,safe=False)
     else:
-        pass
-    
+        ret_msg= {}
+        ret_msg['weather'] = ""
+        ret_msg['temperature'] = ""
+        ret_msg['departure_flights'] = ""
+        ret_msg['arrival_flights'] = ""
+        return JsonResponse(ret_msg,safe=False)

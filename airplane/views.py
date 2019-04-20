@@ -147,7 +147,7 @@ def getSearchFlightByCity(request):
             for item in flights:
                 ret_flights.append(model_to_dict(item))
             ret_msg['is_exist'] = 1
-            ret_msg['flight'] = ret_flight
+            ret_msg['flight'] = ret_flights
             return JsonResponse(ret_msg,safe=False)
     else:
         ret_msg['is_exist'] = 0
