@@ -7,7 +7,7 @@ app_name = 'user'
 urlpatterns = [
 
     url(r'^login/', views.login),
-    url(r'^postlogin/', views.postlogin),
+    url(r'^postLogin/', views.postlogin),
     url(r'^postLoginapi/', views.postloginapi),
     url(r'^register/', views.register),
     url(r'^postRegister/', views.postregister),

@@ -47,6 +47,7 @@ def city2airport(city):
     airport_name = []
     for port in airports:
         dict = model_to_dict(port)
-        airport_name+= dict["airport"]
+        one_ap = str(dict["airport"])
+        airport_name.append(one_ap)
     return airport_name
 

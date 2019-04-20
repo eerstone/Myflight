@@ -60,24 +60,25 @@ def postlogin(request):
         print(ltype)
         phone_num = request.POST.get('phone_num')
         psw = request.POST.get('pwd')
+        print(phone_num)
+        print(psw)
         if ltype == 0:
             try:
                 user = models.User_Auth.objects.get(identifier=phone_num)
                 if user.credential == psw:
+                    print(1)
                     ret_msg = {'user_id':user.user_id, 'login_status':0}
-                    # return render(request, '/', json.dumps(ret_msg))
-                    return JsonResponse(json.dumps(ret_msg),safe=False)
+                    return JsonResponse(ret_msg,safe=False)
                 else:
                     ret_msg = {'user_id':user.user_id, 'login_status':1}
-                    # return render(request, 'user/login.html', json.dumps(ret_msg))
-                    return JsonResponse(json.dumps(ret_msg),safe=False)
+                    return JsonResponse(ret_msg,safe=False)
             except:
                 ret_msg = {'user_id':-1, 'login_status':2}
                 # return render(request, 'user/login.html', json.dumps(ret_msg))
-                return JsonResponse(json.dumps(ret_msg),safe=False)
-        # return JsonResponse(json.dumps({'user_id':-1, 'login_status':2}),safe=False)
+                return JsonResponse(ret_msg,safe=False)
+        return JsonResponse(json.dumps({'user_id':-1, 'login_status':2}),safe=False)
     else:
-        render(request, 'user/login.html')
+        return render(request, 'user/login.html')
 
 #register
 def register(request):

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from . import models
 from user import models as um
+from airport import  models as airportmodels
 import requests
 import hashlib
 import json
@@ -26,9 +27,7 @@ def getSearchFlightById(request):
     if request.method == 'GET':
         askflight_id = request.GET.get('flight_id')
         datetime = request.GET.get('datetime')
-        print(askflight_id)
         flights = models.Flight.objects.filter(flight_id=askflight_id)
-        
         if  not flights.exists():
             ret_msg['is_exist'] = 0
             ret_flight = []
@@ -130,11 +129,12 @@ def  gS_FC(request):
 def getSearchFlightByCity(request):
     ret_msg = {}
     if request.method == 'GET':
-        city_from = request.POST.get('city_from')
-        city_to = request.POST.get('city_to')
-        datetime = request.POST.get('datetime')
-        
-        flights = models.Flight.objects.filter(departure=city_from, arrival=city_to)
+        city_from = request.GET.get('city_from')
+        city_to = request.GET.get('city_to')
+        datetime = request.GET.get('datetime')
+        d_airport = airportmodels.city2airport(city_from)
+        a_airport = airportmodels.city2airport(city_to)
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
         
         if not flights.exists():
             ret_msg['is_exist'] = 0
