@@ -246,9 +246,9 @@ def postUpdatePassword(request):
 def getFavorateFlight(request):
     ret_msg = {}
     if request.method == 'GET':
-        user_id = request.POST.get('user_id')
+        user_id = request.GET.get('user_id')
         trip = models.mytrip.objects.get(user_ID=user_id)
-        flight = airplanemodels.Flight.objects.get(flight_id=trip.flight_ID)
+        flight = airplanemodels.Flight.objects.get(flight_id=trip.flight_id)
         ret_msg['user_id'] = user_id
         ret_msg['flight'] = model_to_dict(flight)
         ret_msg['user_type'] = trip.user_trip

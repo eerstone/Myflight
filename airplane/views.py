@@ -161,7 +161,8 @@ def postFavoriteFlight(request):
         user_type = request.POST.get('user_type')
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
-        um.objects.create(user_ID=user_id, flight_ID=flight_id, datetime=datetime, user_trip=user_type)
+
+        um.objects.create(user_ID=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
         ret_msg['issucceed'] = 1
         return JsonResponse(ret_msg, safe=False)
     else:

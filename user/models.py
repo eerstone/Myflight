@@ -42,7 +42,8 @@ class VerifyCode(models.Model):
 class mytrip(models.Model):
     # id = models.AutoField(primary_key=True) #Django 默认创建自增主键
     user_ID = models.ForeignKey(User,on_delete=models.CASCADE)
-    flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
+    flight_id = models.CharField(max_length=100,default="CA1113")
+    # flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
     #user_trip = models.Integerfield(default=1)
     user_trip = models.IntegerField(default=1)
     datetime = models.DateTimeField(default="2000-01-01")
