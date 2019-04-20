@@ -55,11 +55,7 @@ def admin_add_manager(request):
         output:json{
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
-    if request.method == "POST":
-        issucceeded = administerMagemnet.postadd(request.POST.get("newusrname"),request.POST.get("newusrpsw"))
-        return JsonResponse(json.dumps({
-            "status": issucceeded
-        }),safe=False)
+    postaddadmin(request)
 
 def admin_add_flight(request):
     """
@@ -74,12 +70,7 @@ def admin_add_flight(request):
         output:json{
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
-    if request.method == "POST":
-        issuccessed = flightManagement.postadd(request.POST)
-        print(issuccessed)
-        return JsonResponse(json.dumps({
-            "status": issuccessed
-        }),safe=False)
+    #postaddfl(request)  conflict
 
 def admin_search_flight_by_Id(request):
     """
@@ -90,9 +81,7 @@ def admin_search_flight_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    if request.method == "POST":
-        is_exist,flight = flightManagement.getsearchbyId(request.POST.get("flightname"),request.POST.get("date"))
-        return JsonResponse(json.dumps({flight,is_exist}), safe=False)
+    getsearchbyId(request)
 
 def admin_search_flight_by_City(request):
     """
@@ -104,9 +93,7 @@ def admin_search_flight_by_City(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    if request.method == "POST":
-        flight = flightManagement.getSearchFlightByCity(request.POST.get("takeoff"),request.POST.get("landing"),request.POST.get("date"))
-        return JsonResponse(json.dump(flight),safe=False)
+    getSearchFlightByCity(request)
 
 def admin_mod_flight(request):
     """
@@ -120,6 +107,7 @@ def admin_mod_flight(request):
         return JsonResponse(json.dumps({
             "status": issuccessed
         }), safe=False)
+    #postupdatefl(request) TBD
 
 def admin_del_flight(request):
     """
@@ -129,11 +117,7 @@ def admin_del_flight(request):
             output:json{
                         'status':issucceeded  1：删除成功 0：删除失败}
     """
-    if request.method == "POST":
-        issuccessed = del_flight(request.POST)
-        return JsonResponse(json.dumps({
-            "status": issuccessed
-        }), safe=False)
+    postdeletefl(request)
 
 def admin_add_airport(request):
     """
@@ -145,11 +129,7 @@ def admin_add_airport(request):
             output:json{
                         'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
-    if request.method == "POST":
-        issuccessed = add_airport(request.POST)
-        return JsonResponse(json.dumps({
-            "status": issuccessed
-        }),safe=False)
+    #TBD
 
 def admin_search_airport_by_Id(request):
     """
@@ -159,9 +139,7 @@ def admin_search_airport_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
     """
-    if request.method == "POST":
-        airport = getairportbyId(request.POST)
-        return JsonResponse(json.dump(airport),safe=False)
+    #TBD
 
 def admin_search_airport_by_City(request):
     """
@@ -171,9 +149,7 @@ def admin_search_airport_by_City(request):
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
     """
-    if request.method == "POST":
-        airport = getairportbyCity(request.POST)
-        return JsonResponse(json.dump(airport),safe=False)
+    #TBD
 
 def admin_mod_airport(request):
     """
@@ -182,11 +158,7 @@ def admin_mod_airport(request):
             output:json{
                         'status':issucceeded  1：修改成功 0：修改失败}
     """
-    if request.method == "POST":
-        issuccessed = mod_airport(request.POST)
-        return JsonResponse(json.dumps({
-            "status": issuccessed
-        }), safe=False)
+    #TBD
 
 def admin_del_airport(request):
     """
@@ -195,14 +167,10 @@ def admin_del_airport(request):
             output:json{
                         'status':issucceeded  1：删除成功 0：删除失败}
     """
-    if request.method == "POST":
-        issuccessed = del_airport(request.POST)
-        return JsonResponse(json.dumps({
-            "status": issuccessed
-        }), safe=False)
+    #TBD
 
 #administerMagemnet
-def postadd(request):
+def postaddadmin(request):
     ret_msg = {}
     if requeset.method != 'POST':
         ret_msg['issucceed'] = 0
@@ -211,8 +179,8 @@ def postadd(request):
     password = request.POST.get('password')
     
     user = usermodels.User_Auth.objects.filter(identifier=uesrname)
-    if user.count()>0:
-        ret_msg['issucceed'] = 0
+    if user.count() > 0:
+        ret_msg['issucceed'] = 2
         return JsonResponse(ret_msg, safe=False)
    
     user_new = usermodels.User.objects.create()
@@ -277,7 +245,7 @@ def postupdate(request):
     return JsonResponse(ret_msg, safe=False)
 
 #flightManagement
-def postadd(request):
+def postaddfl(request):
     ret_msg = {}
     if requeset.method != 'POST':
         ret_msg['issucceed'] = 0
@@ -300,7 +268,7 @@ def getsearchbyId(request):
 def getSearchFlightByCity(request):
     av.getSearchFlightByCity(request)
     
-def postdelete(request):
+def postdeletefl(request):
     ret_msg = {}
     if requeset.method != 'POST':
         ret_msg['issucceed'] = 0
@@ -316,7 +284,7 @@ def postdelete(request):
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 
-def postupdate(request):
+def postupdatefl(request):
     ret_msg = {}
     if requeset.method != 'POST':
         ret_msg['issucceed'] = 0

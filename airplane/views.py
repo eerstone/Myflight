@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from . import models
+from user import models as um
 import requests
 import hashlib
 import json
@@ -30,9 +31,8 @@ def getSearchFlightById(request):
         
         if  not flights.exists():
             ret_msg['is_exist'] = 0
-            ret_flight = {}
+            ret_flight = []
             ret_msg['flight'] = ret_flight
-            None
             return JsonResponse(ret_msg,safe=False)
         else:
             ret_flight=[]
@@ -46,7 +46,10 @@ def getSearchFlightById(request):
             ret_msg['flight'] = ret_flight
             return JsonResponse(ret_msg,safe=False)
     else:
-        pass
+        ret_msg['is_exist'] = 0
+        ret_flight = []
+        ret_msg['flight'] = ret_flight
+        return JsonResponse(ret_msg, safe=False)
 
 def  gS_FC(request):
     json = {
@@ -123,7 +126,6 @@ def  gS_FC(request):
     }
     ]
 }
-    return JsonResponse(json,safe=False)
 
 def getSearchFlightByCity(request):
     ret_msg = {}
@@ -148,7 +150,9 @@ def getSearchFlightByCity(request):
             ret_msg['flight'] = ret_flight
             return JsonResponse(ret_msg,safe=False)
     else:
-        pass
+        ret_msg['is_exist'] = 0
+        ret_msg['flight'] = []
+        return JsonResponse(ret_msg, safe=False)
     
 def postFavoriteFlight(request):
     ret_msg = {}
@@ -157,6 +161,9 @@ def postFavoriteFlight(request):
         user_type = request.POST.get('user_type')
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
-        pass
+        um.objects.create(user_ID=user_id, flight_ID=flight_id, datetime=datetime, user_trip=user_type)
+        ret_msg['issucceed'] = 1
+        return JsonResponse(ret_msg, safe=False)
     else:
-        pass
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
