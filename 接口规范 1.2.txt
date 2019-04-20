@@ -1,0 +1,212 @@
+﻿
+ip:port/
+
+/
+
+user/
+	login/
+		postVerifiedCode/
+			input:
+		    	phone_num:String
+		    output:
+			CodeStatus:0,1,2(1：请输入有效手机号码0：手机号发送成功2：手机号不能为空)
+			msg:对应上述内容
+
+		postLogin/
+		  	input:
+			    type:int(0:psw;1:code)
+			    phone_num:String
+			    VerifiedCode:String
+			    pwd:String	
+		  	output:
+		  		login_status:0,1,2,3,4
+		  		(0:success,1:not existed,2:error verified,3:error password,4:else_error)	
+			    user:json{
+			    		user_id:int
+			    		phone_num:String
+						user_name(nickname):String
+						gender:String
+						email:String
+						birthday:String
+						icon:String
+			    		}
+	register/
+		postregisterapi/
+		  	input:
+			    phone_num:String
+			    psw:String
+			    VerifiedCode:String
+			output:
+			    register_status:0,1,2,3
+			    (0:success,1:existed,2:error verified,3:else_error)
+		
+
+	management/
+		postModifyIcon/
+			input:
+				user_id:int
+				icon:image
+			output:
+				issucceed:int
+		postBasicInfo/
+			input:
+				user_id:int
+				user_name:String
+				phone_num:String
+				gender:String
+				email:String
+				birthday:String
+			output:
+				issucceed:int
+		postUpdatePassword/
+			input:
+				user_id:int
+				oldpsw:String
+				psw:String
+			output:
+				issucceed:int
+	mytrip/
+		getFavorateFlight/
+			input:
+				user_id:int
+			output:
+				trips:{trip...}
+					trip = trip_id + flight + user_type
+		postDelete/
+			input:
+				user_id:int
+				trip_id:int
+			output:
+				issucceed:int
+
+
+airport/
+		getAirportInfo/
+			input:
+				airport:String
+			output:
+				weather:String
+				temperature:String
+				departure_flights:{flight...}
+				arrival_flights:{flight...}
+		
+	
+
+airplane/
+	search/
+		getSearchFlightById/
+			input:
+				flight_id:String
+				datetime:String
+			output:
+				is_exist:int
+				flight:json={
+							flight_id:String
+							company:String
+							plan_departure_time:String
+							plan_arrival_time:String
+							actual_departure_time:String
+							actual_arrival_time:String
+							flight_status:String
+							departure:String
+							arrival:String
+							punctuality_rate：String
+							delay_time:String
+							check_in:String
+							boarding_port:String
+							arriving_port:String
+							Baggage_num:String
+							}
+		getSearchFlightByCity/
+			input:
+				city_from:String
+				city_to:String
+				datetime:String
+			output:
+				is_exist:int
+				flights:{flight...}
+
+		postFavoriteFlight：
+			input：
+				user_id:int
+				user_type:int(0:接机人;1:乘机人;2:送机人)
+				flight_id:String
+				datetime:String
+			output:
+				issucceed:int
+
+
+Myflightadmin/
+	Adminlogin/(post)
+		input:
+			username:String
+			password:String
+		output:
+			issucceed:int 1：成功 2：用户名不存在 3：密码错误
+	administerMagemnet/
+		add_manager/
+			input:
+				username:String
+				password:String
+			output:
+				issucceed:int
+	flightManagement/
+		add_flight/
+			input:
+				flight:json
+			output:
+				issucceed:int
+		search_flight_by_Id/
+			input:
+				flight_id:String
+				datetime:String
+			output:
+				is_exist:int
+				flights:{json}
+		search_flight_by_City/
+			input:
+				city_from:String
+				city_to:String
+				datetime:String
+			output:
+				is_exist:int
+				flights:{json}
+		del_flight:
+			input:
+				flight_id:String
+				datetime:String
+			output:
+				issucceed:int
+		mod_flight:
+			input:
+				flight_id:String
+			output:
+				issucceed:int
+	airportManagement/
+		add_airport/
+			input:
+				airport:json
+			output:
+				issucceed:int
+		search_airport_by_Id/
+			input:
+				airport:String
+			output:
+				is_exist:int
+				airport:{json}
+		search_airport_by_City/
+			input:
+				city:String
+			output:
+				is_exist:int
+				airport:{json}
+		del_airport:
+			input:
+				airport:String
+			output:
+				issucceed:int
+		mod_airport:
+			input:
+				airport:String
+			output:
+				issucceed:int
