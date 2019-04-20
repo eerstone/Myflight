@@ -10,7 +10,7 @@ class User(models.Model):
     )
     # id = models.AutoField(primary_key=True) #Django 默认创建自增主键
     nickname = models.CharField(max_length=32)
-    email = models.EmailField(default="username@email.com",unique=True)
+    email = models.EmailField(default="username@email.com")
     sex = models.CharField(max_length=32,choices=gender,default="保密")
     birthday = models.DateField(default="2000-01-01")
     access = models.IntegerField(default=1)

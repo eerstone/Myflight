@@ -56,6 +56,7 @@ def admin_add_manager(request):
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
     postaddadmin(request)
+    return None
 
 def admin_add_flight(request):
     """
@@ -187,7 +188,7 @@ def postaddadmin(request):
     user_au_new = usermodels.User_Auth.objects.create(user_id=user_new,identity_type="用户名"
                                                         ,identifier=username,credential=password)
     ret_msg['issucceed'] = 1
-        return JsonResponse(ret_msg, safe=False)
+    return JsonResponse(ret_msg, safe=False)
     
 def getsearch(request):
     ret_msg = {}
