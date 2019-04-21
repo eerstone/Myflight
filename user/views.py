@@ -77,37 +77,40 @@ def postlogin(request):
         verifiedcode = request.POST.get('VerifiedCode')
         print(phone_num)
         print(psw)
+        basicinfo ={'user_id':-1,'phone_num':"",'user_name':"",'gender':"",'email':"",'birthday':"",'icon':""}
         ifexist = models.User_Auth.objects.filter(identifier=phone_num).count()
         if ifexist:
             user = models.User_Auth.objects.get(identifier=phone_num)
+            basicinfo = models.phone2basicinfo(phone_num)
         else:
-            ret_msg = {'user_id':-1, 'login_status':1}
+            ret_msg = {'user':{}, 'login_status':1}
             return JsonResponse(ret_msg,safe=False)
         if ltype == "0":
             try:
                 if user.credential == psw:
-                    ret_msg = {'user_id':user.user_id_id, 'login_status':0}
+                    ret_msg = {'user':basicinfo, 'login_status':0}
                     return JsonResponse(ret_msg,safe=False)
                 else:
-                    ret_msg = {'user_id':user.user_id_id, 'login_status':3}
+                    ret_msg = {'user':{}, 'login_status':3}
                     return JsonResponse(ret_msg,safe=False)
             except:
-                ret_msg = {'user_id':-1, 'login_status':4}
+                ret_msg = {'user':{}, 'login_status':4}
                 return JsonResponse(ret_msg,safe=False)
         elif ltype == "1":
             try:
                 code = VerifyCode.objects.filter(mobile=phone_num).first().code
                 if verifiedcode == code:
                     print(123)
-                    ret_msg = {'user_id':user.user_id_id, 'login_status':0}
+                    print(basicinfo)
+                    ret_msg = {'user':basicinfo, 'login_status':0}
                     return JsonResponse(ret_msg,safe=False)
                 else:
-                    ret_msg = {'user_id':user.user_id_id, 'login_status':2}
+                    ret_msg = {'user':{}, 'login_status':2}
                     return JsonResponse(ret_msg,safe=False)
             except:
-                ret_msg = {'user_id':-1, 'login_status':4}
+                ret_msg = {'user':{}, 'login_status':4}
                 return JsonResponse(ret_msg,safe=False)
-        return JsonResponse({'user_id':-1, 'login_status':4},safe=False)
+        return JsonResponse({'user':{}, 'login_status':4},safe=False)
     else:
         return render(request, 'user/log in.html')
 
