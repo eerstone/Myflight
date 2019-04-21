@@ -175,8 +175,10 @@ del_submit = function(data){
             data: post_data,
             dataType: 'json',
             success: function(data) {
-                if (data["issucceed"] == "1")
+                if (data["issucceed"] == "1") {
                     alert("删除航班成功!")
+                    location.reload(true);
+                }
                 else
                     alert("删除航班失败,请重试!")
             },
@@ -225,8 +227,10 @@ cg = function (obj) {
 				data: post_data,
 				dataType: 'json',
 				success: function(data) {
-	                if (data["issucceed"] == "1")
-						alert("修改成功!")
+	                if (data["issucceed"] == "1") {
+                        alert("修改成功!")
+                        location.reload(true);
+                    }
 					else
 						alert("修改失败,请重试!")
 				},

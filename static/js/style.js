@@ -26,7 +26,17 @@ $(function() {
 		})
 		$('.bg100').fadeOut();
 	})
-
+	function isTime(str)
+	{
+		var a = str.match(/^(\d{1,2})(:)?(\d{1,2})\2(\d{1,2})$/);
+		if (a == null) {alert('输入的参数不是时间格式'); return false;}
+		if (a[1]>24 || a[3]>60 || a[4]>60)
+		{
+		alert("时间格式不对");
+		return false
+		}
+		return true;
+	}
 	//错误提示
 	function errors() {
 		//从这里 开始
@@ -75,24 +85,6 @@ $(function() {
 
 	function search_flight_submit(post_data,url){
 		location.href = "/Myflightadmin/Manager/search_flight/?flight_id=" + post_data['flight_id'] + "&city_from=" + post_data['city_from'] + "&city_to=" + post_data['city_to']+"&datetime="+ post_data['datetime'];
-	}
-	function del_submit(post_data,url){
-		$.ajax({
-			type: 'POST',
-			url: url,
-			data: post_data,
-			dataType: 'json',
-			success: function(data) {
-				console.log(data);
-                if (data["issucceed"] == "1")
-					alert("删除成功!")
-				else
-					alert("未知错误，删除!")
-			},
-			error: function(xhr, type) {
-				alert("删除失败!")
-			}
-		});
 	}
 	function success() {
 		//从这里 开始

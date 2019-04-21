@@ -160,8 +160,10 @@ del_submit = function(data){
             data: post_data,
             dataType: 'json',
             success: function(data) {
-                if (data["issucceed"] == "1")
-                    alert("删除机场成功!")
+                if (data["issucceed"] == "1") {
+                        alert("修改成功!")
+                        location.reload(true);
+                    }
                 else
                     alert("删除机场失败,请重试!")
             },
@@ -203,8 +205,10 @@ cg = function (obj) {
 				dataType: 'json',
 				success: function(data) {
 				    console.log(data);
-	                if (data["issucceed"] == "1")
-						alert("修改成功!")
+	                if (data["issucceed"] == "1") {
+                        alert("修改成功!")
+                        location.reload(true);
+                    }
 					else
 						alert("修改失败,请重试!")
 				},
