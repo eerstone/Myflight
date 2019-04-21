@@ -140,7 +140,38 @@ def admin_add_flight(request):
         output:json{
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
-    return postaddfl(request)
+    flight = {}
+    if request.method == 'POST':
+        #flight = {}
+        flight['departure'] = request.POST['departure']
+        flight['arrival'] = request.POST['arrival']
+        flight['flight_id'] = request.POST['flight_id']
+        flight['plan_departure_time'] = request.POST['plan_departure_time']
+        flight['plan_arrival_time'] = request.POST['plan_arrival_time']
+        flight['company'] = request.POST['company']
+        flight['datetime'] = request.POST['datetime']
+        flight['mileage'] = 0
+        flight['aircraft_models'] = ""
+        flight['actual_departure_time'] = request.POST['plan_departure_time']
+        flight['actual_arrival_time'] = request.POST['plan_arrival_time']
+        flight['punctuality_rate'] = "90%"
+        flight['delay_time'] = "",
+        flight['check_in'] = "A0"
+        flight['boarding_port'] = "H0"
+        flight['arriving_port'] = "C13"
+        flight['Baggage_num'] = "X3"
+        flight['is_mon'] = False
+        flight['is_tue'] = False
+        flight['is_wed'] = False
+        flight['is_thr'] = False
+        flight['is_fri'] = False
+        flight['is_sat'] = False
+        flight['is_sun'] = False
+        return postaddfl(flight)
+    else:
+        ret_msg = {}
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
 
 
 def admin_search_flight_by_Id(request):
@@ -152,9 +183,9 @@ def admin_search_flight_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    flight = av.gS_FC(request)
-    return JsonResponse(flight, safe=False)
-    # return getsearchbyId(request)#TBD
+    #flight = av.gS_FC(request)
+    #return JsonResponse(flight, safe=False)
+    return getsearchbyId(request)#TBD
 
 
 def admin_search_flight_by_City(request):
@@ -167,9 +198,9 @@ def admin_search_flight_by_City(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    flight = av.gS_FC(request)
-    return JsonResponse(flight, safe=False)
-    # return getSearchFlightByCity(request)#TBD
+    #flight = av.gS_FC(request)
+    #return JsonResponse(flight, safe=False)
+    return getSearchFlightByCity(request)#TBD
 
 
 def admin_mod_flight(request):  # ok
@@ -184,15 +215,38 @@ def admin_mod_flight(request):  # ok
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
 
-    flight = request.POST
-    print(flight)
-    # flight = json.loads(flight)
-    id = flight['flight_id']
+    flight = {}
+    id = request.POST['flight_id']
     origin = am.searchbyid(id)
-    if origin.exists():
+    #print(request.POST)
+    if not origin.exists():
+        flight['company'] = str(request.POST['company'])
+        flight['flight_id'] = request.POST['flight_id']
+        flight['plan_departure_time'] = request.POST['plan_departure_time']
+        flight['actual_departure_time'] = request.POST['actual_departure_time']
+        flight['departure'] = request.POST['departure']
+        flight['plan_arrival_time'] = request.POST['plan_arrival_time']
+        flight['actual_arrival_time'] = request.POST['actual_arrival_time']
+        flight['arrival'] = request.POST['arrival']
+        flight['punctuality_rate'] = request.POST['punctuality_rate']
+        flight['flight_status'] = request.POST['flight_status']
+        flight['mileage'] = origin['mileage']
+        flight['aircraft_models'] = origin['aircraft_models']
+        flight['delay_time'] = origin['delay_time'],
+        flight['check_in'] = origin['check_in']
+        flight['boarding_port'] = origin['boarding_port']
+        flight['arriving_port'] = origin['arriving_port']
+        flight['Baggage_num'] = origin['Baggage_num']
+        flight['is_mon'] = origin['is_mon']
+        flight['is_tue'] = origin['is_tue']
+        flight['is_wed'] = origin['is_wed']
+        flight['is_thr'] = origin['is_thr']
+        flight['is_fri'] = origin['is_fri']
+        flight['is_sat'] = origin['is_sat']
+        flight['is_sun'] = origin['is_sun']
         origin.delete()
 
-    return postaddfl(request)
+    return postaddfl(flight)
 
 
 def admin_del_flight(request):
@@ -225,7 +279,7 @@ def admin_add_airport(request):
     city = request.POST.get('city')
     tem = request.POST.get('temperature')
     #tem = 20
-    print(tem)
+    #print(tem)
     wea = request.POST.get('weather')
 
     apm.add_airport(name, city, tem, wea)
@@ -241,6 +295,7 @@ def admin_search_airport_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
     """
+    return apv.getAirport(request)
     """
     ret_msg = {}
     if request.method != 'POST':
@@ -258,7 +313,7 @@ def admin_search_airport_by_Id(request):
     ret_msg['airport'] = [ps[0]]
     return JsonResponse(ret_msg, safe=False)
     """
-    return JsonResponse(apv.gS_FC(request),safe=False)
+    #return JsonResponse(apv.gS_FC(request),safe=False)
 
 
 def admin_search_airport_by_City(request):
@@ -269,23 +324,22 @@ def admin_search_airport_by_City(request):
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
     """
-    """
     ret_msg = {}
-    if request.method != 'POST':
-        ret_msg['issucceed'] = 0
+    if request.method != 'GET':
+        print(1)
+        ret_msg['is_exist'] = 0
         return JsonResponse(ret_msg, safe=False)
-    city = request.POST.get('city')
+    city = request.GET.get('city')
     airports = apm.city2airport(city)
+    print(airports)
     if len(airports):
-        ret_msg['isexist'] = 1
+        ret_msg['is_exist'] = 1
     else:
-        ret_msg['isexist'] = 0
+        ret_msg['is_exist'] = 0
 
-    ret_msg['airport'] = airports
+    ret_msg['airport'] = apv.getAirportlistByName(airports)
     return JsonResponse(ret_msg, safe=False)
-    
-    """
-    return JsonResponse(apv.gS_FC(request), safe=False)
+    #return JsonResponse(apv.gS_FC(request), safe=False)
 
 
 def admin_mod_airport(request):
@@ -320,8 +374,7 @@ def admin_del_airport(request):
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
 
-    airport = request.POST.get('airport')
-    airport = json.loads(airport)
+    airport = request.POST
     id = airport['airport']
     origin = apm.searchbyid(id)
     origin.delete()
@@ -410,26 +463,18 @@ def postupdate(request):
 
 
 # flightManagement
-def postaddfl(request):  # ok
+def postaddfl(flight):  # ok
     ret_msg = {}
-    if request.method != 'POST':
-        ret_msg['issucceed'] = 0
-        return JsonResponse(ret_msg, safe=False)
 
     # flight = request.POST.get('flight')
-    flight_dict = request.POST
+    flight_dict = flight
 
-    am.add_Flight(flight_dict['flight_id'])
-    '''
-    , flight_dict['mileage'], flight_dict['aircraft_models'],
-                 flight_dict['plan_departure_time'],
+    am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
                  flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
                  flight_dict['punctuality_rate'],
                  flight_dict['delay_time'], flight_dict['company'], flight_dict['is_mon'], flight_dict['is_tue'],
                  flight_dict['is_wed'], flight_dict['is_thr'], flight_dict['is_fri'], flight_dict['is_sat'],
                  flight_dict['is_sun'])
-    '''
-
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 
@@ -450,13 +495,10 @@ def postdeletefl(request):
 
     dflight_id = request.POST.get('flight_id')
     datetime = request.POST.get('datetime')
-    flights = usermodels.User_Auth.objects.filter(flight_id=dflight_id)
+    flights = am.Flight.objects.filter(flight_id=dflight_id)
 
     if flights.exists():
         flights.delete()
 
     ret_msg['issucceed'] = 1
-    return JsonResponse(json.dumps({
-        "status": ret_msg['issucceed']
-    }), safe=False)
     return JsonResponse(ret_msg, safe=False)

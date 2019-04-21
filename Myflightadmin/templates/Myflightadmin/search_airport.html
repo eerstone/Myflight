@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>航班查询结果</title>
+<title>机场查询结果</title>
 <link href="{% static 'css/float.css' %}" rel="stylesheet">
 <link href="{% static 'css/personCenter.css' %}" rel="stylesheet">
 <link href="{% static 'css/widget_new.css' %}" rel="stylesheet">
@@ -22,14 +22,14 @@
     var len = para.length;
     var post_data = {};
     var arr = [];
-    for(var i=0;i<len;i++){
+    for(var i=0;i<len;i++) {
         arr = para[i].split("=");
         post_data[arr[0]] = arr[1];
     }
     if (post_data["airport"] == ''){
         url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_City/'
         $.ajax({
-			type: 'POST',
+			type: 'GET',
 			url: url,
 			data: post_data,
 			dataType: 'json',
@@ -39,7 +39,7 @@
                 if (data["is_exist"] == "1")
 					printairport(data.airport);
 				else
-					alert("未查找到航班!")
+					alert("未查找到机场!")
 			},
 			error: function(xhr, type) {
 				alert("与服务器连接失败search_airport_by_City:404!")
@@ -49,7 +49,7 @@
     else{
         url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_Id/'
         $.ajax({
-			type: 'POST',
+			type: 'GET',
 			url: url,
 			data: post_data,
 			dataType: 'json',
@@ -59,7 +59,7 @@
                 if (data["is_exist"] == "1")
 					printairport(data.airport);
 				else
-					alert("未查找到航班!")
+					alert("未查找到机场!")
 			},
 			error: function(xhr, type) {
 				alert("与服务器连接失败search_airport_by_Id:404!")
@@ -83,14 +83,14 @@
         			"<div class='li_com'>"+
 						"<span class='w260'>"+
 							"<b>"+
-								"<span  title='"+data[i].city+"' id='t"+(index++)+"'>"+data[i].city+"</span>"+
+								"<span  title='"+data[i].city+"' id='t"+(index++)+"'>"+data[i].city+"|</span>"+
 								"<span  title='"+data[i].airport+"' id='t"+(index++)+"'>" +data[i].airport+"</span>"+
 							"</b>"+
 						"</span>"
                 +"<span class='w150' id='t"+(index++)+"'>"+data[i].temperature+"</span>"
         		+"<span class='w150' id='t"+(index++)+"'>"+data[i].weather+"</span>"
                 +"<span class='w150'><a href='javascript:;' id='"+str_index+"' onclick='cg(this)'>"+"修改"+"</a></span>"+
-						"<span class='fob'><a href='javascript:;' class='log-reg-btn del_flight_btn' style='color:red;z-index:6;position: relative;'>"+"[删除机场]"+"</a></span>"+
+						"<span class='fob'><a onclick=del_submit('"+str_index+"') href='javascript:;' style='color:red;z-index:6;position: relative;'>"+"[删除机场]"+"</a></span>"+
 						"<div class='clear'></div></div>");
         		$trTemp.appendTo("#creat_ui");
         	}
@@ -99,27 +99,11 @@
 })
 </script>
 </head>
-<script type="text/javascript">
-	function geturl(){
-	var url = decodeURI(window.location.href);
-    var url = url.split("?")[1];
-    var para = url.split("&");
-    var len = para.length;
-    var res = {};
-    var arr = [];
-    for(var i=0;i<len;i++){
-        arr = para[i].split("=");
-        res[arr[0]] = arr[1];
-        alert(arr[0]);
-    }
-    return res;
-}
-</script>
 <body class="bg">
 	<div class="header">
 		<div class="header-nei">
 			<a href="javascript:;" style="color:#fff" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">返回</i></a>
-			<h2 class="header-title">航班查询结果</h2>
+			<h2 class="header-title">机场查询结果</h2>
 		</div>
 	</div>
 
@@ -161,14 +145,36 @@
 	<!--tip-tip-box/-->
 </div>
 <!--tip-success-bg/-->
-<script>var msg = ['airport','city','temperature','weather'];
+<script>
+    var zero = "a";
+    var num = 4;
+del_submit = function(data){
+    var index = data.charCodeAt(0) - zero.charCodeAt(0);
+    index = index*num + 1;
+    var o = document.getElementById("t" + String(index));
+    post_data = {};
+    post_data['airport'] = o.innerHTML;
+    $.ajax({
+            type: 'POST',
+            url: 'http://127.0.0.1:8000/Myflightadmin/del_airport/',
+            data: post_data,
+            dataType: 'json',
+            success: function(data) {
+                if (data["issucceed"] == "1")
+                    alert("删除机场成功!")
+                else
+                    alert("删除机场失败,请重试!")
+            },
+            error: function(xhr, type) {
+                alert("删除失败,无法与服务器连接!del_airport404")
+            }
+        });
+}
+var msg = ['airport','city','temperature','weather'];
 cg = function (obj) {
 	var post_data ={};
 	var issubmit = 0;
-	var zero = "a";
-	var num = 4;
 	var index = obj.id.toString().substr(0).charCodeAt(0)  - zero.charCodeAt(0);
-	//var msg = ["company","flight_id","plan_departure_time","actual_departure_time","departure","plan_arrival_time","actual_arrival_time","arrival","punctuality_rate","flight_status","delay_time","check_in","boarding_port","arriving_port","Baggage_num"]
 	if (obj.innerHTML == '保存') {
 		for (var i = index*num+2;i<index*num+num;i++){
 			var o = document.getElementById("t" + String(i));
