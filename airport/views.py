@@ -21,6 +21,23 @@ from rest_framework.response import Response
 import random
 
 #airport
+
+def getAirport(request):
+    ret_msg = {}
+    ret_msg["is_exist"]=0
+    ret_msg["airport"]=""
+    if request.method=='GET':
+        airport = request.GET.get('airport')
+        one_airport = models.airport.objects.filter(airport=airport)
+        if one_airport.count()==0:
+            return JsonResponse(ret_msg,safe=False)
+        else:
+            ret_msg["airport"] = model_to_dict(one_airport[0])
+            ret_msg["is_exist"] = 1
+            return JsonResponse(ret_msg,safe=False)
+    return JsonResponse(ret_msg, safe=False)
+
+
 def getAirportInfo(request):
     ret_msg = {}
     if request.method == 'GET':

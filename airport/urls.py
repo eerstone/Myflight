@@ -5,4 +5,5 @@ from airport import  views
 urlpatterns = [
 
     url(r'^getAirportInfo/', views.getAirportInfo),
+    url(r'^getAirport/', views.getAirport),
 ]

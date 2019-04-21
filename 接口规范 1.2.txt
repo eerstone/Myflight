@@ -81,6 +81,17 @@ user/
 
 
 airport/
+		getAirport/
+			input:
+				airport:String
+			output:
+				is_exist:0,1
+				airport:json{
+					weather:String
+					temperature:String
+					city:String
+					airport:String
+				}
 		getAirportInfo/
 			input:
 				airport:String
