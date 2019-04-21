@@ -17,9 +17,10 @@ from django.conf.urls import url,include
 from django.contrib import admin
 
 from login import views
+from user import  views as userviews
 
 urlpatterns = [
-    # url('/', include('user.urls')),
+    url(r'^$', userviews.home),
     url(r'^user/', include('user.urls')),
     url(r'^Myflightadmin/', include('Myflightadmin.urls')),
     url(r'^airplane/', include('airplane.urls')),

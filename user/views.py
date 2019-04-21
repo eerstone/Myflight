@@ -23,10 +23,20 @@ import random
 
 from airplane import models as airplanemodels
 
+#index
+def home(request):
+    if request.method == 'GET':
+        return render(request, 'user/home.html')
+
 #login
 def login(request):
     if request.method == 'GET':
-        return render(request, 'user/login.html')
+        return render(request, 'user/log in.html')
+
+#register
+def register(request):
+    if request.method=='GET':
+        return render(request,"user/register.html")
 
 def postloginapi(request):
     json =  {
@@ -95,12 +105,8 @@ def postlogin(request):
                 return JsonResponse(ret_msg,safe=False)
         return JsonResponse({'user_id':-1, 'login_status':4},safe=False)
     else:
-        return render(request, 'user/login.html')
+        return render(request, 'user/log in.html')
 
-#register
-def register(request):
-    if request.method=='GET':
-        return render(request,"user/register.html")
 
 def postregister(request):#调试成功
     if request.method == 'POST':
@@ -135,7 +141,7 @@ def postregister(request):#调试成功
             ret_msg['register_status']=0
             ret_msg['user_id']=user_id
             return JsonResponse(ret_msg,safe=False)
-    return render(request, 'user/login.html')
+    return render(request, 'user/log in.html')
 
 def getVerifiedCode(request):
     print("get")
@@ -212,7 +218,7 @@ def postModifyIcon(request):
             ret_msg['issucceed'] = 0
             return JsonResponse(ret_msg,safe=False)
     else:
-        return render(request, 'user/login.html')
+        return render(request, 'user/log in.html')
 
 def postBasicInfo(request):
     ret_msg = {}
@@ -241,7 +247,7 @@ def postBasicInfo(request):
         #     ret_msg['issucceed'] = 0
         #     return JsonResponse(ret_msg,safe=False)
     else:
-        return render(request, 'user/login.html')
+        return render(request, 'user/log in.html')
     
 def postUpdatePassword(request):
     ret_msg = {}
@@ -260,7 +266,7 @@ def postUpdatePassword(request):
             ret_msg['issucceed'] = 0
             return JsonResponse(ret_msg,safe=False)
     else:
-        return render(request, 'user/login.html')
+        return render(request, 'user/log in.html')
     
 #mytrip
 def getFavorateFlight(request):

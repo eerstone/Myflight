@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		 	<link rel="stylesheet" href="css/widget_new.css">
+		 	<link rel="stylesheet" href="css/base.css"/>
+		 	<link rel="stylesheet" href="css/float.css"/>
+			<script src="js/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<div class="usernamer_login">
+		<div class="header">
+			<div class="topMenu clearfix">
+				<ul class="menu item pull-left">
+					<li class="top-menu-item  top-menu-curr ">
+						<a href="index.html" class="menu-hd"><span>首页</span></a>
+					</li>
+					<li class="top-menu-item ">
+						<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
+					</li>
+					<li class="top-menu-item   ">
+						<a href="log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="detail_main">
+	<div class="tit">
+		<div class="state">
+			<div class="reg gre_cor " id='flight_status'>到达</div>		</div>
+		<span>
+				<b id = 'flight_name_number'>
+					中国国航 CA111				</b>
+				<p id="order">
+				<!--
+                	作者：offline
+                	时间：2019-04-20
+                	描述：定制系统
+               <a class="forbiddenBtn" onclick="forbiddenJump('到达')" href="javascript:;" style="color:#e1e5e6;font-size:14px;">[订制该航班动态]</a>
+				 --></p>
+				<input type="hidden" id="fdate" value="2019-04-20">
+				<input type="hidden" id="depTime" value="09:30">
+				<input type="hidden" id="arrTime" value="13:05">
+				<input type="hidden" id="fnum" value="CA111">
+			</span>
+		<div class="clear"></div>
+	</div>
+	<div class="flyProc">
+		<div id="p_box" class="p_box">
+			<div class="p_ti">
+				<span class="ti">全程1994公里</span>
+				<span class="ti">时长3小时39分</span>
+			</div>
+			<div class="cir_l curr"><!-- 行程大于 0% 添加样式 curr -->
+				<span ><b id="departure_city">北京1</b></span>
+			</div>
+			<div class="cir_r" style="left:100%;"><!-- 行程等于 100% 添加样式 curr -->
+				<span id='arrive_city'>香港</span>
+			</div>
+			<div class="line_com" style="width:100%">
+				<span style="width:100%">有色线</span>
+			</div>
+			<div class="plane" style="left:100%;"></div>
+		</div>
+		<div class="p_info">
+			<ul>
+				<li class="mileage">机型：<span>AIRBUSA330-343E</span></li>
+				<li class="time">机龄：<span>1.8年</span></li>
+				<li class="per">历史准点率：<span class="lchIMG">
+											</span>
+				</li>
+				<li class="age"><span>比计划晚点35分钟到达</span></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	
+	<!-- 出发 -->
+			<div class="fly_mian">
+			<div class="f_title f_title_a">
+				<!-- 出发右上角的出发计划时间 -->
+				<span id='departure_data'>
+						2019-04-20 周六计划起飞09:30		</span>
+				<h2 title="北京首都T3" id='departure_jc'>
+					<em></em>北京首都T3</h2>
+			</div>
+			<ul class="f_common rand_ul_dep">
+				<li class="weather">
+					<p>10°/13°							C 阴天</p>
+					<p>PM2.5：44</p>
+					<p>小面积延误</p>
+				</li>
+
+				<li class="time">
+					<p class="gray_t" >实际起飞</p>
+					<p class="com rand_p" id='actual_departure_time'>							</p>
+					<p class="com">
+						<em style="display:block; background-color:white; color:#2987c7; font-size:10px;">
+													</em>
+					</p>
+				</li>
+
+				<li class="inspect">
+					<p class="gray_t">值机柜台</p>
+					<p class="com rand_p" id='check_in'>							</p>
+				</li>
+
+				<li class="entrance">
+					<p class="gray_t">登机口</p>
+					<p class="com rand_p" id='boarding_port'>							</p>
+				</li>
+
+			</ul>
+		</div>
+	
+	<!-- 经停 -->
+	
+	<!-- 到达 -->
+			<div class="fly_mian">
+			<div class="f_title f_title_c">
+				<span  id='arrive_data'>
+					2019-04-20 周六计划到达13:05				</span>
+				<h2 title="香港赤鱲角T1"  id='arrive_jc'>
+					<em></em>香港赤鱲角T1</h2>
+			</div>
+			<ul class="f_common rand_ul_arr">
+				<li class="weather">
+					<p>23°/29°							C中雨</p>
+					<p>PM2.5：--</p>
+					<p>小面积延误</p>
+				</li>
+				<li class="time">
+					<p class="gray_t">实际到达</p>
+					<p class="com rand_p" id='actual_arrive_time'>							</p>
+					<p class="com">
+						<em style="display:block; background-color:white; color:#2987c7; font-size:10px;">
+													</em>
+					</p>
+				</li>
+
+				<li class="inspect">
+					<p class="gray_t">行李转盘</p>
+					<p class="com rand_p" id='baggage'>							</p>
+				</li>
+
+				<li class="entrance" >
+					<p class="gray_t">到达口</p>
+					<p class="com rand_p" id='arrive_port'>							</p>
+				</li>
+			</ul>
+
+		</div>
+	
+</div>
+		<script >
+			$(document).ready(function(){
+			var searchUrl = window.location.href;
+    		var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数  
+    		// searchData = searchData.split(" ");
+    		var searchText = decodeURI(searchData[1]); //decodeURI解码  
+    		var infor = searchText.split(' ');
+	    		$('#flight_name_number').html(infor[1]+' '+infor[0]);
+	    		$('#flight_status').html(infor[6]);
+	    		$('#departure_city').html(infor[7]);
+	    		$('#arrive_city').html(infor[8]);
+	    		$('#departure_data').html("计划起飞"+infor[2]);
+	    		$('#departure_jc').html(infor[7]);
+	    		$('#actual_departure_time').html(infor[4]);
+	    		$('#check_in').html(infor[11]);
+	    		$('#boarding_port').html(infor[12]);
+	    		$('#arrive_data').html("计划到达"+infor[3]);
+	    		$('#arrive_jc').html(infor[8]);
+	    		$('#actual_arrive_time').html(infor[5]);
+	    		$('#baggage').html(infor[14]);
+	    		$('#arrive_port').html(infor[13]);
+	   });
+		</script>
+		
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<meta name="baidu-site-verification" content="ucoHEaVHET" />
+	<title>我的航班</title>
+	
+	
+	<link rel="stylesheet" href="css/widget_new.css">
+	<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+	<link rel="stylesheet" type="text/css" href="css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/calendar.css"/>
+	<meta name="viewport" content="width=device-width, 
+                                     initial-scale=1.0, 
+                                     maximum-scale=1.0, 
+                                     user-scalable=no">
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.js"></script>
+	
+
+	 <style>
+        * { padding: 0; margin: 0; }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+        }
+
+        th,td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #09c;
+            font: bold 16px "微软雅黑";
+            color: #fff;
+        }
+
+        td {
+            font: 14px "微软雅黑";
+        }
+        tbody tr {
+            background-color: #f0f0f0;
+        }
+        tbody tr:last-child:hover {
+            background-color: #fafafa;
+        }
+    </style>
+	
+	
+</head>
+<body>
+	<div class="usernamer_login">
+		<div class="header">
+			<div class="topMenu clearfix">
+				<ul class="menu item pull-left">
+					<li class="top-menu-item  top-menu-curr ">
+						<a href="index.html" class="menu-hd"><span>首页</span></a>
+					</li>
+					<li class="top-menu-item ">
+						<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
+					</li>
+					<li class="top-menu-item   ">
+						<a href="log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="container">
+	<div class="flight_search">
+			<h2 style="width: 938px;">
+				<div class="flight_news" style="width:800px;">
+				<div class="category">
+					<input type="radio" name="mathod" id="per_date" checked="checked">
+	                <label for="per_date"> 按行程查询</label>
+	                <input type="radio" name="mathod" id="per_flight">
+	                <label for="per_flight"> 按航班查询</label>
+				</div>
+				<div id="flight_search_form" style="display:none;">
+					<form id="findFlightByNum" name="flight_form" >
+						<div class="form_row">查询实时起飞/到达时间</div>
+						<div class="form_row">
+							<div class="col1" style="width: 48px;">航班号：</div>
+							<div class="col2">
+								<input type="text" class="input" id="flightNo" name="flightNo" value="请输入航班号！">
+							</div>
+							<div class="col1" style="padding-left:70px;">出发时间：</div>
+							<div class="col2">
+								<input type="date" id="takeoffDate" name="takeoffDate" class="input"  style="width:120px;">&nbsp;
+							</div>
+						</div>
+						<div class="form_row" style="padding:20px 0 0 270px;height:30px;width:400px;">
+							<div class="col3">
+								<input type="hidden" name="Nation" value="CHN"> 
+								<input type="hidden" name="yzm" id="yzmByNo"> 
+								<input type="button" value="查 询" id="findFlightByNum_0" class="button" onclick="id_search()">
+					    	</div>
+						</div>
+					</form>
+				</div>
+				  
+				<div id="date_search_form">
+					<form id="findFlightByDate" name="date_form" >
+						<div class="form_row">查询实时起飞/到达时间</div>
+						<div class="form_row">
+							<div class="col1">出发城市：</div>
+							<div class="col2"><input value="北京" id="sl_start" autocomplete="off" type="text" class="input_city"><input id="orgCity" name="orgCity" value="PEK" type="hidden"></div>					  
+							<div class="col1" style="padding-left:50px;">到达城市：</div>
+							<div class="col2"><input value="成都" id="sl_end" autocomplete="off" type="text" class="input_city"><input id="dstCity" name="dstCity" value="CTU" type="hidden"></div>
+						</div>
+						<div class="form_row">
+							<div class="col1">出发时间：</div>
+							<div class="col2">
+								<input type="date" id="takeoffDate1" name="takeoffDate" class="input" style="width:140px;">
+								</div>
+						</div>
+						<div class="form_row">
+							<div class="col3" style="padding-left:280px;width:400px;">
+								<input type="hidden" name="Nation" value="CHN">
+								<input type="hidden" name="yzm" id="yzmDate"> 
+								<input type="button" value="查 询" id="findFlightByDate_0" class="button" onclick="search_onclick()">
+							</div>			   
+						</div>
+					</form>
+				</div>
+			</div>
+		</h2>
+	</div>
+		<div id="container_demo" >
+			
+		</div>
+	</div>
+<link type="text/css" rel="stylesheet" href="/calendar.css" media="screen">
+<script type="text/javascript" language="javascript" src="js/cookieUtils.js"></script>
+<script language="javascript">
+var searchType = "trip";
+jQuery(document).ready(function() {
+	
+	jQuery("#flight_search_form").hide();
+    jQuery("#per_flight").click(function() {
+    	tab_closeCalendar();
+    	CookieUtils.query("FLIGHT");
+    	
+        jQuery("#date_search_form").hide();
+        jQuery("#flight_search_form").show();
+    });
+
+
+    jQuery("#per_date").click(function() {
+    	tab_closeCalendar();
+    	CookieUtils.query("TRIP");
+    	
+        jQuery("#flight_search_form").hide();
+        jQuery("#date_search_form").show();
+    });
+});
+function tab_closeCalendar(){
+	if(document.getElementById('yearDropDown')!=null){
+		closeCalendar();
+	}
+}
+</script>
+
+	
+<script>
+	var data1;
+		function id_search()
+		{	
+	        var date1=$('#takeoffDate').val();
+	        var flight_number=$('#flightNo').val();
+	        var dataObj;
+	        $.get("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io/airplane/getSearchFlightById/?flight_no="+flight_number+"&detatime="+data1+"",function(data,status){
+	        	console.log(data);
+	        	dataObj=eval("("+data+")");
+				if(dataObj.is_exist==1)
+						printfight(dataObj.flight);
+				else{
+						$('#container_demo').html('不存在');
+					}
+	        });		
+		}
+		function search_onclick()
+        	{
+        		var dataObj;
+        		var date1=$('#takeoffDate1').val();
+        		var begin=$('#sl_start').val();
+        		var end=$('#sl_end').val();
+        		$.get("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io/airplane/getSearchFlightByCity?city_from="+begin+"&city_to="+end+"&datetime="+date1+"",function(data,status){
+        			dataObj=eval("("+data+")");
+					if(dataObj.is_exist==1)
+					{
+						var text=$('#takeoffDate1').val();
+						console.log(text);
+						printfight(dataObj.flight);
+					}
+					else{
+						$('#container_demo').html('不存在');
+					}
+        		});
+        	}
+        	
+        function printfight(data)
+        {
+        	data1=data;
+        	$('#container_demo').empty();
+        	$('#container_demo').append('<table id="mytable"> <tr> <th>航班信息</th> <th>计划起飞</th> <th>实际起飞</th> <th>出发地</th> <th>计划到达</th> <th>实际到达</th> <th>到达地</th> <th>准点率</th> <th>状态</th> <th>查看详情</th> </tr> </table>');
+        	var i,j;
+        	for(i=0;i<data.length;i++)
+        	{
+        		var $trTemp = $("<tr></tr>");
+        		$trTemp.append("<td>"+ data[i].flight_id +"</td>");
+        		$trTemp.append("<td>"+ data[i].plan_departure_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].actual_departure_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].departure +"</td>");
+        		$trTemp.append("<td>"+ data[i].plan_arrival_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].actual_arrival_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].arrival +"</td>");
+        		$trTemp.append("<td>"+ data[i].punctuality_rate +"</td>");
+        		$trTemp.append("<td>"+ data[i].flight_status +"</td>");
+        		$trTemp.append("<td >"+"<input type='button' value='查看详情' onclick='detail("+i+")' />" +"</td>");
+        		$trTemp.appendTo("#mytable");
+        	}
+        }
+        function detail(id)
+        {
+	        for(x in data1[id])
+	        	{
+	        		if(data1[id][x]=="")
+	        		{
+	        			data1[id][x]="未知";
+	        		}
+	        	}
+	        var searchUrl = encodeURI("detail.html?searchText=" + data1[id].flight_id+' '+data1[id].company+' '+data1[id].plan_departure_time+' '+data1[id].plan_arrival_time+' '+data1[id].actual_departure_time+' '+data1[id].actual_arrival_time+' '+data1[id].flight_status+' '+data1[id].departure+' '+data1[id].arrival+' '+data1[id].punctuality_rate+' '+data1[id].delay_time+' '+data1[id].check_in+' '+data1[id].boarding_port+' '+data1[id].arriving_port+' '+data1[id].Baggage_num); //使用encodeURI编码  
+		    location.href = searchUrl;
+		}
+	//	alert(124);
+</script>
+</body>
+</html>
