@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
+LOGIN_URL = '/Myflightadmin/login/'
 APIKEY='5aa19590f824fcaf4a76f9039c812da6'
 
 CACHES = {
@@ -35,7 +35,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7k(oao7(t99l(3uz+klj8r-8@^z&_3a((aw%b3iklp!%92&0f4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['219.239.227.198','localhost']
 ALLOWED_HOSTS = ['127.0.0.1','localhost','114.115.134.188']
@@ -152,7 +152,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "/static/") # 收集Django的静态文件到同一个static中
+STATIC_ROOT = os.path.join(BASE_DIR, "static") # 收集Django的静态文件到同一个static中
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static/"),
+    os.path.join(BASE_DIR, "/static/"),
+    BASE_DIR+"/user/"+"static/",
+    BASE_DIR+"/Myflightadmin/"+"static/",
+
 ]

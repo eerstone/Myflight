@@ -26,7 +26,15 @@ $(function() {
 		})
 		$('.bg100').fadeOut();
 	})
-
+	function isTime(str)
+	{
+		var a = str.match(/^(\d{1,2}):(\d{1,2})$/);
+		if (a == null) {return false;}
+		console.log(a);
+		if (a[1]>=24 || a[2]>=60 || a[1] < 0||a[2]<0)
+			return false;
+		return true;
+	}
 	//错误提示
 	function errors() {
 		//从这里 开始
@@ -43,7 +51,7 @@ $(function() {
 				$(".tip-errors-bg").hide()
 			})
 		})
-		//到这里 结束	
+		//到这里 结束
 	}
 	//正确提示
 	function add_submit(post_data,url) {
@@ -68,31 +76,13 @@ $(function() {
 			}
 		});
 	}
-	
+
 	function search_airport_submit(post_data,url){
 		location.href = "/Myflightadmin/Manager/search_airport/?airport=" + post_data['airport'] + "&city=" + post_data['city'];
 	}
 
 	function search_flight_submit(post_data,url){
 		location.href = "/Myflightadmin/Manager/search_flight/?flight_id=" + post_data['flight_id'] + "&city_from=" + post_data['city_from'] + "&city_to=" + post_data['city_to']+"&datetime="+ post_data['datetime'];
-	}
-	function del_submit(post_data,url){
-		$.ajax({
-			type: 'POST',
-			url: url,
-			data: post_data,
-			dataType: 'json',
-			success: function(data) {
-				console.log(data);
-                if (data["issucceed"] == "1")
-					alert("删除成功!")
-				else
-					alert("未知错误，删除!")
-			},
-			error: function(xhr, type) {
-				alert("删除失败!")
-			}
-		});
 	}
 	function success() {
 		//从这里 开始
@@ -109,7 +99,7 @@ $(function() {
 				$(".tip-success-bg").hide()
 			})
 		})
-		//到这里 结束	
+		//到这里 结束
 	}
 	//登录校验
 	var str = /^1\d{10}$/; //手机号格式
@@ -156,7 +146,7 @@ $(function() {
 		}
 		else {
 			var data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_manager/';
+			var url = '/Myflightadmin/add_manager/';
 			data['username'] = managername;
 			data['password'] = managerpsw;
 			//success();
@@ -193,9 +183,19 @@ $(function() {
 			$(".errors").text("请输入计划起飞时间!").css("color","black");
 			return false;
 		}
+		if (!isTime(PDtime)){
+			errors();
+			$(".errors").text("计划起飞时间格式错误!").css("color","black");
+			return false;
+		}
 		if (PLtime == "") {
 			errors();
 			$(".errors").text("请输入计划降落时间!").css("color","black");
+			return false;
+		}
+		if (!isTime(PLtime)){
+			errors();
+			$(".errors").text("计划到达时间格式错误!").css("color","black");
 			return false;
 		}
 		if (airlinename == "") {
@@ -211,7 +211,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_flight/';
+			var url = '/Myflightadmin/add_flight/';
 			post_data['departure'] = takeoff;
 			post_data['arrival'] = landing;
 			post_data['flight_id'] = flightname;
@@ -251,7 +251,7 @@ $(function() {
 		}
 		else {
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_airport/';
+			var url = '/Myflightadmin/add_airport/';
 			post_data['airport'] = airport_name;
 			post_data['city'] = airport_city;
 			post_data['temperature'] = parseInt(airport_tem) ;
@@ -272,7 +272,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			var url = '/Myflightadmin/Manager/init_search_airport/';
 			post_data['city'] = airport_city;
 			post_data['airport'] = '';
 			search_airport_submit(post_data,url);
@@ -290,7 +290,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			var url = '/Myflightadmin/Manager/init_search_airport/';
 			post_data['airport'] = airport_name;
 			post_data['city'] = '';
 			search_airport_submit(post_data,url);
@@ -314,7 +314,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			var url = '/Myflightadmin/Manager/init_search_flight/'
 			post_data['flight_id'] = flightname;
 			post_data['datetime'] = date;
 			post_data['city_from'] = '';
@@ -346,7 +346,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			var url = '/Myflightadmin/Manager/init_search_flight/'
 			post_data['city_from'] = takeoff;
 			post_data['city_to'] = landing;
 			post_data['datetime'] = date;
