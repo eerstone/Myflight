@@ -165,7 +165,7 @@ del_submit = function(data){
     index = index*num + 1;
     var o = document.getElementById("t" + String(index));
     post_data = {};
-    post_data['flight_id'] = o.innerHTML;
+        post_data['flight_id'] = o.innerHTML;
     post_data['datetime'] = datetime;
     $.ajax({
             type: 'POST',
