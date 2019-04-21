@@ -54,12 +54,16 @@ def phone2basicinfo(phone_num):
     #默认user_auth只有一个
     if user_auth.count()==1:
         user_auth = user_auth[0]
-        user = User.objects.filter(id=user_auth.user_id)
-        user = model_to_dict(user)
+        user = User.objects.filter(id=user_auth.user_id_id)
+        user = model_to_dict(user[0])
         #修改字典
-        del user["acess"]
-        user["id"] = user.pop("user_id")
-        user["nickname"] = user.pop("user_name")
+        del user["access"]
+        print(user)
+        user["gender"] = user.pop('sex')
+        user["user_id"] = user.pop('id')
+        user["user_name"] = user.pop('nickname')
+        user["birthday"] = str(user["birthday"])
+        user["icon"] = str(user["icon"])
         user["phone_num"] = phone_num
         return user
     else:

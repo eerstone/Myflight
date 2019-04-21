@@ -34,7 +34,7 @@ user/
 		postRegister/
 		  	input:
 			    phone_num:String
-			    psw:String
+			    pwd:String
 			    VerifiedCode:String
 			output:
 			    register_status:0,1,2,3
