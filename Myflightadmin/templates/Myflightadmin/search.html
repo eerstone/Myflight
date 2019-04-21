@@ -29,7 +29,7 @@
     }
     datetime = post_data['datetime'];
     if (post_data["flight_id"] == ''){
-        url = 'http://127.0.0.1:8000/Myflightadmin/search_flight_by_City/'
+        url = '/Myflightadmin/search_flight_by_City/'
         $.ajax({
 			type: 'GET',
 			url: url,
@@ -49,7 +49,7 @@
 		});
     }
     else{
-        url = 'http://127.0.0.1:8000/Myflightadmin/search_flight_by_Id/'
+        url = '/Myflightadmin/search_flight_by_Id/'
         $.ajax({
 			type: 'GET',
 			url: url,
@@ -134,11 +134,9 @@
 				<p class="w150">删除</p>
 				<div class="clear"></div>
 			</div>
-            <div id ="creat_ui">
 			<ul id="list">
-
+                <div id ="creat_ui"></div>
 		    </ul>
-            </div>
 		    </div>
 	</div>
 <!--content/-->
@@ -171,7 +169,7 @@ del_submit = function(data){
     post_data['datetime'] = datetime;
     $.ajax({
             type: 'POST',
-            url: 'http://127.0.0.1:8000/Myflightadmin/del_flight/',
+            url: '/Myflightadmin/del_flight/',
             data: post_data,
             dataType: 'json',
             success: function(data) {
@@ -223,7 +221,7 @@ cg = function (obj) {
 			//post_data["flight"] = post_data;
 			$.ajax({
 				type: 'POST',
-				url: 'http://127.0.0.1:8000/Myflightadmin/mod_flight/',
+				url: '/Myflightadmin/mod_flight/',
 				data: post_data,
 				dataType: 'json',
 				success: function(data) {

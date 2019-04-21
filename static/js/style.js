@@ -146,7 +146,7 @@ $(function() {
 		}
 		else {
 			var data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_manager/';
+			var url = '/Myflightadmin/add_manager/';
 			data['username'] = managername;
 			data['password'] = managerpsw;
 			//success();
@@ -211,7 +211,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_flight/';
+			var url = '/Myflightadmin/add_flight/';
 			post_data['departure'] = takeoff;
 			post_data['arrival'] = landing;
 			post_data['flight_id'] = flightname;
@@ -251,7 +251,7 @@ $(function() {
 		}
 		else {
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/add_airport/';
+			var url = '/Myflightadmin/add_airport/';
 			post_data['airport'] = airport_name;
 			post_data['city'] = airport_city;
 			post_data['temperature'] = parseInt(airport_tem) ;
@@ -272,7 +272,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			var url = '/Myflightadmin/Manager/init_search_airport/';
 			post_data['city'] = airport_city;
 			post_data['airport'] = '';
 			search_airport_submit(post_data,url);
@@ -290,7 +290,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_airport/';
+			var url = '/Myflightadmin/Manager/init_search_airport/';
 			post_data['airport'] = airport_name;
 			post_data['city'] = '';
 			search_airport_submit(post_data,url);
@@ -314,7 +314,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			var url = '/Myflightadmin/Manager/init_search_flight/'
 			post_data['flight_id'] = flightname;
 			post_data['datetime'] = date;
 			post_data['city_from'] = '';
@@ -346,7 +346,7 @@ $(function() {
 		else {
 			//success();
 			var post_data = {};
-			var url = 'http://127.0.0.1:8000/Myflightadmin/Manager/init_search_flight/'
+			var url = '/Myflightadmin/Manager/init_search_flight/'
 			post_data['city_from'] = takeoff;
 			post_data['city_to'] = landing;
 			post_data['datetime'] = date;
