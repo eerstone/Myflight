@@ -70,27 +70,33 @@
         {
         	$('#creat_ui').empty();
         	$('#creat_ui').append('<ui> </ui>');
+        	var plan = "--";
+        	var flight_index;
+            var str_a = "a";
+            flight_index = str_a.charCodeAt(0);
+            var index = 0;
         	for(var i=0;i<data.length;i++)
         	{
+                var str_index = String.fromCharCode(flight_index++);
         		var $trTemp = $("<li style='position: relative;'></li>");
         		$trTemp.append(
         			"<div class='li_com'>"+
 						"<span class='w260'>"+
 							"<b>"+
-								"<span id='t1' title='东方航空'>"+"东方航空"+"</span>"+
-								"<span id='t2' title='MU5183'>" +"MU5183"+"</span>"+
+								"<span  title='"+data[i].company+"' id='t"+(index++)+"'>"+data[i].company+"</span>"+
+								"<span  title='"+data[i].flight_id+"' id='t"+(index++)+"'>" +data[i].flight_id+"</span>"+
 							"</b>"+
-						"</span>"+
-						"<span class='w150' id='t3' dplan='07:35'>"+"07:35"+"</span>"+
-						"<span class='w150' id='t4' dplan='07:35'>"+"07:35"+"</span>"+
-						"<span class='w150' id='t5'>"+"北京首都T2"+"</span>"+
-						"<span class='w150' id='t6' aplan='09:50'>"+"09:50"+"</span>"+
-						"<span class='w150' id='t7' aplan='09:50'>"+"09:50"+"</span>"+
-						"<span class='w150' id='t8'>"+"上海浦东T1"+"</span>"+
-						"<span class='w150' id='t9' aplan='90%'>"+"90%"+"</span>"+
-						"<span class='w150 gre_cor' id='t10'>"+"到达"+"</span>"+
-						"<span class='w150'><a href='javascript:;' id='a' onclick='cg(this)'>"+"修改"+"</a></span>"+
-						"<span class='fob'><a href='javascript:;' class='log-reg-btn del_flight_btn' style='color:red;z-index:6;position: relative;'>"+"[删除航班]"+"</ a></span>"+
+						"</span>"
+                +"<span class='w150' id='t"+(index++)+"'>"+data[i].plan_departure_time+"</span>"
+        		+"<span class='w150' id='t"+(index++)+"'>"+(data[i].actual_departure_time==""?plan:data[i].actual_departure_time)+"</span>"
+        		+"<span class='w150' id='t"+(index++)+"'>"+data[i].departure+"</span>"
+                +"<span class='w150' id='t"+(index++)+"'>"+data[i].plan_arrival_time+"</span>"
+                +"<span class='w150' id='t"+(index++)+"'>"+(data[i].actual_arrival_time==""?plan:data[i].actual_arrival_time)+"</span>"
+                +"<span class='w150' id='t"+(index++)+"'>"+data[i].arrival+"</span>"
+                +"<span class='w150' id='t"+(index++)+"'>"+data[i].punctuality_rate+"</span>"
+                +"<span class='w150 gre_cor' id='t"+(index++)+"'>"+data[i].flight_status+"</span>"
+                +"<span class='w150'><a href='javascript:;' id='"+str_index+"' onclick='cg(this)'>"+"修改"+"</a></span>"+
+						"<span class='fob'><a href='javascript:;' class='log-reg-btn del_flight_btn' style='color:red;z-index:6;position: relative;'>"+"[删除航班]"+"</a></span>"+
 						"<div class='clear'></div></div>");
         		$trTemp.appendTo("#creat_ui");
         	}
@@ -196,25 +202,14 @@
 <!--tip-success-bg/-->
 <script>
 cg = function (obj) {
-	var post_data = {
-					airline:"",
-					flightname:"",
-					PDtime:"",
-					CDtime:"",
-					takeoff:"",
-					PLtime:"",
-					CLtime:"",
-					landing:"",
-					rate:"",
-					status:"",
-					date:""
-	};
+	var post_data ={};
 	var issubmit = 0;
 	var zero = "a";
-	var index = obj.id.toString().substr(0).charCodeAt()  - zero.charCodeAt() + 1;
-	//alert(index);
+	var num = 10;
+	var index = obj.id.toString().substr(0).charCodeAt(0)  - zero.charCodeAt(0);
+	var msg = ["company","flight_id","plan_departure_time","actual_departure_time","departure","plan_arrival_time","actual_arrival_time","arrival","punctuality_rate","flight_status","delay_time","check_in","boarding_port","arriving_port","Baggage_num"]
 	if (obj.innerHTML == '保存') {
-		for (var i = index;i<index+10;i++){
+		for (var i = index*num+2;i<index*num+num;i++){
 			var o = document.getElementById("t" + String(i));
 			if (o.childNodes[0].value) {
 				issubmit = 1;
@@ -225,19 +220,25 @@ cg = function (obj) {
 			}
 		}
 		if (issubmit == 1){
-			for (var i = index;i<index+10;i++){
+		    var i;
+			for ( i = index*num;i<index*num+num;i++){
 				var o = document.getElementById("t" + String(i));
-				o.innerHTML = o.childNodes[0].value;
+				if (i>=index*num+2)
+				    o.innerHTML = o.childNodes[0].value;
+				post_data[msg[i-index*num]] = o.innerHTML;
 			}
+			for (i = num;i<msg.length;i++){
+			    post_data[msg[i]] = '';
+            }
 			obj.innerHTML = '修改';
+			//post_data["flight"] = post_data;
 			$.ajax({
 				type: 'POST',
 				url: 'http://127.0.0.1:8000/Myflightadmin/mod_flight/',
 				data: post_data,
 				dataType: 'json',
 				success: function(data) {
-					data = JSON.parse(data);
-	                if (data["status"] == "1")
+	                if (data["issucceed"] == "1")
 						alert("修改成功!")
 					else
 						alert("修改失败,请重试!")
@@ -252,7 +253,7 @@ cg = function (obj) {
 		}
 	}
 	else{
-		for (var i = index;i<index+10;i++){
+		for (var i = index*num+2;i<index*num+num;i++){
 			var o = document.getElementById("t" + String(i));
 			o.innerHTML = "<input type='text' value='" + document.getElementById("t" + String(i)).innerHTML + "' />";
 		}

@@ -64,3 +64,36 @@ def getAirportInfo(request):
         ret_msg['departure_flights'] = ""
         ret_msg['arrival_flights'] = ""
         return JsonResponse(ret_msg,safe=False)
+
+def  gS_FC(request):
+    json = {
+        "is_exist": 1,
+        "airport":
+        [
+        {
+            "airport": "北京首都",
+            "city": "北京",
+            "temperature": "50",
+            "weather": "晴朗"
+        },
+        {
+            "airport": "北京首都",
+            "city": "北京",
+            "temperature": "50",
+            "weather": "晴朗"
+        },
+        {
+            "airport": "北京首都",
+            "city": "北京",
+            "temperature": "50",
+            "weather": "晴朗"
+        },
+        {
+            "airport": "北京首都",
+            "city": "北京",
+            "temperature": "50",
+            "weather": "晴朗"
+        }
+        ]
+    }
+    return  json

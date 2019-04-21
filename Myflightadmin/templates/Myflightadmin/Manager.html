@@ -8,6 +8,20 @@
 <title>后台管理系统</title>
 <link href="{% static 'css/style.css' %}" rel="stylesheet">
 <link href="{% static 'css/response.css' %}" rel="stylesheet">
+<script>
+    $(function() {
+        var url = decodeURI(window.location.href);
+        var url = url.split("?")[1];
+        var para = url.split("&");
+        var len = para.length;
+        var post_data = {};
+        var arr = [];
+        for (var i = 0; i < len; i++) {
+            arr = para[i].split("=");
+            post_data[arr[0]] = arr[1];
+        }
+    })
+</script>
 </head>
 <body class="bg">
 <div class="content">

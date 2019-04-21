@@ -54,11 +54,11 @@ $(function() {
 			data: post_data,
 			dataType: 'json',
 			success: function(data) {
-				data = JSON.parse(data);
+				//data = JSON.parse(data);
 				console.log(data);
-                if (data["status"] == "1")
+                if (data["issucceed"] == "1")
 					alert("添加成功111!")
-				else if (data["status"] == "2")
+				else if (data["issucceed"] == "2")
 					alert("已存在，添加失败111!")
 				else
 					alert("未知错误，添加失败111!")
@@ -239,9 +239,9 @@ $(function() {
 			var url = 'http://127.0.0.1:8000/Myflightadmin/add_airport/';
 			post_data['airport'] = airport_name;
 			post_data['city'] = airport_city;
-			post_data['temperature'] = airport_tem;
+			post_data['temperature'] = parseInt(airport_tem) ;
 			post_data['weather'] = airport_wea;
-			add_airport_submit(post_data,url);
+			add_submit(post_data,url);
  			//success();
 			//$(".success").text("添加成功!").css("color","black");
 		}

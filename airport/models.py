@@ -16,6 +16,7 @@ class airport(models.Model):
     weather = models.CharField(max_length=10,choices=weather_status)
 
 def add_airport(newairport,city,temperature,weather=None):
+    temperature = int(temperature)
     if(temperature>=100 or temperature<-100):
         return None
     ap = airport.objects.get_or_create(airport=newairport,city=city,temperature=temperature,weather="晴")
@@ -23,12 +24,11 @@ def add_airport(newairport,city,temperature,weather=None):
 
 def airport2info(port):
     """
-
     :param port:
     :return: basic info about airport
     """
     portinfo = airport.objects.filter(airport=port)
-    if portinfo.count()!=0:
+    if portinfo.count()==0:
         portinfo = portinfo[0]
         portinfo = model_to_dict(portinfo)
         del portinfo["id"]
@@ -39,7 +39,6 @@ def airport2info(port):
 
 def city2airport(city):
     """
-
     :param city:
     :return: list about airports
     """
@@ -51,3 +50,5 @@ def city2airport(city):
         airport_name.append(one_ap)
     return airport_name
 
+def searchbyid(id):
+    return airport.objects.filter(airport=id)

@@ -8,9 +8,10 @@ from user import models as usermodels
 from airplane import views as av
 from airplane import models as am
 from airport import models as apm
-#from Myflightadmin import administerMagemnet
-#from Myflightadmin import flightManagement
-#from Myadmin import airportManagement
+from airport import views as apv
+# from Myflightadmin import administerMagemnet
+# from Myflightadmin import flightManagement
+# from Myadmin import airportManagement
 import json
 from django.contrib.auth.decorators import login_required
 from Myflight import settings
@@ -25,18 +26,22 @@ def my_view(request):
     if not user:
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
+
 def goto_admin_Login(request):
-    return render(request,"Myflightadmin/Database.html")
+    return render(request, "Myflightadmin/Database.html")
+
 
 def goto_admin_search_flight(request):
     return render(request, "Myflightadmin/search.html")
 
+
 def goto_admin_search_airport(request):
     return render(request, "Myflightadmin/search_airport.html")
 
+
 def check_admin(request):
-    #input:username, password
-    #issucceed:int 1：成功 2：用户名不存在 3：密码错误 4:不是admin
+    # input:username, password
+    # issucceed:int 1：成功 2：用户名不存在 3：密码错误 4:不是admin
     ret_msg = {}
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -63,6 +68,7 @@ def check_admin(request):
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 
+
 def goto_admin_Manager(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -71,32 +77,39 @@ def goto_admin_Manager(request):
     request.session["login_pwd"] = password
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/Manager.html")
+    return render(request, "Myflightadmin/Manager.html")
+
 
 def goto_admin_add_manager(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/add_manager.html")
+    return render(request, "Myflightadmin/add_manager.html")
+
 
 def goto_admin_add_flight(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/add_flight.html")
+    return render(request, "Myflightadmin/add_flight.html")
+
 
 def goto_admin_mod_flight(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/mod_flight.html")
+    return render(request, "Myflightadmin/mod_flight.html")
+
 
 def goto_admin_add_airport(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/add_airport.html")
+    return render(request, "Myflightadmin/add_airport.html")
+
 
 def goto_admin_mod_airport(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    return render(request,"Myflightadmin/mod_airport.html")
+    return render(request, "Myflightadmin/mod_airport.html")
+
+
 """
 def admin_add_admin(username,pwd):
     admin_exist = usermodels.User_Auth.objects.filter(identifier=username)
@@ -106,12 +119,13 @@ def admin_add_admin(username,pwd):
                                             identifier=username, credential=pwd)
         newadmin.save()
         newadminiden.save()
-        
+
         return 1
     else:
     return 2
 
 """
+
 
 def admin_add_flight(request):
     """
@@ -128,6 +142,7 @@ def admin_add_flight(request):
     """
     return postaddfl(request)
 
+
 def admin_search_flight_by_Id(request):
     """
             input: json{
@@ -137,9 +152,10 @@ def admin_search_flight_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    #flight = av.gS_FC(request)
-    #return JsonResponse(flight,safe=False)
-    return getsearchbyId(request)#TBD
+    flight = av.gS_FC(request)
+    return JsonResponse(flight, safe=False)
+    # return getsearchbyId(request)#TBD
+
 
 def admin_search_flight_by_City(request):
     """
@@ -151,11 +167,12 @@ def admin_search_flight_by_City(request):
                         isexist:isexist //1:存在 0:不存在
                         flight{}}
     """
-    #flight = av.gS_FC(request)
-    #return JsonResponse(flight, safe=False)
-    return getSearchFlightByCity(request)#TBD
+    flight = av.gS_FC(request)
+    return JsonResponse(flight, safe=False)
+    # return getSearchFlightByCity(request)#TBD
 
-def admin_mod_flight(request):
+
+def admin_mod_flight(request):  # ok
     """
             input: json{
                         flight{}}
@@ -167,13 +184,16 @@ def admin_mod_flight(request):
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
 
-    flight = request.POST.get('flight')
-    flight = json.loads(flight)
+    flight = request.POST
+    print(flight)
+    # flight = json.loads(flight)
     id = flight['flight_id']
     origin = am.searchbyid(id)
-    origin.delete()
+    if origin.exists():
+        origin.delete()
 
     return postaddfl(request)
+
 
 def admin_del_flight(request):
     """
@@ -184,6 +204,7 @@ def admin_del_flight(request):
                         'status':issucceeded  1：删除成功 0：删除失败}
     """
     return postdeletefl(request)
+
 
 def admin_add_airport(request):
     """
@@ -203,11 +224,14 @@ def admin_add_airport(request):
     name = request.POST.get('airport')
     city = request.POST.get('city')
     tem = request.POST.get('temperature')
+    #tem = 20
+    print(tem)
     wea = request.POST.get('weather')
 
     apm.add_airport(name, city, tem, wea)
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
+
 
 def admin_search_airport_by_Id(request):
     """
@@ -216,6 +240,7 @@ def admin_search_airport_by_Id(request):
             output:json{
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
+    """
     """
     ret_msg = {}
     if request.method != 'POST':
@@ -232,6 +257,9 @@ def admin_search_airport_by_Id(request):
     ret_msg['issucceed'] = 1
     ret_msg['airport'] = [ps[0]]
     return JsonResponse(ret_msg, safe=False)
+    """
+    return JsonResponse(apv.gS_FC(request),safe=False)
+
 
 def admin_search_airport_by_City(request):
     """
@@ -240,6 +268,7 @@ def admin_search_airport_by_City(request):
             output:json{
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
+    """
     """
     ret_msg = {}
     if request.method != 'POST':
@@ -254,6 +283,10 @@ def admin_search_airport_by_City(request):
 
     ret_msg['airport'] = airports
     return JsonResponse(ret_msg, safe=False)
+    
+    """
+    return JsonResponse(apv.gS_FC(request), safe=False)
+
 
 def admin_mod_airport(request):
     """
@@ -267,13 +300,13 @@ def admin_mod_airport(request):
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
 
-    airport = request.POST.get('airport')
-    airport = json.loads(airport)
+    airport = request.POST
     id = airport['airport']
     origin = apm.searchbyid(id)
     origin.delete()
 
     return admin_add_airport(request)
+
 
 def admin_del_airport(request):
     """
@@ -296,6 +329,7 @@ def admin_del_airport(request):
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 
+
 # administerMagemnet
 def postaddadmin(request):
     ret_msg = {}
@@ -308,19 +342,13 @@ def postaddadmin(request):
     user = usermodels.User_Auth.objects.filter(identifier=username)
     if user.count() > 0:
         ret_msg['issucceed'] = 2
-        return JsonResponse(json.dumps({
-            "status": ret_msg['issucceed']
-        }), safe=False)
-        #return JsonResponse(ret_msg, safe=False)
+        return JsonResponse(ret_msg, safe=False)
 
     user_new = usermodels.User.objects.create()
     user_au_new = usermodels.User_Auth.objects.create(user_id=user_new, identity_type="用户名"
                                                       , identifier=username, credential=password)
     ret_msg['issucceed'] = 1
-    return JsonResponse(json.dumps({
-        "status": ret_msg['issucceed']
-    }), safe=False)
-    #return JsonResponse(json.dump(ret_msg), safe=False)
+    return JsonResponse(ret_msg, safe=False)
 
 
 def getsearch(request):
@@ -382,22 +410,25 @@ def postupdate(request):
 
 
 # flightManagement
-def postaddfl(request):
+def postaddfl(request):  # ok
     ret_msg = {}
     if request.method != 'POST':
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
 
-    flight = request.POST.get('flight')
-    flight_dict = json.loads(flight)
+    # flight = request.POST.get('flight')
+    flight_dict = request.POST
 
-    am.add_Fligt(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'],
+    am.add_Flight(flight_dict['flight_id'])
+    '''
+    , flight_dict['mileage'], flight_dict['aircraft_models'],
                  flight_dict['plan_departure_time'],
                  flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
                  flight_dict['punctuality_rate'],
                  flight_dict['delay_time'], flight_dict['company'], flight_dict['is_mon'], flight_dict['is_tue'],
                  flight_dict['is_wed'], flight_dict['is_thr'], flight_dict['is_fri'], flight_dict['is_sat'],
                  flight_dict['is_sun'])
+    '''
 
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
