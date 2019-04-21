@@ -278,8 +278,6 @@ def admin_add_airport(request):
     name = request.POST.get('airport')
     city = request.POST.get('city')
     tem = request.POST.get('temperature')
-    #tem = 20
-    #print(tem)
     wea = request.POST.get('weather')
 
     apm.add_airport(name, city, tem, wea)
@@ -295,7 +293,6 @@ def admin_search_airport_by_Id(request):
                         isexist:isexist //1:存在 0:不存在
                         airport{}}
     """
-    return apv.getAirport(request)
     """
     ret_msg = {}
     if request.method != 'POST':
@@ -313,6 +310,8 @@ def admin_search_airport_by_Id(request):
     ret_msg['airport'] = [ps[0]]
     return JsonResponse(ret_msg, safe=False)
     """
+    return apv.getAirport(request)
+
     #return JsonResponse(apv.gS_FC(request),safe=False)
 
 
@@ -326,12 +325,11 @@ def admin_search_airport_by_City(request):
     """
     ret_msg = {}
     if request.method != 'GET':
-        print(1)
         ret_msg['is_exist'] = 0
         return JsonResponse(ret_msg, safe=False)
     city = request.GET.get('city')
     airports = apm.city2airport(city)
-    print(airports)
+    #print(airports)
     if len(airports):
         ret_msg['is_exist'] = 1
     else:
@@ -426,7 +424,7 @@ def getsearch(request):
     return JsonResponse(ret_msg, safe=False)
 
 
-def postdelete(requset):
+def postdelete(request):
     ret_msg = {}
     if request.method != 'POST':
         ret_msg['issucceed'] = 0

@@ -20,22 +20,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import random
 
-#airport
 
 def getAirport(request):
     ret_msg = {}
-    ret_msg["is_exist"]=0
-    ret_msg["airport"]=""
-    if request.method=='GET':
+    ret_msg["is_exist"] = 0
+    ret_msg["airport"] = ""
+    if request.method == 'GET':
         airport = request.GET.get('airport')
         one_airport = models.airport.objects.filter(airport=airport)
-        if one_airport.count()==0:
-            return JsonResponse(ret_msg,safe=False)
+        if one_airport.count() == 0:
+            return JsonResponse(ret_msg, safe=False)
         else:
             ret_msg["airport"] = [model_to_dict(one_airport[0])]
             ret_msg["is_exist"] = 1
-            return JsonResponse(ret_msg,safe=False)
+            return JsonResponse(ret_msg, safe=False)
     return JsonResponse(ret_msg, safe=False)
+
 
 def getAirportInfo(request):
     ret_msg = {}
@@ -66,7 +66,7 @@ def getAirportInfo(request):
 
             return JsonResponse(ret_msg, safe=False)
         except Exception as e:
-            ret_msg= {}
+            ret_msg = {}
             ret_msg['weather'] = ""
             ret_msg['temperature'] = ""
             ret_msg['departure_flights'] = ""
@@ -74,12 +74,13 @@ def getAirportInfo(request):
             return JsonResponse(ret_msg,safe=False)
 
     else:
-        ret_msg= {}
+        ret_msg = {}
         ret_msg['weather'] = ""
         ret_msg['temperature'] = ""
         ret_msg['departure_flights'] = ""
         ret_msg['arrival_flights'] = ""
         return JsonResponse(ret_msg,safe=False)
+
 
 def getAirportlistByName(airports):
     ret = []
@@ -87,6 +88,7 @@ def getAirportlistByName(airports):
         airport = models.airport.objects.filter(airport=name)
         ret.append(model_to_dict(airport[0]))
     return ret
+
 
 def  gS_FC(request):
     json = {

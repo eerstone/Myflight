@@ -202,6 +202,7 @@ cg = function (obj) {
 				data: post_data,
 				dataType: 'json',
 				success: function(data) {
+				    console.log(data);
 	                if (data["issucceed"] == "1")
 						alert("修改成功!")
 					else
