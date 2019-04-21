@@ -123,7 +123,7 @@ def postregister(request):#调试成功
         else:
             #判断手机号是否已经存在
             phone = models.User_Auth.objects.filter(identifier=phone_num)
-            if phone.count()>0:
+            if phone.count()==0:
                 ret_msg['register_status'] = 1
                 ret_msg['user_id']=None
                 return JsonResponse(ret_msg,safe=False)

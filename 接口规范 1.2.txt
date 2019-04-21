@@ -31,7 +31,7 @@ user/
 						icon:String
 			    		}
 	register/
-		postregisterapi/
+		postRegister/
 		  	input:
 			    phone_num:String
 			    psw:String
