@@ -27,7 +27,7 @@
         post_data[arr[0]] = arr[1];
     }
     if (post_data["airport"] == ''){
-        url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_City/'
+        url = '/Myflightadmin/search_airport_by_City/'
         $.ajax({
 			type: 'GET',
 			url: url,
@@ -47,7 +47,7 @@
 		});
     }
     else{
-        url = 'http://127.0.0.1:8000/Myflightadmin/search_airport_by_Id/'
+        url = '/Myflightadmin/search_airport_by_Id/'
         $.ajax({
 			type: 'GET',
 			url: url,
@@ -102,7 +102,7 @@
 <body class="bg">
 	<div class="header">
 		<div class="header-nei">
-			<a href="javascript:;" style="color:#fff" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">返回</i></a>
+			<a href="javascript:;" style="color:#fff" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">&#xe61f;</i></a>
 			<h2 class="header-title">机场查询结果</h2>
 		</div>
 	</div>
@@ -120,11 +120,9 @@
 				<p class="w150">删除</p>
 				<div class="clear"></div>
 			</div>
-            <div id ="creat_ui">
 			<ul id="list">
-
+                <div id ="creat_ui"></div>
 		    </ul>
-            </div>
 		    </div>
 	</div>
 <!--content/-->
@@ -156,7 +154,7 @@ del_submit = function(data){
     post_data['airport'] = o.innerHTML;
     $.ajax({
             type: 'POST',
-            url: 'http://127.0.0.1:8000/Myflightadmin/del_airport/',
+            url: '/Myflightadmin/del_airport/',
             data: post_data,
             dataType: 'json',
             success: function(data) {
@@ -200,7 +198,7 @@ cg = function (obj) {
 			//post_data["flight"] = post_data;
 			$.ajax({
 				type: 'POST',
-				url: 'http://127.0.0.1:8000/Myflightadmin/mod_airport/',
+				url: '/Myflightadmin/mod_airport/',
 				data: post_data,
 				dataType: 'json',
 				success: function(data) {
