@@ -17,6 +17,8 @@ from django.contrib.auth.decorators import login_required
 from Myflight import settings
 # Create your views here.
 from user import models as usermodels
+from django.forms.models import model_to_dict
+
 
 
 def my_view(request):
@@ -150,6 +152,7 @@ def admin_add_flight(request):
         flight['plan_arrival_time'] = request.POST['plan_arrival_time']
         flight['company'] = request.POST['company']
         flight['datetime'] = request.POST['datetime']
+        flight['flight_status'] = "计划"
         flight['mileage'] = 0
         flight['aircraft_models'] = ""
         flight['actual_departure_time'] = request.POST['plan_departure_time']
@@ -167,6 +170,12 @@ def admin_add_flight(request):
         flight['is_fri'] = False
         flight['is_sat'] = False
         flight['is_sun'] = False
+        name = request.POST['flight_id']
+        origin = am.Flight.objects.filter(flight_id=name)
+        if origin.exists():
+            ret_msg = {}
+            ret_msg['issucceed'] = 2
+            return JsonResponse(ret_msg, safe=False)
         return postaddfl(flight)
     else:
         ret_msg = {}
@@ -219,9 +228,11 @@ def admin_mod_flight(request):  # ok
     id = request.POST['flight_id']
     origin = am.searchbyid(id)
     #print(request.POST)
-    if not origin.exists():
+    if origin.exists():
+        ofl = model_to_dict(origin[0])
         flight['company'] = str(request.POST['company'])
         flight['flight_id'] = request.POST['flight_id']
+        flight['flight_status'] = request.POST['flight_status']
         flight['plan_departure_time'] = request.POST['plan_departure_time']
         flight['actual_departure_time'] = request.POST['actual_departure_time']
         flight['departure'] = request.POST['departure']
@@ -230,20 +241,20 @@ def admin_mod_flight(request):  # ok
         flight['arrival'] = request.POST['arrival']
         flight['punctuality_rate'] = request.POST['punctuality_rate']
         flight['flight_status'] = request.POST['flight_status']
-        flight['mileage'] = origin['mileage']
-        flight['aircraft_models'] = origin['aircraft_models']
-        flight['delay_time'] = origin['delay_time'],
-        flight['check_in'] = origin['check_in']
-        flight['boarding_port'] = origin['boarding_port']
-        flight['arriving_port'] = origin['arriving_port']
-        flight['Baggage_num'] = origin['Baggage_num']
-        flight['is_mon'] = origin['is_mon']
-        flight['is_tue'] = origin['is_tue']
-        flight['is_wed'] = origin['is_wed']
-        flight['is_thr'] = origin['is_thr']
-        flight['is_fri'] = origin['is_fri']
-        flight['is_sat'] = origin['is_sat']
-        flight['is_sun'] = origin['is_sun']
+        flight['mileage'] = ofl['mileage']
+        flight['aircraft_models'] = ofl['aircraft_models']
+        flight['delay_time'] = ofl['delay_time']
+        flight['check_in'] = ofl['check_in']
+        flight['boarding_port'] = ofl['boarding_port']
+        flight['arriving_port'] = ofl['arriving_port']
+        flight['Baggage_num'] = ofl['Baggage_num']
+        flight['is_mon'] = ofl['is_mon']
+        flight['is_tue'] = ofl['is_tue']
+        flight['is_wed'] = ofl['is_wed']
+        flight['is_thr'] = ofl['is_thr']
+        flight['is_fri'] = ofl['is_fri']
+        flight['is_sat'] = ofl['is_sat']
+        flight['is_sun'] = ofl['is_sun']
         origin.delete()
 
     return postaddfl(flight)
@@ -279,6 +290,11 @@ def admin_add_airport(request):
     city = request.POST.get('city')
     tem = request.POST.get('temperature')
     wea = request.POST.get('weather')
+
+    origin = apm.airport.objects.filter(airport=name)
+    if origin.exists():
+        ret_msg['issucceed'] = 2
+        return JsonResponse(ret_msg, safe=False)
 
     apm.add_airport(name, city, tem, wea)
     ret_msg['issucceed'] = 1
@@ -353,10 +369,13 @@ def admin_mod_airport(request):
         return JsonResponse(ret_msg, safe=False)
 
     airport = request.POST
+
     id = airport['airport']
     origin = apm.searchbyid(id)
-    origin.delete()
-
+    if not origin.exists():
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
+    origin[0].delete()
     return admin_add_airport(request)
 
 
@@ -466,13 +485,12 @@ def postaddfl(flight):  # ok
 
     # flight = request.POST.get('flight')
     flight_dict = flight
-
-    am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
-                 flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
-                 flight_dict['punctuality_rate'],
-                 flight_dict['delay_time'], flight_dict['company'], flight_dict['is_mon'], flight_dict['is_tue'],
-                 flight_dict['is_wed'], flight_dict['is_thr'], flight_dict['is_fri'], flight_dict['is_sat'],
-                 flight_dict['is_sun'])
+    am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['flight_status'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
+                    flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
+                    flight_dict['punctuality_rate'], flight_dict['delay_time'], flight_dict['company'],
+                    flight_dict['is_mon'], flight_dict['is_tue'],
+                    flight_dict['is_wed'], flight_dict['is_thr'], flight_dict['is_fri'], flight_dict['is_sat'],
+                    flight_dict['is_sun'])
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 

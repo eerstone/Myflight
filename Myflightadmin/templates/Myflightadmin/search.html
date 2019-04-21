@@ -28,7 +28,7 @@
         post_data[arr[0]] = arr[1];
     }
     datetime = post_data['datetime'];
-    if (post_data["flightname"] == ''){
+    if (post_data["flight_id"] == ''){
         url = 'http://127.0.0.1:8000/Myflightadmin/search_flight_by_City/'
         $.ajax({
 			type: 'GET',
@@ -85,7 +85,7 @@
         			"<div class='li_com'>"+
 						"<span class='w260'>"+
 							"<b>"+
-								"<span  title='"+data[i].company+"' id='t"+(index++)+"'>"+data[i].company+"|</span>"+
+								"<span  title='"+data[i].company+"' id='t"+(index++)+"'>"+data[i].company+"</span>"+
 								"<span  title='"+data[i].flight_id+"' id='t"+(index++)+"'>" +data[i].flight_id+"</span>"+
 							"</b>"+
 						"</span>"
@@ -183,7 +183,9 @@ del_submit = function(data){
             error: function(xhr, type) {
                 alert("删除失败,无法与服务器连接!del_flight404")
             }
-        });
+    });
+    //document.execCommand('Refresh');
+    //location.reload();
 }
 cg = function (obj) {
 	var post_data ={};
@@ -196,7 +198,7 @@ cg = function (obj) {
 			var o = document.getElementById("t" + String(i));
 			if (o.childNodes[0].value) {
 				issubmit = 1;
-			} 
+			}
 			else {
 				issubmit = 0;
 				break;

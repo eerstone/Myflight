@@ -53,5 +53,6 @@ def city2airport(city):
         airport_name.append(one_ap)
     return airport_name
 
+
 def searchbyid(id):
     return airport.objects.filter(airport=id)

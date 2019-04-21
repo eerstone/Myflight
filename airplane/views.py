@@ -8,6 +8,7 @@ from airport import  models as airportmodels
 import requests
 import hashlib
 import json
+import operator
 
 import re
 import random
@@ -28,7 +29,7 @@ def getSearchFlightById(request):
         askflight_id = request.GET.get('flight_id')
         datetime = request.GET.get('datetime')
         flights = models.Flight.objects.filter(flight_id=askflight_id)
-        if  not flights.exists():
+        if not flights.exists():
             ret_msg['is_exist'] = 0
             ret_flight = []
             ret_msg['flight'] = ret_flight
@@ -42,7 +43,7 @@ def getSearchFlightById(request):
                 ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
                 ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
             ret_msg['is_exist'] = 1
-            ret_msg['flight'] = ret_flight
+            ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
             return JsonResponse(ret_msg,safe=False)
     else:
         ret_msg['is_exist'] = 0
@@ -147,7 +148,7 @@ def getSearchFlightByCity(request):
             for item in flights:
                 ret_flights.append(model_to_dict(item))
             ret_msg['is_exist'] = 1
-            ret_msg['flight'] = ret_flights
+            ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
             return JsonResponse(ret_msg,safe=False)
     else:
         ret_msg['is_exist'] = 0
