@@ -189,10 +189,13 @@ function tab_closeCalendar(){
         		var date1=$('#takeoffDate1').val();
         		var begin=$('#sl_start').val();
         		var end=$('#sl_end').val();
+			alert("dj");
         		$.get("http://127.0.0.1:8000/airplane/getSearchFlightByCity/?city_from="+begin+"&city_to="+end+"&datetime="+date1+"",function(data,status){
         		    console.log(data);
+			alert("fh");
 					if(data.is_exist==1)
 					{
+						alert(1);
 						printfight(data.flight);
 					}
 					else{
@@ -203,6 +206,7 @@ function tab_closeCalendar(){
         	
         function printfight(data)
         {
+		alert("dy");
         	data1=data;
         	$('#container_demo').empty();
         	$('#container_demo').append('<table id="mytable"> <tr> <th>航班信息</th> <th>计划起飞</th> <th>实际起飞</th> <th>出发地</th> <th>计划到达</th> <th>实际到达</th> <th>到达地</th> <th>准点率</th> <th>状态</th> <th>查看详情</th> </tr> </table>');
