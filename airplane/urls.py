@@ -6,4 +6,6 @@ urlpatterns = [
     # url(r'^getSearchFlightByCity/', views.gS_FC),
     url(r'^getSearchFlightById/', views.getSearchFlightById),
     url(r'^postFavoriteFlight/', views.postFavoriteFlight),
+    url(r'^detail/',views.detail),
+    url(r'^index/',views.index),
 ]

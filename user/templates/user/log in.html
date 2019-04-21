@@ -63,15 +63,13 @@
         		var phonenumber=$('#username1').val();
         		var passwordNumber=$('password1').val();
         		var regularPast=/^[A-Za-z0-9_-]+$/;
-        		var dataObj;
         		if(regularPhone.test(phonenumber))
         		{
-
-	        		$.post("https:127.0.0.1:8000/user/postLogin/",{type:0,phont_num:phonenumber,VerifiedCode:'',pwd:passwordNumber},
+                    alert('到这了吗1');
+	        		$.post("/user/postLogin/",{type:0,phone_num:phonenumber,VerifiedCode:'',pwd:passwordNumber},
 				        function(data,status){
-				        	dataObj=eval("("+data+")");
 				        	alert('到这了吗');
-				        	judge(dataObj);
+				        	judge(data.login_status);
 				    });
 			    }
         		else{
@@ -86,11 +84,11 @@
         		var dataObj;
         		if(regularPhone.test(phonenumber))
         		{
-        			$.post("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io/user/login/postVerifiedCode",{type:1,phont_num:phonenumber,VerifiedCode:yzm,pwd:''},
+        			$.post("http:127.0.0.1:8000/user/postLogin/",{type:1,phont_num:phonenumber,VerifiedCode:yzm,pwd:''},
 				        function(data,status){
-				        dataObj=eval("("+data+")");
-				        judge(dataObj);
-				    });
+        			    	alert('到这了吗');
+				            judge(data.login_status);
+                        });
         		}
         		else{
         			alert("输入的手机号不对");
@@ -99,7 +97,7 @@
         	function judge(data)
         	{
         		alert('这里');
-        		var searchUrl = encodeURI("person.html?searchText=" + data.user_id+'~'+data.phone_num+'~'+data.user_name+'~'+data.gender+'~'+data.email+'~'+data.birthDay+' '+data.icon); //使用encodeURI编码  
+        		var searchUrl = encodeURI("/user/person/?searchText=" + data.user_id+'~'+data.phone_num+'~'+data.user_name+'~'+data.gender+'~'+data.email+'~'+data.birthDay+' '+data.icon); //使用encodeURI编码
 		    	location.href = searchUrl;
         	}
         	
@@ -109,9 +107,8 @@
       	{
       		var yzm=$('yzm').val();
       		var phonenumber=$('#username2').val();
-      		$.post("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io",{phone_num:phonenumber},function(data,status){
-				        dataObj=eval("("+data+")");
-				        alert(dataObj.meg);
+      		$.post("http:127.0.0.1:8000/user/postVerifiedCode/",{phone_num:phonenumber},function(data,status){
+				        alert(data.meg);
       		});
       	}
       	</script>
@@ -122,10 +119,10 @@
 				<div class="topMenu clearfix">
 					<ul class="menu item pull-left">
 						<li class="top-menu-item  top-menu-curr ">
-							<a href="index.html" class="menu-hd"><span>首页</span></a>
+							<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
 						</li>
 						<li class="top-menu-item ">
-							<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
+							<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
 						</li>
 						<li class="top-menu-item   ">
 							<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
@@ -149,7 +146,7 @@
                                 </p>
                                 <p > 
                                     <label for="password1" class="youpasswd" data-icon="p"> 密码 </label>
-                                    <input id="password1" name="password" required="required" type="password" placeholder="密码" "/> 
+                                    <input id="password1" name="password" required="required" type="password" placeholder="密码"/>
                                 </p>
                                 <p class="login button"> 
                                     <input type="button" value="登陆"  onclick="login_onclick_by_pass()"/> 
@@ -187,7 +184,7 @@
 									<a href="#tologin" class="to_register"> 密码登陆</a>
                               		&nbsp &nbsp&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp
 									还没注册 ?
-									<a href="/user/register.html" >注册</a>
+									<a href="/user/register/" >注册</a>
 								</p>
                         </div>	
                     </div>
