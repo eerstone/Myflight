@@ -102,7 +102,7 @@
         		var dataObj;
         		if(regularPhone.test(phonenumber))
         		{
-        			$.post("/user/postLogin/",{type:1,phont_num:phonenumber,VerifiedCode:yzm,pwd:''},
+        			$.post("/user/postLogin/",{type:1,phone_num:phonenumber,VerifiedCode:yzm,pwd:''},
 				        function(data,status){
         			    if(data.login_status==0)
 				        	judge(data.user);
