@@ -60,23 +60,40 @@ def postlogin(request):
         print(ltype)
         phone_num = request.POST.get('phone_num')
         psw = request.POST.get('pwd')
+        verifiedcode = request.POST.get('VerifiedCode')
         print(phone_num)
         print(psw)
-        if ltype == 0:
+        ifexist = models.User_Auth.objects.filter(identifier=phone_num).count()
+        if ifexist:
+            user = models.User_Auth.objects.get(identifier=phone_num)
+        else:
+            ret_msg = {'user_id':-1, 'login_status':1}
+            return JsonResponse(ret_msg,safe=False)
+        if ltype == "0":
             try:
-                user = models.User_Auth.objects.get(identifier=phone_num)
                 if user.credential == psw:
-                    print(1)
-                    ret_msg = {'user_id':user.user_id, 'login_status':0}
+                    ret_msg = {'user_id':user.user_id_id, 'login_status':0}
                     return JsonResponse(ret_msg,safe=False)
                 else:
-                    ret_msg = {'user_id':user.user_id, 'login_status':1}
+                    ret_msg = {'user_id':user.user_id_id, 'login_status':3}
                     return JsonResponse(ret_msg,safe=False)
             except:
-                ret_msg = {'user_id':-1, 'login_status':2}
-                # return render(request, 'user/login.html', json.dumps(ret_msg))
+                ret_msg = {'user_id':-1, 'login_status':4}
                 return JsonResponse(ret_msg,safe=False)
-        return JsonResponse(json.dumps({'user_id':-1, 'login_status':2}),safe=False)
+        elif ltype == "1":
+            try:
+                code = VerifyCode.objects.filter(mobile=phone_num).first().code
+                if verifiedcode == code:
+                    print(123)
+                    ret_msg = {'user_id':user.user_id_id, 'login_status':0}
+                    return JsonResponse(ret_msg,safe=False)
+                else:
+                    ret_msg = {'user_id':user.user_id_id, 'login_status':2}
+                    return JsonResponse(ret_msg,safe=False)
+            except:
+                ret_msg = {'user_id':-1, 'login_status':4}
+                return JsonResponse(ret_msg,safe=False)
+        return JsonResponse({'user_id':-1, 'login_status':4},safe=False)
     else:
         return render(request, 'user/login.html')
 
