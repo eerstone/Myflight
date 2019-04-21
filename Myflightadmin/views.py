@@ -77,38 +77,38 @@ def goto_admin_Manager(request):
     user = usermodels.User_Auth.objects.filter(identifier=username)
     request.session["login_user"] = username
     request.session["login_pwd"] = password
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/Manager.html")
 
 
 def goto_admin_add_manager(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_manager.html")
 
 
 def goto_admin_add_flight(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_flight.html")
 
 
 def goto_admin_mod_flight(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/mod_flight.html")
 
 
 def goto_admin_add_airport(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_airport.html")
 
 
 def goto_admin_mod_airport(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    #if not request.user.is_authenticated():
+    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/mod_airport.html")
 
 
