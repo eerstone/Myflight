@@ -148,7 +148,7 @@
                                     </div>
                                 </li>
                                 <li class="chBtnWrap">
-                                    <a href="javascript:;" id="chSave" class="chSave" onclick="change_infor">保存</a>
+                                    <a href="javascript:;" id="chSave" class="chSave" onclick="change_infor()">保存</a>
                                     <a href="/user/login/" class="chBack">退出登陆</a>
                                 </li>
                             </ul>
@@ -222,10 +222,12 @@
 			var month=$('#chMonth').val();
 			var day=$('#chDay').val();
 			var mail=$('#chMail').val();
-			if(gender!='男'&&gender!='女')
+			if(my_gender!='男'&&my_gender!='女')
 				alert('性别有误');
 			else
-			{$.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:my_gender,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
+			{
+			    alert(year+"-"+month+"-"+day);
+			    $.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:my_gender,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
 			    if(data.issucceed==1)
                 {
                     alert("修改成功");
