@@ -119,7 +119,7 @@ def postregister(request):#调试成功
     if request.method == 'POST':
         phone_num = request.POST.get('phone_num')
         passwd = request.POST.get('pwd')
-        verifycode = request.POST.get('VerifyCode')
+        verifycode = request.POST.get('VerifiedCode')
         ret_msg = {}
         flag = (phone_num!=None and passwd!=None and verifycode!=None)
         print(flag)
@@ -130,11 +130,16 @@ def postregister(request):#调试成功
         else:
             #判断手机号是否已经存在
             phone = models.User_Auth.objects.filter(identifier=phone_num)
-            if phone.count()==0:
+            if phone.count()>0:
                 ret_msg['register_status'] = 1
                 ret_msg['user_id']=None
                 return JsonResponse(ret_msg,safe=False)
             #手机号与验证码匹配验证
+            vcode = VerifyCode.objects.filter(mobile=phone_num)
+            if not vcode.exists():
+                ret_msg['register_status'] = 2
+                ret_msg['user_id']=None
+                return JsonResponse(ret_msg,safe=False)
             code = VerifyCode.objects.filter(mobile=phone_num).first().code
             if code!=verifycode:
                 ret_msg['register_status'] = 2
