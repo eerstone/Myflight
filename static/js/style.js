@@ -28,13 +28,11 @@ $(function() {
 	})
 	function isTime(str)
 	{
-		var a = str.match(/^(\d{1,2})(:)?(\d{1,2})\2(\d{1,2})$/);
-		if (a == null) {alert('输入的参数不是时间格式'); return false;}
-		if (a[1]>24 || a[3]>60 || a[4]>60)
-		{
-		alert("时间格式不对");
-		return false
-		}
+		var a = str.match(/^(\d{1,2}):(\d{1,2})$/);
+		if (a == null) {return false;}
+		console.log(a);
+		if (a[1]>=24 || a[2]>=60 || a[1] < 0||a[2]<0)
+			return false;
 		return true;
 	}
 	//错误提示
@@ -53,7 +51,7 @@ $(function() {
 				$(".tip-errors-bg").hide()
 			})
 		})
-		//到这里 结束	
+		//到这里 结束
 	}
 	//正确提示
 	function add_submit(post_data,url) {
@@ -78,7 +76,7 @@ $(function() {
 			}
 		});
 	}
-	
+
 	function search_airport_submit(post_data,url){
 		location.href = "/Myflightadmin/Manager/search_airport/?airport=" + post_data['airport'] + "&city=" + post_data['city'];
 	}
@@ -101,7 +99,7 @@ $(function() {
 				$(".tip-success-bg").hide()
 			})
 		})
-		//到这里 结束	
+		//到这里 结束
 	}
 	//登录校验
 	var str = /^1\d{10}$/; //手机号格式
@@ -185,9 +183,19 @@ $(function() {
 			$(".errors").text("请输入计划起飞时间!").css("color","black");
 			return false;
 		}
+		if (!isTime(PDtime)){
+			errors();
+			$(".errors").text("计划起飞时间格式错误!").css("color","black");
+			return false;
+		}
 		if (PLtime == "") {
 			errors();
 			$(".errors").text("请输入计划降落时间!").css("color","black");
+			return false;
+		}
+		if (!isTime(PLtime)){
+			errors();
+			$(".errors").text("计划到达时间格式错误!").css("color","black");
 			return false;
 		}
 		if (airlinename == "") {
