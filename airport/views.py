@@ -32,11 +32,10 @@ def getAirport(request):
         if one_airport.count()==0:
             return JsonResponse(ret_msg,safe=False)
         else:
-            ret_msg["airport"] = model_to_dict(one_airport[0])
+            ret_msg["airport"] = [model_to_dict(one_airport[0])]
             ret_msg["is_exist"] = 1
             return JsonResponse(ret_msg,safe=False)
     return JsonResponse(ret_msg, safe=False)
-
 
 def getAirportInfo(request):
     ret_msg = {}
@@ -81,6 +80,13 @@ def getAirportInfo(request):
         ret_msg['departure_flights'] = ""
         ret_msg['arrival_flights'] = ""
         return JsonResponse(ret_msg,safe=False)
+
+def getAirportlistByName(airports):
+    ret = []
+    for name in airports:
+        airport = models.airport.objects.filter(airport=name)
+        ret.append(model_to_dict(airport[0]))
+    return ret
 
 def  gS_FC(request):
     json = {

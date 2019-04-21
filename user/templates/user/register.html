@@ -1,14 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery-3.1.0.min.js"></script>
+		<script src="{% static 'js/jquery.min.js'%}"></script>
+		<script src="{% static 'js/jquery-3.1.0.min.js'%}"></script>
 		<title>注册</title>	
-		<link rel="stylesheet" href="css/widget_new.css">
-        <link rel="stylesheet" type="text/css" href="css/demo.css" />
-        <link rel="stylesheet" type="text/css" href="css/style3.css" />
-		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+		<link rel="stylesheet" href="{% static 'css/widget_new.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css'%}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style3.css'%}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/animate-custom.css'%}" />
 		
 		<style type="text/css">
 			#getyzm:hover{
@@ -40,7 +41,7 @@
         			alert("两次输入的密码不一样");
         		}
         		else{
-        				var searchUrl = encodeURI("person.html?searchText=" + phonenumber); //使用encodeURI编码
+        				var searchUrl = encodeURI("/user/person.html?searchText=" + phonenumber); //使用encodeURI编码
 		    			location.href = searchUrl;
         			/*$.post("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io",{phone_num:phonenumber,psw:passwordNumber,VerifiedCode:VCode},
 				        function(data,status){
@@ -97,7 +98,7 @@
 							<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
 						</li>
 						<li class="top-menu-item   ">
-							<a href="log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+							<a href="/user/log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
 						</li>
 					</ul>
 				</div>
@@ -132,7 +133,7 @@
 									</p>
 	                                <p class="change_link">  
 										已经注册了 ?
-										<a href="log in.html" class="to_register"> 登录 </a>
+										<a href="/user/login" class="to_register"> 登录 </a>
 									</p>
 	                        </div>	
 	                    </div>

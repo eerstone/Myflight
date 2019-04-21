@@ -35,19 +35,15 @@ class Flight(models.Model):
     is_sat = models.BooleanField()
     is_sun = models.BooleanField()
 
-def add_Flight(flight_id):
-    pass
-# def add_Fligt(flight_id,mileage,aircraft_models,plan_departure_time,plan_arrival_time,
-#                   departure,arrival,punctuality_rate,delay_time,
-#                   company,is_mon,is_tue,is_wed,is_thr,is_fri,is_sat,is_sun):
-#     flight = Flight.objects.get_or_create(flight_id=flight_id,mileage=mileage,aircraft_models=aircraft_models,
-#                                      plan_departure_time=plan_departure_time,plan_arrival_time=plan_arrival_time,
-#                                      actual_departure_time=plan_departure_time,actual_arrival_time=plan_arrival_time,
-#                                      departure=departure,arrival=arrival,punctuality_rate=punctuality_rate,delay_time=delay_time,
-#                                      check_in="A0",boarding_port="H0",arriving_port="C13",Baggage_num="X3",company=company,
-#                                      is_mon=is_mon, is_tue=is_tue, is_wed=is_wed, is_thr=is_thr, is_fri=is_fri, is_sat=is_sat, is_sun=is_sun
-#                                      )
-#     return 1
+def add_Flight(flight_id, mileage, aircraft_models,plan_departure_time,plan_arrival_time,departure,arrival,punctuality_rate,delay_time,company,is_mon,is_tue,is_wed,is_thr,is_fri,is_sat,is_sun):
+    flight = Flight.objects.get_or_create(flight_id=flight_id, mileage=mileage, aircraft_models=aircraft_models,
+                                     plan_departure_time=plan_departure_time, plan_arrival_time=plan_arrival_time,
+                                     actual_departure_time=plan_departure_time, actual_arrival_time=plan_arrival_time,
+                                     departure=departure, arrival=arrival, punctuality_rate=punctuality_rate,
+                                     delay_time=delay_time, check_in="A0", boarding_port="H0", arriving_port="C13", Baggage_num="X3", company=company,
+                                     is_mon=is_mon, is_tue=is_tue, is_wed=is_wed, is_thr=is_thr, is_fri=is_fri, is_sat=is_sat, is_sun=is_sun
+                                     )
+    return 1
 
 def airport2flight(airport,isfrom):
     """

@@ -1,13 +1,13 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="zh"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
 
-{% static %}
 	<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
-	<link rel="stylesheet" type="text/css" href="css/base.css"/>
-	<link rel="stylesheet" type="text/css" href="css/widget_new.css"/>
-	<link rel="stylesheet" type="text/css" href="css/personCenter.css"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/widget_new.css'%}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/personCenter.css'%}"/>
 
 
 	<script >
@@ -41,7 +41,7 @@
 							<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
 						</li>
 						<li class="top-menu-item   ">
-							<a href="log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+							<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
 						</li>
 					</ul>
 				</div>
@@ -167,8 +167,7 @@
                                     </div>
                                 </li>
                                 <li class="chBtnWrap">
-                                	                            <input type="button" name="" id="" value="测试" onclick="change()"/>
-                                    <a href="javascript:;" id="chSave" class="chSave">保存</a>
+                                    <a href="javascript:;" id="chSave" class="chSave" onclick="change()">保存</a>
                                     <a href="http://www.variflight.com/user/center?AE71649A58c77=" class="chBack">返回</a>
                                 </li>
                             </ul>
@@ -203,8 +202,7 @@
     </div>
 </div>
 
-
-<script src="js/common_new.js"></script>
+<script src="{% static 'js/common_new.js'%}"></script>
 <script >//初始人物信息的表示
 			$(document).ready(function(){
 			var searchUrl = window.location.href;
