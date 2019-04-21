@@ -85,7 +85,7 @@
         			"<div class='li_com'>"+
 						"<span class='w260'>"+
 							"<b>"+
-								"<span  title='"+data[i].company+"' id='t"+(index++)+"'>"+data[i].company+"</span>"+
+								"<span  title='"+data[i].company+"' id='t"+(index++)+"'>"+data[i].company+" | </span>"+
 								"<span  title='"+data[i].flight_id+"' id='t"+(index++)+"'>" +data[i].flight_id+"</span>"+
 							"</b>"+
 						"</span>"
@@ -135,7 +135,8 @@
 				<div class="clear"></div>
 			</div>
 			<ul id="list">
-                <div id ="creat_ui"></div>
+                <div id ="creat_ui">
+                    </div>
 		    </ul>
 		    </div>
 	</div>
@@ -165,7 +166,7 @@ del_submit = function(data){
     index = index*num + 1;
     var o = document.getElementById("t" + String(index));
     post_data = {};
-        post_data['flight_id'] = o.innerHTML;
+    post_data['flight_id'] = o.innerHTML;
     post_data['datetime'] = datetime;
     $.ajax({
             type: 'POST',
@@ -210,6 +211,9 @@ cg = function (obj) {
 				var o = document.getElementById("t" + String(i));
 				if (i>=index*num+2)
 				    o.innerHTML = o.childNodes[0].value;
+				if(i == index*num){
+				    o.innerHTML = o.innerHTML.replace(/[&\|\\\*^%$#@\-]/g,"");
+                }
 				post_data[msg[i-index*num]] = o.innerHTML;
 			}
 			/*
