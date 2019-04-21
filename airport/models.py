@@ -28,7 +28,7 @@ def airport2info(port):
     :return: basic info about airport
     """
     portinfo = airport.objects.filter(airport=port)
-    if portinfo.count()==0:
+    if portinfo.count()!=0:
         portinfo = portinfo[0]
         portinfo = model_to_dict(portinfo)
         del portinfo["id"]

@@ -60,7 +60,7 @@ def airport2flight(airport,isfrom):
         flights = []
         if flightset.exists():
             for flight in flightset:
-                flights+= model_to_dict(flight)
+                flights.append(model_to_dict(flight))
             return flights
         else:
             return None
@@ -69,7 +69,7 @@ def airport2flight(airport,isfrom):
         flights = []
         if flightset.exists():
             for flight in flightset:
-                flights+= model_to_dict(flight)
+                flights.append(model_to_dict(flight))
             return flights
         else:
             return None

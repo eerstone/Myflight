@@ -24,29 +24,39 @@ import random
 def getAirportInfo(request):
     ret_msg = {}
     if request.method == 'GET':
-        airport = request.POST.get('airport')
-        
-        weather = airport.weather
-        temperature = airport.temperature
-        departure_flights = airplanemodels.objects.filter(boarding_port=airport)
-        arrival_flights = airplanemodels.objects.filter(arriving_port=airport)
-        departure_flights_dicts = []
-        arrival_flights_dicts = []
-        
-        if departure_flights.exists():
-            for item in departure_flights:
-                departure_flights_dicts.append(model_to_dict(item))
-        
-        if arrival_flights.exists():
-            for item in arrival_flights:
-                arrival_flights_dicts.append(model_to_dict(item))
-        
-        ret_msg['weather'] = weather
-        ret_msg['temperature'] = temperature
-        ret_msg['departure_flights'] = departure_flights_dicts
-        ret_msg['arrival_flights'] = arrival_flights_dicts
-        
-        return JsonResponse(ret_msg,safe=False)
+        airport = request.GET.get('airport')
+        try:
+            # 目前默认获取到的机场名称是一定存在的
+            one_airport = models.airport.objects.get(airport=airport)
+            weather = one_airport.weather
+            temperature = one_airport.temperature
+            departure_flights = airplanemodels.Flight.objects.filter(departure=airport)
+            arrival_flights = airplanemodels.Flight.objects.filter(arrival=airport)
+            departure_flights_dicts = []
+            arrival_flights_dicts = []
+
+            if departure_flights.exists():
+                for item in departure_flights:
+                    departure_flights_dicts.append(model_to_dict(item))
+
+            if arrival_flights.exists():
+                for item in arrival_flights:
+                    arrival_flights_dicts.append(model_to_dict(item))
+
+            ret_msg['weather'] = weather
+            ret_msg['temperature'] = temperature
+            ret_msg['departure_flights'] = departure_flights_dicts
+            ret_msg['arrival_flights'] = arrival_flights_dicts
+
+            return JsonResponse(ret_msg, safe=False)
+        except Exception as e:
+            ret_msg= {}
+            ret_msg['weather'] = ""
+            ret_msg['temperature'] = ""
+            ret_msg['departure_flights'] = ""
+            ret_msg['arrival_flights'] = ""
+            return JsonResponse(ret_msg,safe=False)
+
     else:
         ret_msg= {}
         ret_msg['weather'] = ""

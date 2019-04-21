@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^user/', include('user.urls')),
     url(r'^Myflightadmin/', include('Myflightadmin.urls')),
     url(r'^airplane/', include('airplane.urls')),
+    url(r'^airport/', include('airport.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
     url(r'^login/', views.login),
