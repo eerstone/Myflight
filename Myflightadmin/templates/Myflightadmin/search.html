@@ -28,7 +28,7 @@
         post_data[arr[0]] = arr[1];
     }
     datetime = post_data['datetime'];
-    if (post_data["flightname"] == ''){
+    if (post_data["flight_id"] == ''){
         url = 'http://127.0.0.1:8000/Myflightadmin/search_flight_by_City/'
         $.ajax({
 			type: 'GET',

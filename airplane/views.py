@@ -21,6 +21,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import random
 
+#detail
+def detail(request):
+    if request.method == 'GET':
+        return render(request, 'user/detail.html')
+
+#index
+def index(request):
+    if request.method=='GET':
+        return render(request,'user/index.html')
+
 #search
 def getSearchFlightById(request):
     ret_msg = {}
