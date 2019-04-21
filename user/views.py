@@ -98,7 +98,7 @@ def postlogin(request):
                 return JsonResponse(ret_msg,safe=False)
         elif ltype == "1":
             try:
-                code = VerifyCode.objects.filter(mobile=phone_num).first().code
+                code = VerifyCode.objects.filter(mobile=phone_num).last().code
                 if verifiedcode == code:
                     print(123)
                     print(basicinfo)
@@ -184,7 +184,7 @@ class ForCodeView(View):  # 调试成功
                 code.mobile = mobile
                 code.code = str(c)
                 code.save()
-                code = VerifyCode.objects.filter(mobile=mobile).first().code
+                code = VerifyCode.objects.filter(mobile=mobile).last().code
                 yunpian = YunPian(APIKEY)
                 sms_status = yunpian.send_sms(code=code, mobile=mobile)
                 sms_status = sms_status.json()
