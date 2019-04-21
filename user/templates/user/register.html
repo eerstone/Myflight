@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery-3.1.0.min.js"></script>
+		<title>注册</title>	
+		<link rel="stylesheet" href="css/widget_new.css">
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style3.css" />
+		<link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+		
+		<style type="text/css">
+			#getyzm:hover{
+				color: #FFC864;
+				cursor:pointer;
+				align;
+			}
+		</style>
+	
+		<script>//用于检验提交登陆信息的正确性
+        	function login_onclick_by_pass()
+        	{
+        		var dataObj;
+        		var regularPhone=/^1[34578]\d{9}$/;
+        		var phonenumber=$('#username1').val();
+        		var passwordNumber=$('#password1').val();
+        		var rePasswordNumber=$('#repassword1').val();
+        		var VCode=$('#yzm').val();
+        		console.log(passwordNumber);
+        		console.log(rePasswordNumber);
+        		var regularPast=/^[A-Za-z0-9_-]+$/;
+        		console.log(phonenumber);
+        		if(!regularPhone.test(phonenumber))
+        		{
+        			alert("输入的手机号不对");
+
+			    }
+        		else if(passwordNumber!=rePasswordNumber){
+        			alert("两次输入的密码不一样");
+        		}
+        		else{
+        				var searchUrl = encodeURI("person.html?searchText=" + phonenumber); //使用encodeURI编码
+		    			location.href = searchUrl;
+        			/*$.post("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io",{phone_num:phonenumber,psw:passwordNumber,VerifiedCode:VCode},
+				        function(data,status){
+				        	dataObj=eval("("+data+")");
+				        	window.location.href = "person.html";
+
+							trans(dataObj);
+				        	if(dataObj.register_status==1)
+				        	{
+				        		alert('注册成功');
+
+				        	}
+				        	else if(dataObj.register_status==2)
+				        	{
+				        		alert('验证码错误');
+				        	}
+				        	else
+				        	{
+				        		alert("未知错误");
+
+				    });	}*/
+        		}
+			}
+        </script>
+		<script >//用于检验输入的电话号码是否符合要求
+			var regular=/^1[34578]\d{9}$/;
+			$(function () {
+     			$("#username1").on('blur', function () {
+        			var phonenumber=$('#username1').val();
+        			if(!regular.test(phonenumber))
+					{	
+        				$('#labelPhoneNumber').html('输入格式不正确');
+        				$('#labelPhoneNumber').attr("style", "color:red");
+        			}
+					else{
+						$('#labelPhoneNumber').html('符合');
+						$('#labelPhoneNumber').attr("style", "color:green");
+					}
+      			});
+   			});
+		</script>
+	
+	
+	</head>
+	<body>
+		<div class="usernamer_login">
+			<div class="header">
+				<div class="topMenu clearfix">
+					<ul class="menu item pull-left">
+						<li class="top-menu-item  top-menu-curr ">
+							<a href="index.html" class="menu-hd"><span>首页</span></a>
+						</li>
+						<li class="top-menu-item ">
+							<a href="/follow?AE71649A58c77=" class="menu-hd"><span>出行管理</span></a>
+						</li>
+						<li class="top-menu-item   ">
+							<a href="log in.html" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div >		
+		<div class="container">
+            <!-- Codrops top bar -->
+                <div id="container_demo" >
+                	<div id="wrapper">
+	                	<div id="login" class="animate form" ">
+	                                <h1> 注册 </h1> 
+	                                <p> 
+                                    <label id="labelPhoneNumber" for="username1" class="uname" data-icon="n" > 手机号 </label>
+                                    <input id="username1" name="username"  type="text" placeholder="手机号"/>
+                                	</p>
+	                                <p> 
+                                          	请填入验证码<br /> 
+                                    	<input id="yzm" name="password"  type="text" placeholder="验证码" style="width: 50%;"/>
+                                    	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
+                                    	<input id="getyzm"    type="button"  style="width: 18%;" value="获取验证码" onclick=""/>
+                                	</p>
+	                                 <p > 
+                                    <label for="password1" class="youpasswd" data-icon="p"> 密码 </label>
+                                    <input id="password1" name="password"  type="password" placeholder="密码" "/> 
+                                	</p>
+	                                 <p > 
+                                    <label for="repassword1" class="youpasswd" data-icon="p"> 再次输入密码 </label>
+                                    <input id="repassword1" name="password"  type="password" placeholder="再次输入密码" "/> 
+                                	</p>
+	                                <p class="signin button"> 
+										<input type="button" value="注册"/ onclick="login_onclick_by_pass()"> 
+									</p>
+	                                <p class="change_link">  
+										已经注册了 ?
+										<a href="log in.html" class="to_register"> 登录 </a>
+									</p>
+	                        </div>	
+	                    </div>
+	                </div>
+                </div>
+       </div>
+	</body>
+</html>
