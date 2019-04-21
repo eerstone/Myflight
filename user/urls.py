@@ -6,10 +6,10 @@ from user import views
 app_name = 'user'
 urlpatterns = [
 
-    url(r'^login/', views.login),
     url(r'^register/', views.register),
     url(r'^person/', views.person),
     url(r'^postLogin/', views.postlogin),
+    url(r'^login/', views.login),
     url(r'^postLoginapi/', views.postloginapi),
     url(r'^postRegister/', views.postregister),
     url(r'^postVerifiedCode/', ForCodeView.as_view(), name='forcode'),

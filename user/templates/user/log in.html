@@ -66,7 +66,7 @@
         		if(regularPhone.test(phonenumber))
         		{
                     alert('到这了吗1');
-	        		$.post("http:127.0.0.1:8000/user/postLogin/",{type:0,phone_num:phonenumber,VerifiedCode:'',pwd:passwordNumber},
+	        		$.post("/user/postLogin/",{type:0,phone_num:phonenumber,VerifiedCode:'',pwd:passwordNumber},
 				        function(data,status){
 				        	alert('到这了吗');
 				        	judge(data.login_status);
