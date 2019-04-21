@@ -226,7 +226,6 @@
 				alert('性别有误');
 			else
 			{
-			    alert(year+"-"+month+"-"+day);
 			    $.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:my_gender,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
 			    if(data.issucceed==1)
                 {

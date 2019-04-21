@@ -92,7 +92,7 @@
                                             </div>
                                             <div class="col1" style="padding-left:70px;">出发时间：</div>
                                             <div class="col2">
-                                                <input type="date" id="takeoffDate" name="takeoffDate" class="input"  style="width:120px;">&nbsp;
+                                                <input type="date" id="takeoffDate2" name="takeoffDate2" class="input"  style="width:120px;">&nbsp;
                                             </div>
                                         </div>
                                         <div class="form_row" style="padding:20px 0 0 270px;height:30px;width:400px;">
@@ -117,7 +117,7 @@
                                         <div class="form_row">
                                             <div class="col1">出发时间：</div>
                                             <div class="col2">
-                                                <input type="date" id="takeoffDate1" name="takeoffDate" class="input" style="width:140px;">
+                                                <input type="date" id="takeoffDate1" name="takeoffDate1" class="input" style="width:140px;">
                                                 </div>
                                         </div>
                                         <div class="form_row">
@@ -174,9 +174,12 @@ function tab_closeCalendar(){
 	var data1;
 		function id_search()
 		{	
-	        var date1=$('#takeoffDate').val();
+
 	        var flight_number=$('#flightNo').val();
-	        $.get("/airplane/getSearchFlightById/?flight_no="+flight_number+"&datetime="+data1+"",function(data,status){
+
+            var  my_data ;
+            my_data= $('#takeoffDate2').val();
+	        $.get("/airplane/getSearchFlightById/?flight_id="+flight_number+"&datetime="+my_data+"",function(data,status){
 				if(data.is_exist==1)
 						printfight(data.flight);
 				else{
@@ -186,10 +189,10 @@ function tab_closeCalendar(){
 		}
 		function search_onclick()
         	{
-        		var date1=$('#takeoffDate1').val();
+        		var date3=$('#takeoffDate1').val();
         		var begin=$('#sl_start').val();
         		var end=$('#sl_end').val();
-        		$.get("/airplane/getSearchFlightByCity/?city_from="+begin+"&city_to="+end+"&datetime="+date1+"",function(data,status){
+        		$.get("/airplane/getSearchFlightByCity/?city_from="+begin+"&city_to="+end+"&datetime="+date3+"",function(data,status){
         		    console.log(data);
 					if(data.is_exist==1)
 					{
