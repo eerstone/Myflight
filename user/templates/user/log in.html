@@ -61,15 +61,33 @@
         	{
         		var regularPhone=/^1[34578]\d{9}$/;
         		var phonenumber=$('#username1').val();
-        		var passwordNumber=$('password1').val();
+        		var passwordNumber=$('#password1').val();
         		var regularPast=/^[A-Za-z0-9_-]+$/;
         		if(regularPhone.test(phonenumber))
         		{
-                    alert('到这了吗1');
+        		    console.log(passwordNumber);
+        		    console.log( phonenumber);
 	        		$.post("/user/postLogin/",{type:0,phone_num:phonenumber,VerifiedCode:'',pwd:passwordNumber},
 				        function(data,status){
-				        	alert('到这了吗');
-				        	judge(data.login_status);
+	        		    console.log(data.login_status);
+	        		    if(data.login_status==0)
+				        	judge(data.user);
+	        		    else if(data.login_status==1)
+                        {
+                            alert("用户不存在");
+                        }
+	        		    else if(data.login_status==2)
+                        {
+                            alert("验证码错误");
+                        }
+                        else if(data.login_status==3)
+                        {
+                            alert("密码错误");
+                        }
+                        else
+                        {
+                            alert("其他错误");
+                        }
 				    });
 			    }
         		else{
@@ -84,10 +102,22 @@
         		var dataObj;
         		if(regularPhone.test(phonenumber))
         		{
-        			$.post("http:127.0.0.1:8000/user/postLogin/",{type:1,phont_num:phonenumber,VerifiedCode:yzm,pwd:''},
+        			$.post("/user/postLogin/",{type:1,phont_num:phonenumber,VerifiedCode:yzm,pwd:''},
 				        function(data,status){
-        			    	alert('到这了吗');
-				            judge(data.login_status);
+        			    if(data.login_status==0)
+				        	judge(data.user);
+	        		    else if(data.login_status==1)
+                        {
+                            alert("用户不存在");
+                        }
+	        		    else if(data.login_status==2)
+                        {
+                            alert("验证码错误");
+                        }
+                        else if(data.login_status==3)
+                        {
+                            alert("其他错误");
+                        }
                         });
         		}
         		else{
@@ -96,8 +126,7 @@
         	}
         	function judge(data)
         	{
-        		alert('这里');
-        		var searchUrl = encodeURI("/user/person/?searchText=" + data.user_id+'~'+data.phone_num+'~'+data.user_name+'~'+data.gender+'~'+data.email+'~'+data.birthDay+' '+data.icon); //使用encodeURI编码
+        		var searchUrl = encodeURI("/user/person/?searchText=" + data.user_id+'~'+data.phone_num+'~'+data.user_name+'~'+data.gender+'~'+data.email+'~'+data.birthday+'~'+data.icon); //使用encodeURI编码
 		    	location.href = searchUrl;
         	}
         	
@@ -107,8 +136,8 @@
       	{
       		var yzm=$('yzm').val();
       		var phonenumber=$('#username2').val();
-      		$.post("http:127.0.0.1:8000/user/postVerifiedCode/",{phone_num:phonenumber},function(data,status){
-				        alert(data.meg);
+      		$.post("/user/postVerifiedCode/",{phone_num:phonenumber},function(data,status){
+				        alert(data.msg);
       		});
       	}
       	</script>

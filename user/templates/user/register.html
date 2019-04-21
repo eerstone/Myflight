@@ -40,30 +40,30 @@
         			alert("两次输入的密码不一样");
         		}
         		else{
-        				var searchUrl = encodeURI("/user/person/?searchText=" + phonenumber); //使用encodeURI编码
-		    			location.href = searchUrl;
-        			/*$.post("https://d39e2e4f-d80e-4c68-965c-2484a8a2b9f7.mock.pstmn.io",{phone_num:phonenumber,psw:passwordNumber,VerifiedCode:VCode},
-				        function(data,status){
-				        	dataObj=eval("("+data+")");
-				        	window.location.href = "person.html";
+        		    alert(1);
+        			$.post("/user/postRegister/",{phone_num:phonenumber,psw:passwordNumber,VerifiedCode:VCode},
+				        function(data,status) {
+                            if (data.register_status == 1) {
+                                alert('注册成功');
+                                var searchUrl = encodeURI("/user/person/?searchText=" + phonenumber); //使用encodeURI编码
+                                location.href = searchUrl;
+                            } else if (data.register_status == 2) {
+                                alert('验证码错误');
+                            } else {
+                                alert("未知错误");
 
-							trans(dataObj);
-				        	if(dataObj.register_status==1)
-				        	{
-				        		alert('注册成功');
-
-				        	}
-				        	else if(dataObj.register_status==2)
-				        	{
-				        		alert('验证码错误');
-				        	}
-				        	else
-				        	{
-				        		alert("未知错误");
-
-				    });	}*/
+                            }
+                        });
         		}
 			}
+			function getMyVerifiedCode()//获取验证码
+            {
+                var phonenumber=$('#username1').val();
+                console.log(phonenumber);
+      		    $.post("/user/postVerifiedCode/",{phone_num:phonenumber},function(data,status){
+				        alert(data.msg);
+      		    });
+            }
         </script>
 		<script >//用于检验输入的电话号码是否符合要求
 			var regular=/^1[34578]\d{9}$/;
@@ -117,7 +117,7 @@
                                           	请填入验证码<br /> 
                                     	<input id="yzm" name="password"  type="text" placeholder="验证码" style="width: 50%;"/>
                                     	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
-                                    	<input id="getyzm"    type="button"  style="width: 18%;" value="获取验证码" onclick=""/>
+                                    	<input id="getyzm"    type="button"  style="width: 18%;" value="获取验证码" onclick="getMyVerifiedCode()"/>
                                 	</p>
 	                                 <p > 
                                     <label for="password1" class="youpasswd" data-icon="p"> 密码 </label>
