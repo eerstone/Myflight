@@ -38,6 +38,10 @@ def register(request):
     if request.method=='GET':
         return render(request,"user/register.html")
 
+def person(request):
+    if request.method=='GET':
+        return render(request,'user/person.html')
+
 def postloginapi(request):
     json =  {
 	"login_status" : 0,
