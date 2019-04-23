@@ -140,7 +140,7 @@ def postregister(request):#调试成功
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
                 return JsonResponse(ret_msg,safe=False)
-            code = VerifyCode.objects.filter(mobile=phone_num).first().code
+            code = VerifyCode.objects.filter(mobile=phone_num).last().code
             if code!=verifycode:
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
