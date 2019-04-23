@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^postFavoriteFlight/', views.postFavoriteFlight),
     url(r'^detail/',views.detail),
     url(r'^index/',views.index),
+    url(r'^trip/',views.index),
 ]
