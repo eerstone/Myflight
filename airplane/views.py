@@ -143,6 +143,7 @@ def getSearchFlightByCity(request):
         city_from = request.GET.get('city_from')
         city_to = request.GET.get('city_to')
         datetime = request.GET.get('datetime')
+
         d_airport = airportmodels.city2airport(city_from)
         a_airport = airportmodels.city2airport(city_to)
         flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
