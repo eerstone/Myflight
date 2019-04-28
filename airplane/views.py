@@ -9,7 +9,7 @@ import requests
 import hashlib
 import json
 import operator
-
+from utils.data_get import variflight
 import re
 import random
 from utils.yunpian import YunPian
@@ -38,23 +38,27 @@ def getSearchFlightById(request):
     if request.method == 'GET':
         askflight_id = request.GET.get('flight_id')
         datetime = request.GET.get('datetime')
-        flights = models.Flight.objects.filter(flight_id=askflight_id)
-        if not flights.exists():
-            ret_msg['is_exist'] = 0
-            ret_flight = []
-            ret_msg['flight'] = ret_flight
-            return JsonResponse(ret_msg,safe=False)
-        else:
-            ret_flight=[]
-            for i in range(flights.count()):
-                ret_flight.append(model_to_dict(flights[i]))
-                ret_flight[i]['plan_departure_time'] = str(ret_flight[i]['plan_departure_time'])
-                ret_flight[i]["plan_arrival_time"] = str(ret_flight[i]["plan_arrival_time"])
-                ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
-                ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
-            ret_msg['is_exist'] = 1
-            ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
-            return JsonResponse(ret_msg,safe=False)
+
+        vf = variflight()
+        ret_msg = vf.search_num(askflight_id)
+        return JsonResponse(ret_msg,safe=False)
+        # flights = models.Flight.objects.filter(flight_id=askflight_id)
+        # if not flights.exists():
+        #     ret_msg['is_exist'] = 0
+        #     ret_flight = []
+        #     ret_msg['flight'] = ret_flight
+        #     return JsonResponse(ret_msg,safe=False)
+        # else:
+        #     ret_flight=[]
+        #     for i in range(flights.count()):
+        #         ret_flight.append(model_to_dict(flights[i]))
+        #         ret_flight[i]['plan_departure_time'] = str(ret_flight[i]['plan_departure_time'])
+        #         ret_flight[i]["plan_arrival_time"] = str(ret_flight[i]["plan_arrival_time"])
+        #         ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
+        #         ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
+        #     ret_msg['is_exist'] = 1
+        #     ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
+        #     return JsonResponse(ret_msg,safe=False)
     else:
         ret_msg['is_exist'] = 0
         ret_flight = []
@@ -144,23 +148,26 @@ def getSearchFlightByCity(request):
         city_to = request.GET.get('city_to')
         datetime = request.GET.get('datetime')
 
-        d_airport = airportmodels.city2airport(city_from)
-        a_airport = airportmodels.city2airport(city_to)
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
-        
-        if not flights.exists():
-            ret_msg['is_exist'] = 0
-            ret_flights = []
-            ret_msg['flight'] = ret_flights
-            
-            return JsonResponse(ret_msg,safe=False)
-        else:
-            ret_flights = []
-            for item in flights:
-                ret_flights.append(model_to_dict(item))
-            ret_msg['is_exist'] = 1
-            ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
-            return JsonResponse(ret_msg,safe=False)
+        vf = variflight()
+        ret_msg = vf.search_seg(city_from,city_to)
+        return JsonResponse(ret_msg,safe=False)
+        # d_airport = airportmodels.city2airport(city_from)
+        # a_airport = airportmodels.city2airport(city_to)
+        # flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
+        #
+        # if not flights.exists():
+        #     ret_msg['is_exist'] = 0
+        #     ret_flights = []
+        #     ret_msg['flight'] = ret_flights
+        #
+        #     return JsonResponse(ret_msg,safe=False)
+        # else:
+        #     ret_flights = []
+        #     for item in flights:
+        #         ret_flights.append(model_to_dict(item))
+        #     ret_msg['is_exist'] = 1
+        #     ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
+        #     return JsonResponse(ret_msg,safe=False)
     else:
         ret_msg['is_exist'] = 0
         ret_msg['flight'] = []
