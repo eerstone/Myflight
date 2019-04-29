@@ -159,13 +159,13 @@
                             <div class="changeData_pwBody">
                                 <ul>
                                     <li>
-                                        <label for="">当前密码</label><input type="password" placeholder="请输入当前使用的密码">
+                                        <label for="">当前密码</label><input id="old_pwd" type="password" placeholder="请输入当前使用的密码">
                                     </li>
                                     <li>
-                                        <label for="">新密码</label><input type="password" placeholder="设置6位以上数字或字符密码">
+                                        <label for="">新密码</label><input id="new_pwd" type="password" placeholder="设置6位以上数字或字符密码">
                                     </li>
                                     <li>
-                                        <label for="">确认密码</label><input type="password" placeholder="请再输入一遍密码以确认">
+                                        <label for="">确认密码</label><input id="assure_pwd" type="password" placeholder="请再输入一遍密码以确认">
                                     </li>
                                 </ul>
                             </div>
@@ -173,7 +173,7 @@
                         <div class="changeDataTog2Btn">
                             <label for=""></label>
 
-                            <a class="chSure" onclick="c_server.widget.modifyPwd()">确定</a>
+                            <a href="javascript:;" class="chSure" onclick="change_pwd()">确定</a>
                             <a href="/user/login/" class="chBack">退出登录</a>
                         </div>
                     </div>
@@ -189,6 +189,7 @@
     <script >//初始人物信息的表示
         var my_id;
         var my_phone;
+        var initial_pwd;
 			$(document).ready(function(){
 			var searchUrl = window.location.href;
     		var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数
@@ -241,7 +242,26 @@
 		}
 		function change_pwd()
         {
-
+            var opwd=$('#old_pwd').val();
+            var npwd=$('#new_pwd').val();
+            var apwd=$('#assure_pwd').val();
+            if(apwd!=npwd)
+            {
+                alert('两次输入的密码不一样');
+            }
+            else if(npwd==opwd)
+            {
+                alert('修改前后的密码相同');
+            }
+            else
+            {
+                $.post("/user/postUpdatePassword/" ,{user_id:my_id,oldpsw:opwd,psw:npwd},function (data,status) {
+                    if(data.issucceed==1)
+                        alert('修改成功');
+                    else
+                        alert('修改失败');
+                });
+            }
         }
 	</script>
 </body><!--[if lt IE 9]>

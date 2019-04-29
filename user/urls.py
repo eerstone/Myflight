@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^apitest/', views.apitest),
     url(r'^getFavorateFlight/', views.getFavorateFlight),
     url(r'^postBasicInfo/', views.postBasicInfo),
+    url(r'^postUpdatePassword/', views.postUpdatePassword),
     #url(r'^getSearchFlightById/', views.search_by_id),
 ]

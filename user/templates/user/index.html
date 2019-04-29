@@ -72,73 +72,72 @@
 			</div>
 		</div>
 	</div>
-    <div id="container">
-        <div class="flight_search">
-                            <h2 style="width: 938px;">
-                                <div class="flight_news" style="width:800px;">
-                                <div class="category">
-                                    <input type="radio" name="mathod" id="per_date" checked="checked">
-                                    <label for="per_date"> 按行程查询</label>
-                                    <input type="radio" name="mathod" id="per_flight">
-                                    <label for="per_flight"> 按航班查询</label>
-                                </div>
-                                <div id="flight_search_form" style="display:none;">
-                                    <form id="findFlightByNum" name="flight_form" >
-                                        <div class="form_row">查询实时起飞/到达时间</div>
-                                        <div class="form_row">
-                                            <div class="col1" style="width: 48px;">航班号：</div>
-                                            <div class="col2">
-                                                <input type="text" class="input" id="flightNo" name="flightNo" value="" placeholder="请输入航班号">
-                                            </div>
-                                            <div class="col1" style="padding-left:70px;">出发时间：</div>
-                                            <div class="col2">
-                                                <input type="date" id="takeoffDate2" name="takeoffDate2" class="input"  style="width:120px;">&nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="form_row" style="padding:20px 0 0 270px;height:30px;width:400px;">
-                                            <div class="col3">
-                                                <input type="hidden" name="Nation" value="CHN">
-                                                <input type="hidden" name="yzm" id="yzmByNo">
-                                                <input type="button" value="查 询" id="findFlightByNum_0" class="button" onclick="id_search()">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div id="date_search_form">
-                                    <form id="findFlightByDate" name="date_form" >
-                                        <div class="form_row">查询实时起飞/到达时间</div>
-                                        <div class="form_row">
-                                            <div class="col1">出发城市：</div>
-                                            <div class="col2"><input value="" id="sl_start" autocomplete="off" type="text" class="input_city"><input id="orgCity" name="orgCity" value="PEK" type="hidden"></div>
-                                            <div class="col1" style="padding-left:50px;">到达城市：</div>
-                                            <div class="col2"><input value="" id="sl_end" autocomplete="off" type="text" class="input_city"><input id="dstCity" name="dstCity" value="CTU" type="hidden"></div>
-                                        </div>
-                                        <div class="form_row">
-                                            <div class="col1">出发时间：</div>
-                                            <div class="col2">
-                                                <input type="date" id="takeoffDate1" name="takeoffDate1" class="input" style="width:140px;">
+    <div style="">
+        <div id="container">
+            <div class="flight_search">
+                                <h2 style="width: 938px;">
+                                    <div class="flight_news" style="width:800px;">
+                                    <div class="category">
+                                        <input type="radio" name="mathod" id="per_date" checked="checked">
+                                        <label for="per_date"> 按行程查询</label>
+                                        <input type="radio" name="mathod" id="per_flight">
+                                        <label for="per_flight"> 按航班查询</label>
+                                    </div>
+                                    <div id="flight_search_form" style="display:none;">
+                                        <form id="findFlightByNum" name="flight_form" >
+                                            <div class="form_row">查询实时起飞/到达时间</div>
+                                            <div class="form_row">
+                                                <div class="col1" style="width: 48px;">航班号：</div>
+                                                <div class="col2">
+                                                    <input type="text" class="input" id="flightNo" name="flightNo" value="" placeholder="请输入航班号">
                                                 </div>
-                                        </div>
-                                        <div class="form_row">
-                                            <div class="col3" style="padding-left:280px;width:400px;">
-                                                <input type="hidden" name="Nation" value="CHN">
-                                                <input type="hidden" name="yzm" id="yzmDate">
-                                                <input type="button" value="查 询" id="findFlightByDate_0" class="button" onclick="search_onclick()">
+                                                <div class="col1" style="padding-left:70px;">出发时间：</div>
+                                                <div class="col2">
+                                                    <input type="date" id="takeoffDate2" name="takeoffDate2" class="input"  style="width:120px;">&nbsp;
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </h2>
-        </div>
-    </div>
-    </div>
-		<div id="container_demo" >
-			
-		</div>
-	</div>
+                                            <div class="form_row" style="padding:20px 0 0 270px;height:30px;width:400px;">
+                                                <div class="col3">
+                                                    <input type="hidden" name="Nation" value="CHN">
+                                                    <input type="hidden" name="yzm" id="yzmByNo">
+                                                    <input type="button" value="查 询" id="findFlightByNum_0" class="button" onclick="id_search()">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
+                                    <div id="date_search_form">
+                                        <form id="findFlightByDate" name="date_form" >
+                                            <div class="form_row">查询实时起飞/到达时间</div>
+                                            <div class="form_row">
+                                                <div class="col1">出发城市：</div>
+                                                <div class="col2"><input value="" id="sl_start" autocomplete="off" type="text" class="input_city"><input id="orgCity" name="orgCity" value="PEK" type="hidden"></div>
+                                                <div class="col1" style="padding-left:50px;">到达城市：</div>
+                                                <div class="col2"><input value="" id="sl_end" autocomplete="off" type="text" class="input_city"><input id="dstCity" name="dstCity" value="CTU" type="hidden"></div>
+                                            </div>
+                                            <div class="form_row">
+                                                <div class="col1">出发时间：</div>
+                                                <div class="col2">
+                                                    <input type="date" id="takeoffDate1" name="takeoffDate1" class="input" style="width:140px;">
+                                                    </div>
+                                            </div>
+                                            <div class="form_row">
+                                                <div class="col3" style="padding-left:280px;width:400px;">
+                                                    <input type="hidden" name="Nation" value="CHN">
+                                                    <input type="hidden" name="yzm" id="yzmDate">
+                                                    <input type="button" value="查 询" id="findFlightByDate_0" class="button" onclick="search_onclick()">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </h2>
+            </div>
+        </div>
+        <div id="container_demo" >
+
+        </div>
+    </div>>
 <script type="text/javascript" language="javascript" src="{% static 'js/cookieUtils.js'%}"></script>
 <script language="javascript">
 var searchType = "trip";
