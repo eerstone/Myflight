@@ -271,7 +271,8 @@ def postUpdatePassword(request):
         user_auth = models.User_Auth.objects.get(user_id=user_id)
         
         if user_auth.credential == oldpsw:
-            user_auth.update(credential=newpsw)
+            user_auth.credential=newpsw
+            user_auth.save()
             ret_msg['issucceed'] = 1
             return JsonResponse(ret_msg,safe=False)
         else:
