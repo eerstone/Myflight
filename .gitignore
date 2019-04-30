@@ -12,3 +12,5 @@ dist
 build
 .idea/
 venv/
+*.png
+utils/*.png
