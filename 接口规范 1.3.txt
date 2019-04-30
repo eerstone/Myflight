@@ -72,6 +72,7 @@ user/
 			output:
 				trips:{trip...}
 					trip = trip_id + flight + user_type 
+		postDelete/
 			input:
 				user_id:int
 				trip_id:int
