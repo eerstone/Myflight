@@ -42,11 +42,47 @@ class VerifyCode(models.Model):
 class mytrip(models.Model):
     # id = models.AutoField(primary_key=True) #Django 默认创建自增主键
     user_ID = models.ForeignKey(User,on_delete=models.CASCADE)
+    ##FLIGHT
     flight_id = models.CharField(max_length=100,default="CA1113")
-    # flight_ID = models.ForeignKey(airplanemodels.Flight,on_delete=models.CASCADE)
-    #user_trip = models.Integerfield(default=1)
-    user_trip = models.IntegerField(default=1)
+    company = models.CharField(max_length=100,default="--")
+    real_flight_id = models.CharField(max_length=100,default="--")
     datetime = models.DateTimeField(default="2000-01-01")
+
+    plan_departure_time = models.CharField(max_length=100,default="--")
+    plan_arrival_time = models.CharField(max_length=100,default="--")
+    actual_departure_time =  models.CharField(max_length=100,default="--")
+    actual_arrival_time = models.CharField(max_length=100,default="--")
+
+    flight_status = models.CharField(max_length=100,default="--")
+    departure = models.CharField(max_length=100,default="--")
+    arrival = models.CharField(max_length=100,default="--")
+
+    punctuality_rate = models.CharField(max_length=100,default="--")
+    delay_time = models.CharField(max_length=100,default="--")
+    check_in = models.CharField(max_length=100,default="--")
+    boarding_port = models.CharField(max_length=100,default="--")
+    arriving_port = models.CharField(max_length=100,default="--")
+
+    Baggage_num = models.CharField(max_length=100,default="--")
+    length = models.CharField(max_length=100,default="--")
+    time = models.CharField(max_length=100,default="--")
+
+    proc = models.CharField(max_length=100,default="--")
+    plane = models.CharField(max_length=100,default="--")
+    age = models.CharField(max_length=100,default="--")
+    forecast = models.CharField(max_length=100,default="--")
+    old_state = models.CharField(max_length=100,default="--")
+
+    d_weather = models.CharField(max_length=100,default="--")
+    d_pm = models.CharField(max_length=100,default="--")
+    d_state = models.CharField(max_length=100,default="--")
+
+    a_weather = models.CharField(max_length=100,default="--")
+    a_pm = models.CharField(max_length=100,default="--")
+    a_state = models.CharField(max_length=100,default="--")
+    detail_url = models.CharField(max_length=100,default="--")
+    ##FLIGHT
+    user_trip = models.IntegerField(default=1)
 
 
 def phone2basicinfo(phone_num):
