@@ -122,7 +122,7 @@ def add_trip(one_trip):
     trip.save()
 
 def del_trip(trip_id):
-    trip = mytrip.objects.get(trip_id)
+    trip = mytrip.objects.get(id=trip_id)
     trip.delete()
 
 def search_trip(user_id):
