@@ -32,6 +32,11 @@ def index(request):
     if request.method=='GET':
         return render(request,'user/index.html')
 
+#trip
+def trip(request):
+    if request.method=='GET':
+        return render(request,'user/trip.html')
+
 #search
 def getSearchFlightById(request):
     ret_msg = {}
