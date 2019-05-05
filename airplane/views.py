@@ -17,11 +17,11 @@ from Myflight.settings import APIKEY
 from django.views import View
 from django_redis import get_redis_connection
 from utils import data_get
-
+import time
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import random
-
+from datetime import  datetime as DT
 from datetime import date
 
 #detail
@@ -49,7 +49,11 @@ def getSearchFlightById(request):
         detail_url = request.GET.get('detail_url')
 
         today = date.today()
-        askdate = dtime.strftime('%Y-%m-%d')
+
+        askdate = DT.strptime(dtime,'%Y-%m-%d')
+        askdate = askdate.date()
+        # askdate = date(askdate.year,askdate.month,askdate.day)
+        # dtime.strptime('%Y-%m-%d')
 
         if askdate > today:
             flights = models.Flight.objects.filter(flight_id=askflight_id)
@@ -199,7 +203,9 @@ def getSearchFlightByCity(request):
         detail_url = request.GET.get('detail_url')
 
         today = date.today()
-        askdate = dtime.strftime('%Y-%m-%d')
+
+        askdate = DT.strptime(dtime,'%Y-%m-%d')
+        askdate = askdate.date()
 
         if askdate > today:
             d_airport = airportmodels.city2airport(city_from)
