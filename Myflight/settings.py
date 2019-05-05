@@ -155,7 +155,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static") # 收集Django的静态文件到同一个static中
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "/static/"),
-    BASE_DIR+"/user/"+"static/",
     BASE_DIR+"/Myflightadmin/"+"static/",
+    BASE_DIR+"/user/"+"static/",
 
 ]
