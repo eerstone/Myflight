@@ -86,8 +86,10 @@ class mytrip(models.Model):
 
 def add_trip(one_trip):
     trip = mytrip()
-    trip.user_ID = one_trip["user_id"]
+    user = User.objects.get(id=one_trip["user_id"])
+    trip.user_ID = user
     trip.user_trip = one_trip["user_type"]
+
     trip.flight_id = one_trip["flight_id"]
     trip.company = one_trip["company"]
     trip.real_flight_id = one_trip["real_flight_id"]

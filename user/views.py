@@ -303,9 +303,11 @@ def postDelete(request):
     ret_msg = {}
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
+        user_id = int(user_id)
         trip_id = request.POST.get('trip_id')
+        print(trip_id)
         trip = models.mytrip.objects.get(id=trip_id)
-        
+        print(trip.user_ID_id)
         if (user_id == trip.user_ID_id):
             trip.delete()
             ret_msg['issucceed'] = 1

@@ -70,7 +70,7 @@ def getSearchFlightById(request):
                 ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
                 return JsonResponse(ret_msg,safe=False)
         else:
-            if is_detail == 1 && detail_url == '--':
+            if is_detail == 1 and detail_url == '--':
                 ret_msg['issucceed'] = 0
                 ret_flight = []
                 ret_msg['flight'] = ret_flight
@@ -194,6 +194,9 @@ def getSearchFlightByCity(request):
     if request.method == 'GET':
         city_from = request.GET.get('city_from')
         city_to = request.GET.get('city_to')
+        dtime = request.GET.get('datetime')
+        is_detail = int(request.GET.get('is_detail'))
+        detail_url = request.GET.get('detail_url')
 
         today = date.today()
         askdate = dtime.strftime('%Y-%m-%d')
@@ -217,7 +220,7 @@ def getSearchFlightByCity(request):
                 ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
                 return JsonResponse(ret_msg,safe=False)
         else:
-            if is_detail == 1 && detail_url == '--':
+            if is_detail == 1 and detail_url == '--':
                 ret_msg['issucceed'] = 0
                 ret_flight = []
                 ret_msg['flight'] = ret_flight
@@ -265,7 +268,18 @@ def postFavoriteFlight(request):
         user_type = request.POST.get('user_type')
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
-        um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
+        detail_url = request.POST.get('detail_url')
+        vf = data_get.variflight()
+        flight_msg = vf.get_detail_mes(detail_url)
+        flight_msg = flight_msg[0]
+        flight_msg["user_id"] = user_id
+        flight_msg["user_type"] = user_type
+        flight_msg["datetime"] = datetime
+        flight_msg["delay_time"] = "0minutes"
+        flight_msg["detail_url"] = detail_url
+        print(flight_msg)
+        um.add_trip(flight_msg)
+        # um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
         ret_msg['issucceed'] = 1
         return JsonResponse(ret_msg, safe=False)
     else:
