@@ -205,9 +205,53 @@ Myflightadmin/
 			input:
 				flight_id:String
 				datetime:String
+				is_detail:0(简单信息)，1（详细信息）
+				detail_url:("--"表示无，若查询详细信息时 需附url表明是哪个航班)
 			output:
 				is_exist:int
-				flights:{json}
+				flight:json=[
+								{
+								flight_id:String
+								company:String
+								real_flight_id:string(实际承运航班)
+								datetime:string
+
+								plan_departure_time:String
+								plan_arrival_time:String
+								actual_departure_time:String
+								actual_arrival_time:String
+
+								flight_status:String
+								departure:String
+								arrival:String
+
+								punctuality_rate：String
+								delay_time:String
+								check_in:String
+								boarding_port:String
+								arriving_port:String
+
+								Baggage_num:String
+								length:string
+								time:string(用时)
+
+								proc:string（飞行的距离占总距离的比例）
+								plane:string(飞机类型)
+								age:string(机龄)
+								forecast:string（未起飞为其预计起飞时间，飞到后为其与预期的比较）
+								old_state:string（前序航班）
+
+								d_weather:string
+								d_pm:string（pm值）
+								d_state:string
+
+								a_weather:string
+								a_pm:string
+								a_state:string
+
+								detail_url:string(表示获取详细信息的url)
+								}
+							]
 		search_flight_by_City/
 			input:
 				city_from:String
