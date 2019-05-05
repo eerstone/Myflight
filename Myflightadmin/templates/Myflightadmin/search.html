@@ -28,11 +28,8 @@
         post_data[arr[0]] = arr[1];
     }
     datetime = post_data['datetime'];
-    var date = new Date(datetime.replace(/-/,"/"));
-    alert(date);
     post_data['is_detail'] = 0;
     post_data['detail_url'] = "--";
-    post_data['datetime'] = date;
     if (post_data["flight_id"] == ''){
         url = '/Myflightadmin/search_flight_by_City/'
         $.ajax({
