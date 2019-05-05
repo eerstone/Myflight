@@ -1,0 +1,99 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>trip</title>
+
+    <link rel="stylesheet" href="{% static 'css/widget_new.css'%}">
+    <link rel="stylesheet" href="{% static 'css/base.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/float.css'%}"/>
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+
+     <style>
+        * { padding: 0; margin: 0 auto; }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+        }
+
+        th,td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #09c;
+            font: bold 20px "微软雅黑";
+            color: #fff;
+        }
+
+        td {
+            font: 14px "微软雅黑";
+        }
+        tbody tr {
+            background-color: #f0f0f0;
+        }
+        tbody tr:last-child:hover {
+            background-color: #fafafa;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+			<div class="topMenu clearfix">
+				<ul class="menu item pull-left">
+					<li class="top-menu-item  top-menu-curr ">
+						<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
+					</li>
+					<li class="top-menu-item ">
+						<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+					</li>
+					<li class="top-menu-item   ">
+						<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+					</li>
+				</ul>
+			</div>
+    </div>
+    <div style="margin: 0 auto">
+        <table>
+            <tr> <th>日 期</th> <th>航 班 号</th> <th>出 发 地</th> <th>计划出发时间</th> <th>到 达 地</th> <th>到达时间</th>  <th>订制身份</th> <th>是否删除</th> </tr>
+        </table>
+    </div>
+<script>
+    $(document).ready(function(){
+        $.get("/airplane/getFavorateFlight/?user_id="+ my_id,function(data,status){
+            print(data);
+        })
+    })
+    function print(data){
+        for (i=0;i<data.length;i++)
+        {
+            var $trTemp = $("<tr></tr>");
+        		$trTemp.append("<td>"+ data[i].datetime +"</td>");
+        		$trTemp.append("<td>"+ data[i].flight_id +"</td>");
+        		$trTemp.append("<td>"+ data[i].actual_departure_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].departure +"</td>");
+        		$trTemp.append("<td>"+ data[i].plan_arrival_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].actual_arrival_time +"</td>");
+        		$trTemp.append("<td>"+ data[i].arrival +"</td>");
+        		$trTemp.append("<td>"+ data[i].punctuality_rate +"</td>");
+        		$trTemp.append("<td>"+ data[i].flight_status +"</td>");
+        		$trTemp.append("<td >"+"<input type='button' value='删除' onclick='deletetrip("+i+")' />" +"</td>");
+        		$trTemp.appendTo("#mytable");
+        }
+    }
+    function deletetrip(i)
+    {
+         $.post("/user/postDelete/",{user_id:my_id,trip_id:my_trip_id},function(data,status){
+	        if(data.issucceed==1)
+	            alert("删除成功");
+	        else
+	            alert("删除失败")
+    })
+</script>
+</body>
+</html>

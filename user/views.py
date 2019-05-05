@@ -140,7 +140,7 @@ def postregister(request):#调试成功
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
                 return JsonResponse(ret_msg,safe=False)
-            code = VerifyCode.objects.filter(mobile=phone_num).first().code
+            code = VerifyCode.objects.filter(mobile=phone_num).last().code
             if code!=verifycode:
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
@@ -271,7 +271,8 @@ def postUpdatePassword(request):
         user_auth = models.User_Auth.objects.get(user_id=user_id)
         
         if user_auth.credential == oldpsw:
-            user_auth.update(credential=newpsw)
+            user_auth.credential=newpsw
+            user_auth.save()
             ret_msg['issucceed'] = 1
             return JsonResponse(ret_msg,safe=False)
         else:
@@ -285,14 +286,15 @@ def getFavorateFlight(request):
     ret_msg = {}
     if request.method == 'GET':
         user_id = request.GET.get('user_id')
-        trip = models.mytrip.objects.get(user_ID=user_id)
-        flight = airplanemodels.Flight.objects.filter(flight_id=trip.flight_id)
-        flights =[]
-        for f in flight:
-            flights.append(model_to_dict(f))
-        ret_msg['user_id'] = user_id
-        ret_msg['flight'] = flights
-        ret_msg['user_type'] = trip.user_trip
+        # trip = models.mytrip.objects.get(user_ID=user_id)
+        # flight = airplanemodels.Flight.objects.filter(flight_id=trip.flight_id)
+        # flights =[]
+        # for f in flight:
+        #     flights.append(model_to_dict(f))
+        # ret_msg['user_id'] = user_id
+        # ret_msg['flight'] = flights
+        # ret_msg['user_type'] = trip.user_trip
+        ret_msg = models.search_trip(user_id)
         return JsonResponse(ret_msg,safe=False)
     else:
         pass
@@ -301,11 +303,13 @@ def postDelete(request):
     ret_msg = {}
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
+        user_id = int(user_id)
         trip_id = request.POST.get('trip_id')
+        print(trip_id)
         trip = models.mytrip.objects.get(id=trip_id)
-        
-        if (user_id == trip.user_ID):
-            airplanemodels.Flight.objects.filter(flight_id=trip.flight_ID).delete()
+        print(trip.user_ID_id)
+        if (user_id == trip.user_ID_id):
+            trip.delete()
             ret_msg['issucceed'] = 1
             return JsonResponse(ret_msg,safe=False)
         else:
