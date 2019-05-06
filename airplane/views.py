@@ -295,6 +295,8 @@ def postFavoriteFlight(request):
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
         detail_url = request.POST.get('detail_url')
+        if "T16:00:00Z" in datetime:
+            datetime = datetime[0:10]
         vf = data_get.variflight()
         flight_msg = vf.get_detail_mes(detail_url)
         flight_msg = flight_msg[0]
