@@ -79,13 +79,13 @@ def getSearchFlightById(request):
                 return JsonResponse(ret_msg, safe=False)
         else:
             if is_detail == 1 and detail_url == '--':
-                ret_msg['issucceed'] = 0
+                ret_msg['is_exist'] = 0
                 ret_flight = []
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
 
             vf = data_get.variflight()
-            ret_msg['issucceed'] = 1
+            ret_msg['is_exist'] = 1
             if is_detail:
                 ret_flight = vf.get_detail_mes(detail_url)
                 ret_msg['flight'] = ret_flight
@@ -240,13 +240,13 @@ def getSearchFlightByCity(request):
                 return JsonResponse(ret_msg, safe=False)
         else:
             if is_detail == 1 and detail_url == '--':
-                ret_msg['issucceed'] = 0
+                ret_msg['is_exist'] = 0
                 ret_flight = []
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
 
             vf = data_get.variflight()
-            ret_msg['issucceed'] = 1
+            ret_msg['is_exist'] = 1
             if is_detail:
                 print("come here if is_detail")
                 ret_flight = vf.get_detail_mes(detail_url)
@@ -301,7 +301,7 @@ def postFavoriteFlight(request):
         flight_msg["user_id"] = user_id
         flight_msg["user_type"] = user_type
         flight_msg["datetime"] = datetime
-        flight_msg["delay_time"] = "0minutes"
+        flight_msg["delay_time"] = flight_msg["forecast"]
         flight_msg["detail_url"] = detail_url
         print(flight_msg)
         um.add_trip(flight_msg)
