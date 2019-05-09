@@ -43,6 +43,40 @@ def trip(request):
         return render(request, 'user/trip.html')
 
 
+def weektoflightid(askflight_id,weekday):
+    if weekday==0:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_mon=1)
+    elif weekday==1:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_tue=1)
+    elif weekday==2:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_wed=1)
+    elif weekday==3:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_thr=1)
+    elif weekday==4:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_fri=1)
+    elif weekday==5:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_sat=1)
+    elif weekday==6:
+        flights = models.Flight.objects.filter(flight_id=askflight_id,is_sun=1)
+    return flights
+
+def weektoflightcity(d_airport,a_airport,weekday):
+    if weekday==0:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_mon=1)
+    elif weekday==1:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_tue=1)
+    elif weekday==2:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_wed=1)
+    elif weekday==3:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_thr=1)
+    elif weekday==4:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_fri=1)
+    elif weekday==5:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_sat=1)
+    elif weekday==6:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_sun=1)
+    return flights
+
 # search
 def getSearchFlightById(request):
     ret_msg = {}
@@ -53,14 +87,14 @@ def getSearchFlightById(request):
         detail_url = request.GET.get('detail_url')
 
         today = date.today()
-
         askdate = DT.strptime(dtime, '%Y-%m-%d')
         askdate = askdate.date()
         # askdate = date(askdate.year,askdate.month,askdate.day)
         # dtime.strptime('%Y-%m-%d')
 
         if askdate > today:
-            flights = models.Flight.objects.filter(flight_id=askflight_id)
+            weekday = askdate.isoweekday()
+            flights = weektoflightid(askflight_id,weekday)
             if not flights.exists():
                 ret_msg['is_exist'] = 0
                 ret_flight = []
@@ -70,10 +104,7 @@ def getSearchFlightById(request):
                 ret_flight = []
                 for i in range(flights.count()):
                     ret_flight.append(model_to_dict(flights[i]))
-                    ret_flight[i]['plan_departure_time'] = str(ret_flight[i]['plan_departure_time'])
-                    ret_flight[i]["plan_arrival_time"] = str(ret_flight[i]["plan_arrival_time"])
-                    ret_flight[i]["actual_departure_time"] = str(ret_flight[i]["plan_departure_time"])
-                    ret_flight[i]["actual_arrival_time"] = str(ret_flight[i]["actual_arrival_time"])
+
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
                 return JsonResponse(ret_msg, safe=False)
@@ -125,6 +156,128 @@ def getSearchFlightById(request):
         ret_msg['flight'] = ret_flight
         return JsonResponse(ret_msg, safe=False)
 
+
+def getSearchFlightByCity(request):
+    ret_msg = {}
+    if request.method == 'GET':
+        city_from = request.GET.get('city_from')
+        city_to = request.GET.get('city_to')
+        dtime = request.GET.get('datetime')
+        is_detail = int(request.GET.get('is_detail'))
+        detail_url = request.GET.get('detail_url')
+
+        today = date.today()
+
+        askdate = DT.strptime(dtime, '%Y-%m-%d')
+        askdate = askdate.date()
+
+        if askdate > today:
+            d_airport = airportmodels.city2airport(city_from)
+            a_airport = airportmodels.city2airport(city_to)
+            weekday = askdate.isoweekday()
+            flights = weektoflightcity(d_airport,a_airport,weekday)
+
+            if not flights.exists():
+                ret_msg['is_exist'] = 0
+                ret_flights = []
+                ret_msg['flight'] = ret_flights
+
+                return JsonResponse(ret_msg, safe=False)
+            else:
+                ret_flights = []
+                for item in flights:
+                    ret_flights.append(model_to_dict(item))
+                ret_msg['is_exist'] = 1
+                ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
+                return JsonResponse(ret_msg, safe=False)
+        else:
+            if is_detail == 1 and detail_url == '--':
+                ret_msg['is_exist'] = 0
+                ret_flight = []
+                ret_msg['flight'] = ret_flight
+                return JsonResponse(ret_msg, safe=False)
+
+            vf = data_get.variflight()
+            ret_msg['is_exist'] = 1
+            if is_detail:
+                print("come here if is_detail")
+                ret_flight = vf.get_detail_mes(detail_url)
+                ret_msg['flight'] = ret_flight
+                return JsonResponse(ret_msg, safe=False)
+            else:
+                print("come here else is_detail")
+                ret_flight = vf.search_seg(city_from, city_to)
+                if ret_flight == None:
+                    ret_msg['is_exist'] = 0
+                    return JsonResponse(ret_msg, safe=False)
+                ret_msg['is_exist'] = 1
+                ret_msg['flight'] = ret_flight
+                return JsonResponse(ret_msg, safe=False)
+        # vf = variflight()
+        # ret_msg = vf.search_seg(city_from,city_to)
+        # return JsonResponse(ret_msg,safe=False)
+        # d_airport = airportmodels.city2airport(city_from)
+        # a_airport = airportmodels.city2airport(city_to)
+        # flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
+        #
+        # if not flights.exists():
+        #     ret_msg['is_exist'] = 0
+        #     ret_flights = []
+        #     ret_msg['flight'] = ret_flights
+        #
+        #     return JsonResponse(ret_msg,safe=False)
+        # else:
+        #     ret_flights = []
+        #     for item in flights:
+        #         ret_flights.append(model_to_dict(item))
+        #     ret_msg['is_exist'] = 1
+        #     ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
+        #     return JsonResponse(ret_msg,safe=False)
+    else:
+        ret_msg['is_exist'] = 0
+        ret_msg['flight'] = []
+        return JsonResponse(ret_msg, safe=False)
+
+
+def postFavoriteFlight(request):
+    ret_msg = {}
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        user_type = request.POST.get('user_type')
+        flight_id = request.POST.get('flight_id')
+        datetime = request.POST.get('datetime')
+        detail_url = request.POST.get('detail_url')
+        istrip = um.mytrip.objects.filter(user_id=user_id,user_type=user_type,flight_id=flight_id,datetime=datetime,detail_url=detail_url)
+        if istrip.exists():
+            ret_msg['issucceed'] = 0
+            return JsonResponse(ret_msg, safe=False)
+
+        if "T16:00:00Z" in datetime:
+            datetime = datetime[0:10]
+        askdate = DT.strptime(datetime, '%Y-%m-%d')
+        askdate = askdate.date()
+        today = date.today()
+        if askdate>today:
+            weekday = askdate.isoweekday()
+            flights = weektoflightid(flight_id,weekday)
+            flight_msg = model_to_dict(flights[0])
+        else:
+            vf = data_get.variflight()
+            flight_msg = vf.get_detail_mes(detail_url)
+            flight_msg = flight_msg[0]
+            flight_msg["delay_time"] = flight_msg["forecast"]
+        flight_msg["user_id"] = user_id
+        flight_msg["user_type"] = user_type
+        flight_msg["datetime"] = datetime
+        flight_msg["detail_url"] = detail_url
+        print(flight_msg)
+        um.add_trip(flight_msg)
+        # um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
+        ret_msg['issucceed'] = 1
+        return JsonResponse(ret_msg, safe=False)
+    else:
+        ret_msg['issucceed'] = 0
+        return JsonResponse(ret_msg, safe=False)
 
 def gS_FC(request):
     json = {
@@ -203,113 +356,3 @@ def gS_FC(request):
     }
     return json
 
-
-def getSearchFlightByCity(request):
-    ret_msg = {}
-    if request.method == 'GET':
-        city_from = request.GET.get('city_from')
-        city_to = request.GET.get('city_to')
-        print(city_to)
-        print(city_from)
-        dtime = request.GET.get('datetime')
-        is_detail = int(request.GET.get('is_detail'))
-        detail_url = request.GET.get('detail_url')
-
-        today = date.today()
-
-        askdate = DT.strptime(dtime, '%Y-%m-%d')
-        askdate = askdate.date()
-
-        if askdate > today:
-            d_airport = airportmodels.city2airport(city_from)
-            a_airport = airportmodels.city2airport(city_to)
-            flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
-
-            if not flights.exists():
-                ret_msg['is_exist'] = 0
-                ret_flights = []
-                ret_msg['flight'] = ret_flights
-
-                return JsonResponse(ret_msg, safe=False)
-            else:
-                ret_flights = []
-                for item in flights:
-                    ret_flights.append(model_to_dict(item))
-                ret_msg['is_exist'] = 1
-                ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
-                return JsonResponse(ret_msg, safe=False)
-        else:
-            if is_detail == 1 and detail_url == '--':
-                ret_msg['is_exist'] = 0
-                ret_flight = []
-                ret_msg['flight'] = ret_flight
-                return JsonResponse(ret_msg, safe=False)
-
-            vf = data_get.variflight()
-            ret_msg['is_exist'] = 1
-            if is_detail:
-                print("come here if is_detail")
-                ret_flight = vf.get_detail_mes(detail_url)
-                ret_msg['flight'] = ret_flight
-                return JsonResponse(ret_msg, safe=False)
-            else:
-                print("come here else is_detail")
-                ret_flight = vf.search_seg(city_from, city_to)
-                if ret_flight == None:
-                    ret_msg['is_exist'] = 0
-                    return JsonResponse(ret_msg, safe=False)
-                ret_msg['is_exist'] = 1
-                ret_msg['flight'] = ret_flight
-                return JsonResponse(ret_msg, safe=False)
-        # vf = variflight()
-        # ret_msg = vf.search_seg(city_from,city_to)
-        # return JsonResponse(ret_msg,safe=False)
-        # d_airport = airportmodels.city2airport(city_from)
-        # a_airport = airportmodels.city2airport(city_to)
-        # flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport)
-        #
-        # if not flights.exists():
-        #     ret_msg['is_exist'] = 0
-        #     ret_flights = []
-        #     ret_msg['flight'] = ret_flights
-        #
-        #     return JsonResponse(ret_msg,safe=False)
-        # else:
-        #     ret_flights = []
-        #     for item in flights:
-        #         ret_flights.append(model_to_dict(item))
-        #     ret_msg['is_exist'] = 1
-        #     ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
-        #     return JsonResponse(ret_msg,safe=False)
-    else:
-        ret_msg['is_exist'] = 0
-        ret_msg['flight'] = []
-        return JsonResponse(ret_msg, safe=False)
-
-
-def postFavoriteFlight(request):
-    ret_msg = {}
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        user_type = request.POST.get('user_type')
-        flight_id = request.POST.get('flight_id')
-        datetime = request.POST.get('datetime')
-        detail_url = request.POST.get('detail_url')
-        if "T16:00:00Z" in datetime:
-            datetime = datetime[0:10]
-        vf = data_get.variflight()
-        flight_msg = vf.get_detail_mes(detail_url)
-        flight_msg = flight_msg[0]
-        flight_msg["user_id"] = user_id
-        flight_msg["user_type"] = user_type
-        flight_msg["datetime"] = datetime
-        flight_msg["delay_time"] = flight_msg["forecast"]
-        flight_msg["detail_url"] = detail_url
-        print(flight_msg)
-        um.add_trip(flight_msg)
-        # um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
-        ret_msg['issucceed'] = 1
-        return JsonResponse(ret_msg, safe=False)
-    else:
-        ret_msg['issucceed'] = 0
-        return JsonResponse(ret_msg, safe=False)
