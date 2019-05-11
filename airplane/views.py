@@ -23,6 +23,7 @@ from rest_framework.response import Response
 import random
 from datetime import datetime as DT
 from datetime import date
+from datetime import time
 
 
 # detail
@@ -238,6 +239,21 @@ def getSearchFlightByCity(request):
         ret_msg['flight'] = []
         return JsonResponse(ret_msg, safe=False)
 
+def future2normalization(flight):
+    del flight["id"]
+    del flight["is_mon"]
+    del flight["is_tue"]
+    del flight["is_wed"]
+    del flight["is_thr"]
+    del flight["is_fri"]
+    del flight["is_sat"]
+    del flight["is_sun"]
+    flight["real_flight_id"] = flight["flight_id"]
+    print(type(flight["plan_departure_time"]))
+    flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"],"%H:%M")
+    print(flight["plan_departure_time"])
+    return flight
+
 
 def postFavoriteFlight(request):
     ret_msg = {}
@@ -247,20 +263,25 @@ def postFavoriteFlight(request):
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
         detail_url = request.POST.get('detail_url')
-        istrip = um.mytrip.objects.filter(user_id=user_id,user_type=user_type,flight_id=flight_id,datetime=datetime,detail_url=detail_url)
+        if "T16:00:00Z" in datetime:
+            datetime = datetime[0:10]
+        istrip = um.mytrip.objects.filter(user_ID_id=user_id,user_trip=user_type,flight_id=flight_id,datetime=datetime,detail_url=detail_url)
         if istrip.exists():
             ret_msg['issucceed'] = 0
             return JsonResponse(ret_msg, safe=False)
 
-        if "T16:00:00Z" in datetime:
-            datetime = datetime[0:10]
         askdate = DT.strptime(datetime, '%Y-%m-%d')
         askdate = askdate.date()
         today = date.today()
         if askdate>today:
             weekday = askdate.isoweekday()
             flights = weektoflightid(flight_id,weekday)
+            if not flights.exists():
+                ret_msg['issucceed'] = 0
+                return JsonResponse(ret_msg, safe=False)
             flight_msg = model_to_dict(flights[0])
+            flight_msg = future2normalization(flight_msg)
+            print(flight_msg)
         else:
             vf = data_get.variflight()
             flight_msg = vf.get_detail_mes(detail_url)
@@ -270,8 +291,7 @@ def postFavoriteFlight(request):
         flight_msg["user_type"] = user_type
         flight_msg["datetime"] = datetime
         flight_msg["detail_url"] = detail_url
-        print(flight_msg)
-        um.add_trip(flight_msg)
+        # um.add_trip(flight_msg)
         # um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
         ret_msg['issucceed'] = 1
         return JsonResponse(ret_msg, safe=False)

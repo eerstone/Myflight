@@ -305,13 +305,18 @@ def postDelete(request):
         user_id = request.POST.get('user_id')
         user_id = int(user_id)
         trip_id = request.POST.get('trip_id')
-        print(trip_id)
-        trip = models.mytrip.objects.get(id=trip_id)
-        print(trip.user_ID_id)
-        if (user_id == trip.user_ID_id):
-            trip.delete()
-            ret_msg['issucceed'] = 1
-            return JsonResponse(ret_msg,safe=False)
+
+        isexist = models.mytrip.objects.filter(id=trip_id)
+        isexist = isexist.exists()
+        if (isexist==1):
+            trip = models.mytrip.objects.get(id=trip_id)
+            if (user_id == trip.user_ID_id):
+                trip.delete()
+                ret_msg['issucceed'] = 1
+                return JsonResponse(ret_msg,safe=False)
+            else:
+                ret_msg['issucceed'] = 0
+                return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
             return JsonResponse(ret_msg,safe=False)
