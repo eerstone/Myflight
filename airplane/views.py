@@ -45,6 +45,8 @@ def trip(request):
 
 
 def weektoflightid(askflight_id,weekday):
+    if weekday>6 or weekday<0:
+        return None
     if weekday==0:
         flights = models.Flight.objects.filter(flight_id=askflight_id,is_mon=1)
     elif weekday==1:
@@ -62,6 +64,8 @@ def weektoflightid(askflight_id,weekday):
     return flights
 
 def weektoflightcity(d_airport,a_airport,weekday):
+    if weekday>6 or weekday<0:
+        return None
     if weekday==0:
         flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_mon=1)
     elif weekday==1:
@@ -94,7 +98,7 @@ def getSearchFlightById(request):
         # dtime.strptime('%Y-%m-%d')
 
         if askdate > today:
-            weekday = askdate.isoweekday()
+            weekday = askdate.weekday()
             flights = weektoflightid(askflight_id,weekday)
             if not flights.exists():
                 ret_msg['is_exist'] = 0
@@ -102,12 +106,14 @@ def getSearchFlightById(request):
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
-                ret_flight = []
-                for i in range(flights.count()):
-                    ret_flight.append(model_to_dict(flights[i]))
+                ret_flights = []
+                for flight in flights:
+                    flight = model_to_dict(flight)
+                    flight = future2normalization(flight)
+                    ret_flights.append(flight)
 
                 ret_msg['is_exist'] = 1
-                ret_msg['flight'] = sorted(ret_flight, key=operator.itemgetter('plan_departure_time'))
+                ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
                 return JsonResponse(ret_msg, safe=False)
         else:
             if is_detail == 1 and detail_url == '--':
@@ -175,7 +181,7 @@ def getSearchFlightByCity(request):
         if askdate > today:
             d_airport = airportmodels.city2airport(city_from)
             a_airport = airportmodels.city2airport(city_to)
-            weekday = askdate.isoweekday()
+            weekday = askdate.weekday()
             flights = weektoflightcity(d_airport,a_airport,weekday)
 
             if not flights.exists():
@@ -186,8 +192,10 @@ def getSearchFlightByCity(request):
                 return JsonResponse(ret_msg, safe=False)
             else:
                 ret_flights = []
-                for item in flights:
-                    ret_flights.append(model_to_dict(item))
+                for flight in flights:
+                    flight = model_to_dict(flight)
+                    flight = future2normalization(flight)
+                    ret_flights.append(flight)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
                 return JsonResponse(ret_msg, safe=False)
@@ -240,6 +248,28 @@ def getSearchFlightByCity(request):
         return JsonResponse(ret_msg, safe=False)
 
 def future2normalization(flight):
+    flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"],"%H:%M")
+    flight["plan_arrival_time"] = time.strftime(flight["plan_arrival_time"],"%H:%M")
+    flight["actual_departure_time"] = time.strftime(flight["actual_departure_time"],"%H:%M")
+    flight["actual_arrival_time"] = time.strftime(flight["actual_arrival_time"],"%H:%M")
+    flight["real_flight_id"] = flight["flight_id"]
+    flight["check_in"] = "--"
+    flight["boarding_port"] = "--"
+    flight["arriving_port"] = "--"
+    flight["Baggage_num"] = "--"
+    flight["length"] = flight["mileage"]
+    flight["time"] = "--"
+    flight["proc"] = "--"
+    flight["plane"] = flight["aircraft_models"]
+    flight["age"] = "--"
+    flight["forecast"] = "--"
+    flight["old_state"] = "--"
+    flight["d_weather"] = "--"
+    flight["d_pm"] = "--"
+    flight["d_state"] = "--"
+    flight["a_weather"] = "--"
+    flight["a_pm"] = "--"
+    flight["a_state"] = "--"
     del flight["id"]
     del flight["is_mon"]
     del flight["is_tue"]
@@ -248,10 +278,8 @@ def future2normalization(flight):
     del flight["is_fri"]
     del flight["is_sat"]
     del flight["is_sun"]
-    flight["real_flight_id"] = flight["flight_id"]
-    print(type(flight["plan_departure_time"]))
-    flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"],"%H:%M")
-    print(flight["plan_departure_time"])
+    del flight["mileage"]
+    del flight["aircraft_models"]
     return flight
 
 
@@ -263,8 +291,10 @@ def postFavoriteFlight(request):
         flight_id = request.POST.get('flight_id')
         datetime = request.POST.get('datetime')
         detail_url = request.POST.get('detail_url')
+        #数据库日期更新后，以下两条语句应该无用
         if "T16:00:00Z" in datetime:
             datetime = datetime[0:10]
+        #行程是否存在判断
         istrip = um.mytrip.objects.filter(user_ID_id=user_id,user_trip=user_type,flight_id=flight_id,datetime=datetime,detail_url=detail_url)
         if istrip.exists():
             ret_msg['issucceed'] = 0
@@ -273,15 +303,16 @@ def postFavoriteFlight(request):
         askdate = DT.strptime(datetime, '%Y-%m-%d')
         askdate = askdate.date()
         today = date.today()
+        #如果关注行程为未来，则存储未来航班状态至库
         if askdate>today:
-            weekday = askdate.isoweekday()
+            weekday = askdate.weekday()
             flights = weektoflightid(flight_id,weekday)
             if not flights.exists():
                 ret_msg['issucceed'] = 0
                 return JsonResponse(ret_msg, safe=False)
             flight_msg = model_to_dict(flights[0])
             flight_msg = future2normalization(flight_msg)
-            print(flight_msg)
+        #否则为过去和现在，调用爬虫获取状态进行存储，（目前过去实际存储同为现在）
         else:
             vf = data_get.variflight()
             flight_msg = vf.get_detail_mes(detail_url)
@@ -291,7 +322,7 @@ def postFavoriteFlight(request):
         flight_msg["user_type"] = user_type
         flight_msg["datetime"] = datetime
         flight_msg["detail_url"] = detail_url
-        # um.add_trip(flight_msg)
+        um.add_trip(flight_msg)
         # um.mytrip.objects.create(user_ID_id=user_id, flight_id=flight_id, datetime=datetime, user_trip=user_type)
         ret_msg['issucceed'] = 1
         return JsonResponse(ret_msg, safe=False)
