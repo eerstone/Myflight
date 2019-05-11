@@ -250,8 +250,10 @@ def getSearchFlightByCity(request):
 def future2normalization(flight):
     flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"],"%H:%M")
     flight["plan_arrival_time"] = time.strftime(flight["plan_arrival_time"],"%H:%M")
-    flight["actual_departure_time"] = time.strftime(flight["actual_departure_time"],"%H:%M")
-    flight["actual_arrival_time"] = time.strftime(flight["actual_arrival_time"],"%H:%M")
+    # flight["actual_departure_time"] = time.strftime(flight["actual_departure_time"],"%H:%M")
+    # flight["actual_arrival_time"] = time.strftime(flight["actual_arrival_time"],"%H:%M")
+    flight["actual_departure_time"] = "--"
+    flight["actual_arrival_time"] = "--"
     flight["real_flight_id"] = flight["flight_id"]
     flight["check_in"] = "--"
     flight["boarding_port"] = "--"
