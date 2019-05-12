@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost','114.115.134.188']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +60,12 @@ INSTALLED_APPS = [
     'Myflightadmin',
     'rest_framework',
 ]
+
+# CRONJOBS = [
+#     # 表示每两分钟执行一次
+#     ('*/1 * * * *', 'airplane.task.task'),
+#     # ('*/2 * * * *', 'airplane.views.scan_trip'),
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

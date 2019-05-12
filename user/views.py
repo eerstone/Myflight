@@ -322,3 +322,4 @@ def postDelete(request):
             return JsonResponse(ret_msg,safe=False)
     else:
         pass
+

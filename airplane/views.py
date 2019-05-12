@@ -17,6 +17,7 @@ from Myflight.settings import APIKEY
 from django.views import View
 from django_redis import get_redis_connection
 from utils import data_get
+from utils import jiguang
 import time
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -44,7 +45,7 @@ def trip(request):
         return render(request, 'user/trip.html')
 
 
-def weektoflightid(askflight_id,weekday):
+def week2flightid(askflight_id,weekday):
     if weekday>6 or weekday<0:
         return None
     if weekday==0:
@@ -63,7 +64,7 @@ def weektoflightid(askflight_id,weekday):
         flights = models.Flight.objects.filter(flight_id=askflight_id,is_sun=1)
     return flights
 
-def weektoflightcity(d_airport,a_airport,weekday):
+def week2flightcity(d_airport,a_airport,weekday):
     if weekday>6 or weekday<0:
         return None
     if weekday==0:
@@ -99,7 +100,7 @@ def getSearchFlightById(request):
 
         if askdate > today:
             weekday = askdate.weekday()
-            flights = weektoflightid(askflight_id,weekday)
+            flights = week2flightid(askflight_id,weekday)
             if not flights.exists():
                 ret_msg['is_exist'] = 0
                 ret_flight = []
@@ -182,7 +183,7 @@ def getSearchFlightByCity(request):
             d_airport = airportmodels.city2airport(city_from)
             a_airport = airportmodels.city2airport(city_to)
             weekday = askdate.weekday()
-            flights = weektoflightcity(d_airport,a_airport,weekday)
+            flights = week2flightcity(d_airport,a_airport,weekday)
 
             if not flights.exists():
                 ret_msg['is_exist'] = 0
@@ -308,7 +309,7 @@ def postFavoriteFlight(request):
         #如果关注行程为未来，则存储未来航班状态至库
         if askdate>today:
             weekday = askdate.weekday()
-            flights = weektoflightid(flight_id,weekday)
+            flights = week2flightid(flight_id,weekday)
             if not flights.exists():
                 ret_msg['issucceed'] = 0
                 return JsonResponse(ret_msg, safe=False)
@@ -331,6 +332,43 @@ def postFavoriteFlight(request):
     else:
         ret_msg['issucceed'] = 0
         return JsonResponse(ret_msg, safe=False)
+
+
+def scan_trip():
+    trips = um.mytrip.objects.filter()
+    i = 0
+    for trip in trips:
+        trip_id = trip.id
+        user_id = trip.user_ID_id
+        datetime = trip.datetime
+        flight_id = trip.flight_id
+        status = trip.flight_status
+        today = date.today()
+        print("trip%d"%i)
+        i = i + 1
+        if datetime >today:
+            weekday = datetime.weekday()
+            new_flight = week2flightid(flight_id,weekday)
+            new_flight = new_flight.first()
+            if new_flight.flight_status=="延迟" and status=="计划":
+                jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
+                trip.status = "延误"
+                trip.save()
+        else:
+            if trip.detail_url=="--":
+                pass
+            else:
+                vf = data_get.variflight()
+                new_flight = vf.get_detail_mes(trip.detail_url)
+                new_flight = new_flight[0]
+                if new_flight["flight_status"]=="延误" and status=="计划":
+                    jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
+                    trip.status = "延误"
+                    trip.save()
+
+
+
+
 
 def gS_FC(request):
     json = {
