@@ -1,6 +1,5 @@
 from django.db import models
 from django.forms.models import model_to_dict
-
 # Create your models here.
 class Flight(models.Model):
     flight_id = models.CharField(max_length=100)
@@ -72,5 +71,10 @@ def airport2flight(airport,isfrom):
         else:
             return None
 
-def searchbyid(id):
-    return Flight.objects.filter(flight_id=id)
+from airplane.views import future2normalization
+def searchbyid(flightid):
+    flight = Flight.objects.filter(flight_id=flightid)
+    # flight = model_to_dict(flight[0])
+    # flight = future2normalization(flight)
+
+    return flight

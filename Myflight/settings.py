@@ -45,6 +45,7 @@ ALLOWED_HOSTS = ['127.0.0.1','localhost','114.115.134.188']
 # Application definition
 
 INSTALLED_APPS = [
+    # 'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,7 +59,14 @@ INSTALLED_APPS = [
     'user',
     'Myflightadmin',
     'rest_framework',
+    'web_session',
 ]
+
+# CRONJOBS = [
+#     # 表示每两分钟执行一次
+#     ('*/1 * * * *', 'airplane.task.task'),
+#     # ('*/2 * * * *', 'airplane.views.scan_trip'),
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -159,3 +167,12 @@ STATICFILES_DIRS = [
     BASE_DIR+"/Myflightadmin/"+"static/",
 
 ]
+
+SESSION_COOKIE_NAME = "sessionid"       # Session的cookie保存在浏览器上时的key
+SESSION_COOKIE_PATH = "/"               # Session的cookie保存的路径(默认)
+SESSION_COOKIE_DOMAIN = None            # Session的cookie保存的域名(默认)
+SESSION_COOKIE_SECURE = False           # 是否Https传输cookie
+SESSION_COOKIE_HTTPONLY = True          # 是否Session的cookie只支持http传输(默认)
+SESSION_COOKIE_AGE = 1209600            # Session的cookie失效日期(2周)(默认)
+SESSION_SAVE_EVERY_REQUEST = False      # 是否设置关闭浏览器使得Session过期
+SESSION_COOKIE_AT_BROWSER_CLOSE = False  # 是否每次请求都保存Session，默认修改之后才能保存
