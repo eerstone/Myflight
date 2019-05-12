@@ -47,7 +47,7 @@ class mytrip(models.Model):
     flight_id = models.CharField(max_length=100,default="CA1113")
     company = models.CharField(max_length=100,default="--")
     real_flight_id = models.CharField(max_length=100,default="--")
-    datetime = models.DateTimeField(default="2000-01-01")
+    datetime = models.DateField(default="2000-01-01")
 
     plan_departure_time = models.CharField(max_length=100,default="--")
     plan_arrival_time = models.CharField(max_length=100,default="--")
@@ -125,7 +125,6 @@ def add_trip(one_trip):
 
 def del_trip(trip_id):
     trip = mytrip.objects.get(id=trip_id)
-    trip.delete()
 
 def search_trip(user_id):
     trips = mytrip.objects.filter(user_ID_id=user_id)

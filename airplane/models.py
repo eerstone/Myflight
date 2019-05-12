@@ -72,5 +72,7 @@ def airport2flight(airport,isfrom):
         else:
             return None
 
-def searchbyid(id):
-    return Flight.objects.filter(flight_id=id)
+# def searchbyid(flightid):
+#     flight = Flight.objects.filter(flight_id=flightid)
+#     flight = model_to_dict(flight[0])
+#     return

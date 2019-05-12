@@ -32,3 +32,19 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^captcha', include('captcha.urls')),
 ]
+
+from apscheduler.scheduler import Scheduler
+from airplane.views import scan_trip
+sched = Scheduler()
+
+
+# @sched.interval_schedule(seconds=10)
+# def my_task1():
+#     print(1)
+
+@sched.interval_schedule(seconds=120)
+def my_task2():
+    scan_trip()
+
+
+sched.start()
