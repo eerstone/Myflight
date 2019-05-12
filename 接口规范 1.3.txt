@@ -118,7 +118,7 @@ airplane/
 								flight_id:String
 								company:String
 								real_flight_id:string(实际承运航班)
-								datetime:string
+							datetime:string
 
 								plan_departure_time:String
 								plan_arrival_time:String
@@ -127,10 +127,10 @@ airplane/
 
 								flight_status:String
 								departure:String
-								arrival:String
+						10		arrival:String
 
 								punctuality_rate：String
-								delay_time:String
+							delay_time:String
 								check_in:String
 								boarding_port:String
 								arriving_port:String
@@ -139,7 +139,7 @@ airplane/
 								length:string
 								time:string(用时)
 
-								proc:string（飞行的距离占总距离的比例）
+							proc:string（飞行的距离占总距离的比例）
 								plane:string(飞机类型)
 								age:string(机龄)
 								forecast:string（未起飞为其预计起飞时间，飞到后为其与预期的比较）

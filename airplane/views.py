@@ -86,6 +86,7 @@ def getSearchFlightById(request):
 
             vf = data_get.variflight()
             ret_msg['is_exist'] = 1
+            ret_msg['issucceed'] = 1
             if is_detail:
                 ret_flight = vf.get_detail_mes(detail_url)
                 ret_msg['flight'] = ret_flight
@@ -247,6 +248,7 @@ def getSearchFlightByCity(request):
 
             vf = data_get.variflight()
             ret_msg['is_exist'] = 1
+            ret_msg['issucceed'] = 1
             if is_detail:
                 print("come here if is_detail")
                 ret_flight = vf.get_detail_mes(detail_url)
