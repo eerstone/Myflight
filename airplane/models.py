@@ -72,7 +72,9 @@ def airport2flight(airport,isfrom):
         else:
             return None
 
-# def searchbyid(flightid):
-#     flight = Flight.objects.filter(flight_id=flightid)
-#     flight = model_to_dict(flight[0])
-#     return
+from airplane.views import future2normalization
+def searchbyid(flightid):
+    flight = Flight.objects.filter(flight_id=flightid)
+    flight = model_to_dict(flight[0])
+    flight = future2normalization(flight)
+    return flight
