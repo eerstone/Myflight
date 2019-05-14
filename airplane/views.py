@@ -89,6 +89,7 @@ def getSearchFlightById(request):
     if request.method == 'GET':
         askflight_id = request.GET.get('flight_id')
         dtime = request.GET.get('datetime')
+        datetime = dtime#String
         is_detail = int(request.GET.get('is_detail'))
         detail_url = request.GET.get('detail_url')
 
@@ -111,6 +112,7 @@ def getSearchFlightById(request):
                 for flight in flights:
                     flight = model_to_dict(flight)
                     flight = future2normalization(flight)
+                    flight["datetime"] = datetime
                     ret_flights.append(flight)
 
                 ret_msg['is_exist'] = 1
@@ -127,11 +129,12 @@ def getSearchFlightById(request):
             ret_msg['is_exist'] = 1
             ret_msg['issucceed'] = 1
             if is_detail:
-                ret_flight = vf.get_detail_mes(detail_url)
+                ret_flight = vf.get_detail_mes(detail_url,datetime)
+                ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
-                ret_flight = vf.search_num(askflight_id)
+                ret_flight = vf.search_num(askflight_id,datetime)
                 if ret_flight == None:
                     ret_msg['is_exist'] = 0
                     return JsonResponse(ret_msg, safe=False)
@@ -172,6 +175,7 @@ def getSearchFlightByCity(request):
         city_from = request.GET.get('city_from')
         city_to = request.GET.get('city_to')
         dtime = request.GET.get('datetime')
+        datetime = dtime #String
         is_detail = int(request.GET.get('is_detail'))
         detail_url = request.GET.get('detail_url')
 
@@ -197,6 +201,7 @@ def getSearchFlightByCity(request):
                 for flight in flights:
                     flight = model_to_dict(flight)
                     flight = future2normalization(flight)
+                    flight["datetime"] = datetime
                     ret_flights.append(flight)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = sorted(ret_flights, key=operator.itemgetter('plan_departure_time'))
@@ -213,12 +218,13 @@ def getSearchFlightByCity(request):
             ret_msg['issucceed'] = 1
             if is_detail:
                 print("come here if is_detail")
-                ret_flight = vf.get_detail_mes(detail_url)
+                ret_flight = vf.get_detail_mes(detail_url,datetime)
+                ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
                 print("come here else is_detail")
-                ret_flight = vf.search_seg(city_from, city_to)
+                ret_flight = vf.search_seg(city_from, city_to,datetime)
                 if ret_flight == None:
                     ret_msg['is_exist'] = 0
                     return JsonResponse(ret_msg, safe=False)
@@ -320,7 +326,8 @@ def postFavoriteFlight(request):
         #否则为过去和现在，调用爬虫获取状态进行存储，（目前过去实际存储同为现在）
         else:
             vf = data_get.variflight()
-            flight_msg = vf.get_detail_mes(detail_url)
+            print(detail_url)
+            flight_msg = vf.get_detail_mes(detail_url,datetime)
             flight_msg = flight_msg[0]
             flight_msg["delay_time"] = flight_msg["forecast"]
         flight_msg["user_id"] = user_id

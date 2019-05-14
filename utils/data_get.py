@@ -4,6 +4,7 @@ import pytesseract
 import re
 import time
 import random
+import time
 from bs4 import BeautifulSoup
 
 from urllib.parse import urlencode
@@ -209,7 +210,7 @@ class variflight(object):
 
             # 通过url获取信息列表(航段或航班号)
 
-    def get_mesbyurl(self, url):
+    def get_mesbyurl(self, url, dt):
         result = []
         r = requests.Session()
         resp = r.get(url)
@@ -318,6 +319,7 @@ class variflight(object):
                     'a_pm': '--',  # pm2.5
                     'a_state': '--',  # 机场拥堵情况
 
+                    'datetime': dt,
                     "detail_url": detail_url,  # 获取详细信息url
                 }
                 result.append(mydict)
@@ -326,7 +328,7 @@ class variflight(object):
         return result
 
     # 通过url获取详细信息(具体航班)
-    def get_detail_mes(self, url):
+    def get_detail_mes(self, url, dt):
         result = []
         r = requests.Session()
         req = r.get(url)
@@ -379,15 +381,20 @@ class variflight(object):
             d_weather = selector.xpath('//ul[@class="f_common rand_ul_dep"]/li[1]/p[1]/text()')[0].split()  # 天气
             d_pm = selector.xpath('//ul[@class="f_common rand_ul_dep"]/li[1]/p[2]/text()')  # pm2.5
             d_state = selector.xpath('//ul[@class="f_common rand_ul_dep"]/li[1]/p[3]/text()')  # 机场拥堵情况
-
-            d_weather = d_weather[0] + d_weather[1] + d_weather[2]
+            if (len(d_weather) < 3):
+                d_weather = d_weather[0]
+            else:
+                d_weather = d_weather[0] + d_weather[1] + d_weather[2]
 
             # 目的地机场信息
             a_weather = selector.xpath('//ul[@class="f_common rand_ul_arr"]/li[1]/p[1]/text()')[0].split()  # 天气
             a_pm = selector.xpath('//ul[@class="f_common rand_ul_arr"]/li[1]/p[2]/text()')  # pm2.5
             a_state = selector.xpath('//ul[@class="f_common rand_ul_arr"]/li[1]/p[3]/text()')  # 机场拥堵情况
 
-            a_weather = a_weather[0] + a_weather[1]
+            if (len(a_weather) < 2):
+                a_weather = a_weather[0]
+            else:
+                a_weather = a_weather[0] + a_weather[1]
 
             # 获取图片信息列表
             src = selector.xpath('//p[@class="com rand_p"]/img[1]/@src')
@@ -524,6 +531,7 @@ class variflight(object):
                 'a_pm': self.check(a_pm),  # pm2.5
                 'a_state': self.check(a_state),  # 机场拥堵情况
 
+                'datetime': dt,
                 'detail_url': '--',
 
             }
@@ -536,26 +544,77 @@ class variflight(object):
 
     '''
     通过航班号获取航班信息，返回字典列表
-    参数num为航班号字符串
+    参数num为航班号字符串,参数date为日期字符串,如2019-05-07
     '''
 
-    def search_num(self, num):
+    def search_num(self, num, date):
 
-        url = 'http://www.variflight.com/flight/fnum/' + num + '.html?AE71649A58c77'
+        dt = date
 
-        return self.get_mesbyurl(url)
+        # 获取今日日期
+        localtime = time.localtime(time.time())
+
+        year = str(localtime.tm_year)
+        mon = str(localtime.tm_mon)
+        day = str(localtime.tm_mday)
+        if (len(mon) == 1):
+            mon = '0' + mon
+        if (len(day) == 1):
+            day = '0' + day
+
+        today = year + mon + day
+
+        # 整理传入日期格式
+        date = date.split('-')
+        date = date[0] + date[1] + date[2]
+
+        # 获取当天信息
+        if (int(date) == int(today)):
+            url = 'http://www.variflight.com/flight/fnum/' + num + '.html?AE71649A58c77'
+
+        # 获取历史信息
+        if (int(date) < int(today)):
+            url = 'http://www.variflight.com/flight/fnum/' + num + '.html?AE71649A58c77&fdate=' + date
+
+        return self.get_mesbyurl(url, dt)
 
     '''
     通过其降地获取航班信息，返回字典列表
-    参数depart为出发城市字符串,参数arrive为到达城市字符串
+    参数depart为出发城市字符串,参数arrive为到达城市字符串,参数date为日期字符串,如2019-05-07
     '''
 
-    def search_seg(self, depart, arrive):
+    def search_seg(self, depart, arrive, date):
 
-        url = 'http://www.variflight.com/flight/' + airport_dict[depart] + '-' + airport_dict[
-            arrive] + '.html?AE71649A58c77'
+        dt = date
 
-        return self.get_mesbyurl(url)
+        # 获取今日日期
+        localtime = time.localtime(time.time())
+
+        year = str(localtime.tm_year)
+        mon = str(localtime.tm_mon)
+        day = str(localtime.tm_mday)
+        if (len(mon) == 1):
+            mon = '0' + mon
+        if (len(day) == 1):
+            day = '0' + day
+
+        today = year + mon + day
+
+        # 整理传入日期格式
+        date = date.split('-')
+        date = date[0] + date[1] + date[2]
+
+        # 获取当天信息
+        if (int(date) == int(today)):
+            url = 'http://www.variflight.com/flight/' + airport_dict[depart] + '-' + airport_dict[
+                arrive] + '.html?AE71649A58c77'
+
+        # 获取历史信息
+        if (int(date) < int(today)):
+            url = 'http://www.variflight.com/flight/' + airport_dict[depart] + '-' + airport_dict[
+                arrive] + '.html?AE71649A58c77&fdate=' + date
+
+        return self.get_mesbyurl(url, dt)
 
 
 def main():
@@ -563,15 +622,16 @@ def main():
     vf = variflight()
 
     # 通过航班号查询，返回字典列表
-    # l1=vf.search_num('CA1151')
+    # l1=vf.search_num('CA1151','2019-05-05')
     # print(json.dumps(l1,indent=2,ensure_ascii=False))
 
     # 通过起降地查询，返回字典列表
-    # l2=vf.search_seg('北京','包头')
+    # l2=vf.search_seg('北京','上海')
     # print(json.dumps(l2,indent=2,ensure_ascii=False))
 
-    # 通过detai_url查询详细信息
-    l3 = vf.get_detail_mes('http://www.variflight.com/schedule/PEK-BAV-CA1107.html?AE71649A58c77=')
+    # 通过detai_url查询详细信息，返回字典列表,列表只有一个元素
+    l3 = vf.get_detail_mes('http://www.variflight.com/schedule/PEK-HKG-CA111.html?AE71649A58c77=&fdate=20190513',
+                           '2019-05-13')
     print(json.dumps(l3, indent=2, ensure_ascii=False))
 
 

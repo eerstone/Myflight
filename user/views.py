@@ -295,7 +295,7 @@ def getFavorateFlight(request):
         # ret_msg['flight'] = flights
         # ret_msg['user_type'] = trip.user_trip
         ret_msg = models.search_trip(user_id)
-        return JsonResponse(ret_msg,safe=False)
+        return JsonResponse({"trips":ret_msg},safe=False)
     else:
         pass
 

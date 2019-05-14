@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width: 1536px">
 <head>
     <meta charset="UTF-8">
     <title>行程</title>
@@ -28,12 +28,12 @@
 				</ul>
 			</div>
     </div>
-    <div class="gray_bg">
-        <div class="personCenterWrap">
-            <div class="personInfo clear">
+    <div class="gray_bg" style="width: 100%">
+        <div class="personCenterWrap" style="width: 100% ; background-color: ghostwhite">
+            <div class="personInfo clear" style="background-color: ghostwhite">
                 <div class="flightCustomize" id="parentd" style="width: 1100px">
                     <div class="pcbox_head">
-                        <div class="pcbox_head_text" style="color: white">我的航班 &nbsp| &nbsp行程管理</div>
+                        <div class="pcbox_head_text" style="color: black">我的航班 &nbsp| &nbsp行程管理</div>
         {% comment %}                <div class="pcIcon_tip" id="pcIcon_tip2">
                             <div class="pcIcon_tipBox" id="pcIconTipBox2" style="">
                                 <i class="pcIcon_triangle"></i>航班订制记录数据包括飞常准APP和网站中所关注订制的航班数据。
@@ -74,7 +74,7 @@
     $(document).ready(function(){
         $.get("/user/getFavorateFlight/?user_id="+ 1,function(data,status){
             console.log(data);
-            print(data);
+            print(data.trips);
         })
     })
     function print(data){
@@ -83,7 +83,7 @@
             var $trTemp=$("<div id='son_div"+i+"' class='fc_table_bar'></div>");
             $trTemp.appendTo('#recordTable');
         }
-        for (i=0;i<5;i++)
+        for (i=0;i<data.length;i++)
         {
             var $trTemp = $("<ul></ul>");
         		//$trTemp.append("<li class='fc_tableLi1'>"+ data[i].flight.datetime +"</li>");
