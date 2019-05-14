@@ -377,9 +377,6 @@ def scan_trip():
                     trip.save()
 
 
-
-
-
 def gS_FC(request):
     json = {
         "is_exist": 1,
