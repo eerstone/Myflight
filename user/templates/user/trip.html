@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>trip</title>
+    <title>行程</title>
     <link rel="stylesheet" href="{% static 'css/personCenter.css' %}">
     <link rel="stylesheet" href="{% static 'css/widget_new.css'%}">
     <link rel="stylesheet" href="{% static 'css/base.css'%}"/>
@@ -16,10 +16,10 @@
     <div class="header">
 			<div class="topMenu clearfix">
 				<ul class="menu item pull-left">
-					<li class="top-menu-item  top-menu-curr ">
+					<li class="top-menu-item  ">
 						<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
 					</li>
-					<li class="top-menu-item ">
+					<li class="top-menu-item  top-menu-curr ">
 						<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
 					</li>
 					<li class="top-menu-item   ">
@@ -33,7 +33,7 @@
             <div class="personInfo clear">
                 <div class="flightCustomize" id="parentd" style="width: 1100px">
                     <div class="pcbox_head">
-                        <div class="pcbox_head_text">我的航班行程管理</div>
+                        <div class="pcbox_head_text" style="color: white">我的航班 &nbsp| &nbsp行程管理</div>
         {% comment %}                <div class="pcIcon_tip" id="pcIcon_tip2">
                             <div class="pcIcon_tipBox" id="pcIconTipBox2" style="">
                                 <i class="pcIcon_triangle"></i>航班订制记录数据包括飞常准APP和网站中所关注订制的航班数据。
@@ -83,21 +83,33 @@
             var $trTemp=$("<div id='son_div"+i+"' class='fc_table_bar'></div>");
             $trTemp.appendTo('#recordTable');
         }
-        for (i=4;i<5;i++)
+        for (i=0;i<5;i++)
         {
             var $trTemp = $("<ul></ul>");
         		//$trTemp.append("<li class='fc_tableLi1'>"+ data[i].flight.datetime +"</li>");
-                $trTemp.append("<li class='fc_tableLi1'>"+ "2019-5-7" +"</li>");
+                $trTemp.append("<li class='fc_tableLi1'>"+ data[i].flight.datetime+"</li>");
         		$trTemp.append("<li class='fc_tableLi2' style='cursor:pointer;'>"+ data[i].flight.flight_id +"</li>");
         		$trTemp.append("<li class='fc_tableLi3'>"+data[i].flight.departure+"</li>");
         		$trTemp.append("<li class='fc_tableLi4'>"+data[i].flight.plan_departure_time+"</li>");
         		$trTemp.append("<li class='fc_tableLi5'>"+ data[i].flight.arrival+"</td>");
         		$trTemp.append("<li class='fc_tableLi6'>"+  data[i].flight.plan_arrival_time +"</td>");
-        		$trTemp.append("<li class='fc_tableLi8'>"+ data[i].user_type+"</td>");
+        		var user_type=judge_user(data[i].user_type);
+        		$trTemp.append("<li class='fc_tableLi8'>"+user_type+"</td>");
         		$trTemp.append("<li class='fc_tableLi9'style='width:100px;'>"+ "<a href='javascript:;' class='fc_handle_cancel'>"+"删除"+"</a>"+"</li>");
-        		$trTemp.appendTo('#son_div0');
+        		//$trTemp.appendTo('#son_div');
+                $trTemp.appendTo('#recordTable').children('div').eq(i);
         }
     }
+    function judge_user(i)
+    {
+        if(i==0)
+            return ('接机人');
+        else if(i==1)
+            return('乘机人');
+        else
+            return('送机人');
+    }
+
     function deletetrip(i)
     {
          $.post("/user/postDelete/",{user_id:my_id,trip_id:my_trip_id},function(data,status) {
