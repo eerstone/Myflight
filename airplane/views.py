@@ -353,25 +353,25 @@ def scan_trip():
         flight_id = trip.flight_id
         status = trip.flight_status
         today = date.today()
-        print("trip%d"%i)
+        print("trip%d" % i)
         i = i + 1
-        if datetime >today:
+        if datetime > today:
             weekday = datetime.weekday()
-            new_flight = week2flightid(flight_id,weekday)
+            new_flight = week2flightid(flight_id, weekday)
             new_flight = new_flight.first()
             # print(new_flight)
-            if new_flight.flight_status=="延误" and status=="计划":
+            if new_flight.flight_status == "延误" and status == "计划":
                 jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
                 trip.flight_status = "延误"
                 trip.save()
         else:
-            if trip.detail_url=="--":
+            if trip.detail_url == "--":
                 pass
             else:
                 vf = data_get.variflight()
                 new_flight = vf.search_num(flight_id)
                 new_flight = new_flight[0]
-                if new_flight["flight_status"]=="延误" and status=="计划":
+                if new_flight["flight_status"] == "延误" and status == "计划":
                     jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
                     trip.flight_status = "延误"
                     trip.save()

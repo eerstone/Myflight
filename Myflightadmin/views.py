@@ -525,5 +525,8 @@ def postdeletefl(request):
 
 def get_submit_file(request):
     user = request.POST.get('user')
-    get_file = request.FILES.get('img')
+    get_file = request.FILES.get('files')
+    print(get_file)
+    if get_file is None:
+        return HttpResponse("上传失败")
     return HttpResponse('上传成功')
