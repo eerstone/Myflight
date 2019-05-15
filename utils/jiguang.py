@@ -5,7 +5,7 @@ app_key= '19f11eaac0f8577c1a17f3ca'
 master_secret = '08822d65b8709a917f765a7c'
 
 _jpush = jpush.JPush(app_key, master_secret)
-_jpush.set_logging("DEBUG")
+# _jpush.set_logging("DEBUG")
 
 def all():
     push = _jpush.create_push()

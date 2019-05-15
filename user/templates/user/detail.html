@@ -42,7 +42,9 @@
                 	时间：2019-04-20
                 	描述：定制系统
                <a class="forbiddenBtn" onclick="forbiddenJump('到达')" href="javascript:;" style="color:#e1e5e6;font-size:14px;">[订制该航班动态]</a>
-				 --></p>
+				 -->
+                <a href="javascript:;" style="text-decoration: none; cursor: default; font-size: 14px;"><span id="real_f">实际承运CA1883</a>
+                </p>
 				<input type="hidden" id="fdate" value="2019-04-20">
 				<input type="hidden" id="depTime" value="09:30">
 				<input type="hidden" id="arrTime" value="13:05">
@@ -53,8 +55,8 @@
 	<div class="flyProc">
 		<div id="p_box" class="p_box">
 			<div class="p_ti">
-				<span class="ti">全程1994公里</span>
-				<span class="ti">时长3小时39分</span>
+				<span id="length" class="ti">全程1994公里</span>
+				<span id="time" class="ti">时长3小时39分</span>
 			</div>
 			<div class="cir_l curr"><!-- 行程大于 0% 添加样式 curr -->
 				<span ><b id="departure_city">北京1</b></span>
@@ -69,18 +71,18 @@
 		</div>
 		<div class="p_info">
 			<ul>
-				<li class="mileage">机型：<span>AIRBUSA330-343E</span></li>
-				<li class="time">机龄：<span>1.8年</span></li>
-				<li class="per">历史准点率：<span class="lchIMG">
+				<li class="mileage">机型：<span id='planetype'>AIRBUSA330-343E</span></li>
+				<li class="time">机龄：<span id='planeage'>1.8年</span></li>
+				<li class="per">历史准点率：<span id='punctuality_rate'class="lchIMG">
 											</span>
 				</li>
-				<li class="age"><span>比计划晚点35分钟到达</span></li>
+				<li class="age"><span id="forecast">比计划晚点35分钟到达</span></li>
 			</ul>
 			<div class="clear"></div>
 		</div>
 	</div>
-	<div class="clear"></div>
-	
+	    <div class="clear"></div>
+        <div id="old_state"></div>
 	<!-- 出发 -->
 			<div class="fly_mian">
 			<div class="f_title f_title_a">
@@ -92,9 +94,9 @@
 			</div>
 			<ul class="f_common rand_ul_dep">
 				<li class="weather">
-					<p>10°/13°							C 阴天</p>
-					<p>PM2.5：44</p>
-					<p>小面积延误</p>
+					<p id="d_weather">10°/13°							C 阴天</p>
+					<p id="d_pm">PM2.5：44</p>
+					<p id="d_state">小面积延误</p>
 				</li>
 
 				<li class="time">
@@ -131,9 +133,9 @@
 			</div>
 			<ul class="f_common rand_ul_arr">
 				<li class="weather">
-					<p>23°/29°							C中雨</p>
-					<p>PM2.5：--</p>
-					<p>小面积延误</p>
+					<p id="a_weather">23°/29°							C中雨</p>
+					<p id="a_pm">PM2.5：--</p>
+					<p id="a_state">小面积延误</p>
 				</li>
 				<li class="time">
 					<p class="gray_t">实际到达</p>
@@ -165,20 +167,36 @@
     		// searchData = searchData.split(" ");
     		var searchText = decodeURI(searchData[1]); //decodeURI解码  
     		var infor = searchText.split(' ');
-	    		$('#flight_name_number').html(infor[1]+' '+infor[0]);
-	    		$('#flight_status').html(infor[6]);
-	    		$('#departure_city').html(infor[7]);
-	    		$('#arrive_city').html(infor[8]);
-	    		$('#departure_data').html("计划起飞"+infor[2]);
-	    		$('#departure_jc').html(infor[7]);
-	    		$('#actual_departure_time').html(infor[4]);
-	    		$('#check_in').html(infor[11]);
-	    		$('#boarding_port').html(infor[12]);
-	    		$('#arrive_data').html("计划到达"+infor[3]);
-	    		$('#arrive_jc').html(infor[8]);
-	    		$('#actual_arrive_time').html(infor[5]);
-	    		$('#baggage').html(infor[14]);
-	    		$('#arrive_port').html(infor[13]);
+	    		$('#flight_name_number').html(infor[1]+' '+infor[0]);//打印company和flight_id
+                $('#real_flight').html(infor[2]);
+                $('#departure_data').html("计划起飞"+infor[4]);
+                $('#arrive_data').html("计划到达"+infor[5]);
+                $('#actual_departure_time').html(infor[6]);
+                $('#actual_arrive_time').html(infor[7]);
+	    		$('#flight_status').html(infor[8]);
+	    		$('#departure_city').html(infor[9]);
+                $('#departure_jc').html(infor[9]);
+                $('#arrive_jc').html(infor[10]);
+	    		$('#arrive_city').html(infor[10]);
+	    		$('#punctuality_rate').html(infor[11]);
+	    		$('#check_in').html(infor[13]);
+	    		$('#boarding_port').html(infor[14]);
+                $('#arrive_port').html(infor[15]);
+	    		$('#baggage').html(infor[16]);
+                $('#length').html(infor[17]);
+                $('#time').html(infor[18]);
+
+                $('#planetype').html(infor[20]);
+                $('#planeage').html(infor[21]);
+                $('#forecast').html(infor[22]);
+                $('#old_state').html(infor[23]);
+                $('#d_weather').html(infor[24]);
+				$('#d_pm').html(infor[25]);
+				$('#d_state').html(infor[26]);
+                $('#a_weather').html(infor[27]);
+				$('#a_pm').html(infor[28]);
+				$('#a_state').html(infor[29]);
+
 	   });
 		</script>
 		
