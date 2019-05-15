@@ -371,7 +371,7 @@ def scan_trip():
                 # datetimee = datetime.strftime("%Y-%M-%D")
                 # print(datetime.__str__())
                 vf = data_get.variflight()
-                new_flight = vf.search_num(flight_id,datetime.__str__())
+                new_flight = vf.search_num(flight_id, datetime.__str__())
                 new_flight = new_flight[0]
                 if new_flight["flight_status"] == "延误" and status == "计划":
                     jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
