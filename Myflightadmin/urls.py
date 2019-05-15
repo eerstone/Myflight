@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^Manager/search_flight/', views.goto_admin_search_flight),
     #url(r'^Manager/init_search_airport/', views.init_admin_search_airport),
     url(r'^Manager/search_airport/', views.goto_admin_search_airport),
+    url(r'^Manager/uploadfile/', views.goto_admin_upload_file),
+    url(r'^Manager/submit_file/', views.get_submit_file),
     url(r'^Manager/', views.goto_admin_Manager),
     url(r'^add_manager/', views.postaddadmin),
     url(r'^add_flight/', views.admin_add_flight),

@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>上传文件</title>
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<link href="{% static 'css/response.css' %}" rel="stylesheet">
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/style.js' %}"></script>
+</head>
+<body class="bg">
+<div class="content">
+    <div class="header">
+        <div class="header-nei">
+            <a href="javascript:;" onclick="javascript:history.back(-1);" class="back-up"><i class="iconfont">&#xe61f;</i></a>
+            <h2 class="header-title">上传excel文件</h2>
+        </div>
+    </div>
+    <!--head/-->
+    <div class="head-height">&nbsp;</div>
+    <form method="post" action="/Myflightadmin/Manager/submit_file/" enctype="multipart/form-data" onsubmit="return validate()">
+        {% csrf_token %}
+        请输入测试执行人：<input type="text" name="peoples">
+        请输入测试版本：<input type="text" name="versions"><br>
+        请上传文件<input type="file" name="files"><br>
+        <input type="submit" value="上传">
+        <br>
+        <b><small>测试执行结果：</small></b><hr>
+    </form>
+</div>
+</body>
+</html>

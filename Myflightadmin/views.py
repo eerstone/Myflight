@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.http import HttpRequest
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import auth
 from user import models as usermodels
 from airplane import views as av
@@ -110,6 +109,10 @@ def goto_admin_mod_airport(request):
     #if not request.user.is_authenticated():
     #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/mod_airport.html")
+
+
+def goto_admin_upload_file(request):
+    return render(request, "Myflightadmin/uploadfile.html")
 
 
 """
@@ -518,3 +521,9 @@ def postdeletefl(request):
 
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
+
+
+def get_submit_file(request):
+    user = request.POST.get('user')
+    get_file = request.FILES.get('img')
+    return HttpResponse('上传成功')
