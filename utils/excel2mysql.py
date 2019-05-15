@@ -9,7 +9,7 @@ if django.VERSION >= (1,7):
 
 import pandas as pd
 from airport.models import add_airport
-from airplane.models import add_Fligt
+from airplane.models import add_Flight
 def main():
     io = "airplane.xls"
     df = pd.read_excel(io,sheet_name="hangban",header=0)
@@ -19,7 +19,7 @@ def main():
         data = df.ix[i]
         add_airport(newairport=data["departure_airport"],city=data["departure_city"],temperature=23)
         add_airport(newairport=data["landing_airport"],city=data["landing_city"],temperature=23)
-        add_Fligt(flight_id=data["flight_schedules"],mileage=data["mileage"],aircraft_models=data["aircraft_models"],
+        add_Flight(flight_id=data["flight_schedules"],mileage=data["mileage"],aircraft_models=data["aircraft_models"],
                          plan_departure_time=data["departure_time"],plan_arrival_time=data["landing_time"],
                          departure=data["departure_airport"],arrival=data["landing_airport"],
                          punctuality_rate=data["punctuality_rate"],delay_time=data["average_delayed"],company=data["airlines"],
