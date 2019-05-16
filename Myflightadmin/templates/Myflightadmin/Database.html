@@ -64,9 +64,13 @@
 		        }else{
 		        	isRemberPass = '0';
 		        }
-		     
-		       
-		 
+		        var url = decodeURI(window.location.href);
+                var url = url.split("?")[1];
+                var next = "";
+                if (url != null){
+                    next = url.split("=")[1];
+                }
+
 		        var userError = document.getElementById("user_error");
 		        var passError = document.getElementById("pass_error");
                                
@@ -95,7 +99,10 @@
                             //data = JSON.parse(data);
                             console.log(data);
                             if (data["issucceed"] == "1") {
-                                location.href = "/Myflightadmin/Manager/?admin="+post_data["username"]+"&psw="+post_data["password"];
+                                if (next == "")
+                                    location.href = "/Myflightadmin/Manager/";
+                                else
+                                    location.href = next;
                             }
                             else if (data["issucceed"] == "2")
                                 alert("用户名不存在!")

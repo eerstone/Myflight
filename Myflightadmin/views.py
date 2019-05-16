@@ -19,6 +19,10 @@ from user import models as usermodels
 from django.forms.models import model_to_dict
 
 
+def logout(request):
+    request.session.flush()
+    return HttpResponseRedirect(settings.LOGIN_URL)
+
 
 def my_view(request):
     username = request.POST.get('username')
@@ -28,15 +32,19 @@ def my_view(request):
         return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
 
-def goto_admin_Login(request):
+def goto_admin_login(request):
     return render(request, "Myflightadmin/Database.html")
 
 
 def goto_admin_search_flight(request):
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/search.html")
 
 
 def goto_admin_search_airport(request):
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/search_airport.html")
 
 
@@ -67,51 +75,52 @@ def check_admin(request):
         return JsonResponse(ret_msg, safe=False)
 
     ret_msg['issucceed'] = 1
+    request.session['is_login'] = True
+    request.session['user_id'] = username
+    request.session['user_name'] = password
     return JsonResponse(ret_msg, safe=False)
+    #return render(request, "Myflightadmin/Manager.html", ret_msg)
 
 
-def goto_admin_Manager(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
-    user = usermodels.User_Auth.objects.filter(identifier=username)
-    request.session["login_user"] = username
-    request.session["login_pwd"] = password
-    #if request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+def goto_admin_manager(request):
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/Manager.html")
 
 
 def goto_admin_add_manager(request):
-    #if not request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_manager.html")
 
 
 def goto_admin_add_flight(request):
-    #if not request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_flight.html")
 
 
 def goto_admin_mod_flight(request):
-    #if not request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/mod_flight.html")
 
 
 def goto_admin_add_airport(request):
-    #if not request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/add_airport.html")
 
 
 def goto_admin_mod_airport(request):
-    #if not request.user.is_authenticated():
-    #    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/mod_airport.html")
 
 
 def goto_admin_upload_file(request):
+    if not request.session.get("is_login", None):
+        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request, "Myflightadmin/uploadfile.html")
 
 
