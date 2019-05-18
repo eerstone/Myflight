@@ -12,12 +12,14 @@
                                      user-scalable=no">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/widget_new.css'%}">
+    <link rel="stylesheet" href="{% static 'css/float.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<script src="{% static 'js/jquery.min.js'%}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery-1.js'%}"></script>
 
 	 <style>
-        * { padding: 0; margin: 0 auto; box-sizing: border-box;font-size: 16px}
+        * { font-size: 16px}
         table {
             border-collapse: collapse;
             border-spacing: 0;
@@ -47,12 +49,11 @@
         }
         .section{
             margin: 10px auto;
-            width: 472px;
-            background-color: #88b7e4;
+            width: 800px;
             font-family: "Microsoft YaHei";
         }
         .all{
-            width: 450px;
+            width: 600px;
             height: 250px;
         }
         .nav{
@@ -60,7 +61,7 @@
         }
         .nav>a{
             padding: 0 15px;
-            width: 225px;
+            width: 300px;
             height: 50px;
             line-height: 50px;
             display: block;
@@ -81,10 +82,10 @@
             background-color: #e1f2fc;
         }
         .contentbox{
-            width: 450px;
+            width: 600px;
         }
         .cont-1>input{
-            width: 350px;
+            width: 506px;
             height: 46px;
             border: 1px solid #c6cddc;
         }
@@ -169,7 +170,7 @@
             margin-top: 12px;
         }
         .contentbox>div{
-            width: 450px;
+            width: 600px;
             height: 190px;
             text-align: center;
             display: none;
@@ -192,6 +193,9 @@
         /*这是webkit下placeholder的字体颜色*/
         .cont-1>input::-webkit-input-placeholder {
             color: #bfbfbf;
+        }
+        .li_com span a:hover{
+            text-decoration: underline;
         }
     </style>
 
@@ -231,27 +235,31 @@
                 <div class="contentbox">
                     <div class="box active">
                         <div class="cont-1" style="position: relative;">
-                            <input style="padding-left: 110px;margin: 10px 0px" type="text" class="icon email" id="flightNo" name="flightNo" value="" placeholder="请输入航班号"><span style="position: absolute;left: 51px;top: 22px">航班号:</span>
+                            <input style="padding-left: 150px;margin: 10px 0px;background-color: white" type="text" class="icon email" id="flightNo" name="flightNo" value="" placeholder="请输入航班号"><span style="position: absolute;left: 65px;top: 22px">航班号:</span>
                             <br>
-                            <input style="padding-left: 110px ;" type="date" id="takeoffDate2" name="takeoffDate2" style="width:350px;"> <span style="position: absolute;left: 51px;top: 76px">出发时间:</span>
+                            <input style="padding-left: 150px ;color: black;" type="date" id="takeoffDate2" name="takeoffDate2" style="width:350px;"> <span style="position: absolute;left: 65px;top: 76px">出发时间:</span>
+                            <br>
                             <input style="width: 150px;padding-left: 12px;line-height: 36px;color:white;"type="button" value="查&nbsp;&nbsp;询" id="findFlightByNum_0" class="btn" onclick="id_search()">
                         </div>
                     </div>
                     <div class="box">
                         <div class="cont-1" style="position: relative;">
-                            <input style="width: 175px ;margin: 10px 0px" value="" id="sl_start" autocomplete="off" type="text" class="icon email" placeholder="输入出发城市">
-                            <input style="width: 175px ;margin: 10px 0px"value="" id="sl_end" autocomplete="off" type="text" class="icon email"  placeholder="输入目的城市">
+                            <input style="width: 250px ;margin: 10px 0px;color: black;padding-left:100px;" value="" id="sl_start" autocomplete="off" type="text" class="icon email" placeholder="输入出发城市"><span style="position: absolute;left: 65px;top: 20px">起飞地:</span>
+                            <input style="width: 250px ;margin: 10px 0px;color: black;padding-left:100px;"value="" id="sl_end" autocomplete="off" type="text" class="icon email"  placeholder="输入目的城市"><span style="position: absolute;left: 315px;top: 20px">目的地:</span>
                             <br>
-                            <input style="padding-left: 110px" type="date" id="takeoffDate1" name="takeoffDate1" class="input"style="width:354px;"> <span style="position: absolute;left: 51px;top: 76px">出发时间:</span>
+                            <input style="padding-left: 150px ;color: black; width: 506px" type="date" id="takeoffDate1" name="takeoffDate1" class="input"style="width:354px;"> <span style="position: absolute;left: 65px;top: 76px">出发时间:</span>
                             <br>
                             <input style="width: 150px;padding-left: 12px;line-height: 36px;color:white;" type="button" value="查&nbsp;&nbsp;询" id="findFlightByDate_0" class="btn" onclick="city_search()">
                           </div>
+                        <a ></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="container_demo" >
+        <div class="f_content" style="box-sizing: content-box">
+            <div id="fly_list" class="fly_list">
 
+            </div>
         </div>
     </div>
     <script>
@@ -270,12 +278,44 @@
 	var data1;
 	var id_flag=1;
 	var city_flag=1;
+    var first_id;
+    var first_datetime;
+    var first_city_from;
+    var first_city_to;
+     $("#sl_start").bind("input propertychange",function(event){
+       console.log($("#sl_start").val())
+     });
+     $(document).ready(function(){
+         if(confirm("确定删除该权限?"))
+         {
+             alert(1);
+         }
+         else
+         {
+             alert(2);
+         }
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+         $('#takeoffDate2').val(currentdate);
+         $('#takeoffDate1').val(currentdate);
+     })
 		function id_search()
 		{
           var flight_number=$('#flightNo').val();
-            var  my_data ;
-            my_data= $('#takeoffDate2').val();
-            console.log(my_data);
+          var  my_data ;
+          my_data= $('#takeoffDate2').val();
+          first_id=flight_number;
+          first_datetime=my_data;
 	        $.get("/airplane/getSearchFlightById/?flight_id="+flight_number+"&datetime="+my_data+"&is_detail="+0+"&detail_url="+"--",function(data,status){
 				if(data.is_exist==1)
                 {
@@ -286,12 +326,12 @@
                         $('#my_all').empty();
                         $('#my_all').css('width','1200px');
                         $('#my_all').css('height','64px');
-                        $('#my_all').append('<div class="contentbox" style="width:1200px;height:64px" id="my_search"></div>');
-                        $('#my_search').append('<div class="box active" style="width:1000px ;height:64px;margin:0 auto;text-align:left"  id="my_box"></div>');
+                        $('#my_all').append('<div class="contentbox" style="width:1200px;height:64px;" id="my_search"></div>');
+                        $('#my_search').append('<div class="box active" style="width:1200px ;height:64px;margin:0 auto;text-align:left"  id="my_box"></div>');
                         $('#my_box').append('<div class="cont-1" id="cont" style="position: relative;background-color:#88b7e4">');
-                        $('#cont').append(' <input style="padding-left: 110px;margin: 10px 20px;" type="text" class="icon email" id="flightNo" name="flightNo" value="" placeholder="请输入航班号"><span style="position: absolute;left: 51px;top: 22px">航班号:</span>');
-                        $('#cont').append('<input style="padding-left: 110px ;" type="date" id="takeoffDate2" name="takeoffDate2" style="width:350px;"> <span style="position: absolute;left: 410px;top: 22px">出发时间:</span>');
-                        $('#cont').append(' <input style="margin-top:0px;margin-left:50px;margin-top:-5px;width: 150px;padding-left: 12px;line-height: 36px; color:white;"type="button" value="查&nbsp;&nbsp;询" id="findFlightByNum_0" class="btn" onclick="id_search()">');
+                        $('#cont').append(' <input style="width:350px; padding-left: 110px;margin: 10px 85px;color:black;color: black;" type="text" class="icon email" id="flightNo" name="flightNo" value="'+first_id+'" placeholder="请输入航班号"><span style="position: absolute;left: 110px;top: 21px">航班号:</span>');
+                        $('#cont').append('<input style=" width:350px;padding-left: 110px ; color: black;" type="date" id="takeoffDate2" name="takeoffDate2" style="width:350px;" value="'+first_datetime+'"> <span style="position: absolute;left: 540px;top: 21px">出发时间:</span>');
+                        $('#cont').append(' <input style="margin-top:0px;margin-left:85px;margin-top:-5px;width: 150px;padding-left: 12px;line-height: 36px; color:white;"type="button" value="查&nbsp;&nbsp;询" id="findFlightByNum_0" class="btn" onclick="id_search()">');
                         id_flag=0;
                     }
                    printfight(data.flight,0);
@@ -304,25 +344,33 @@
 		}
 		function city_search()
         	{
-        	    $('#my_header').css('display','none');
-                $('#my_section').css('width','1200px');
-                $('#my_all').empty();
-                $('#my_all').css('width','1200px');
-                $('#my_all').css('height','64px');
-                $('#my_all').append('<div class="contentbox" style="width:1200px;height:64px" id="my_search"></div>');
-                $('#my_search').append('<div class="box active" style="width:1000px ;height:64px;margin:0 auto;text-align:left"  id="my_box"></div>');
-                $('#my_box').append('<div class="cont-1" id="cont" style="position: relative;background-color:#88b7e4">');
-                $('#cont').append('<input style="width: 175px ;margin: 10px 0px" value="" id="sl_start" autocomplete="off" type="text" class="icon email" placeholder="输入出发城市">');
-                $('#cont').append('<input style="width: 175px ;margin: 10px 15px "value="" id="sl_end" autocomplete="off" type="text" class="icon email"  placeholder="输入目的城市">')
-                $('#cont').append(' <input style="padding-left: 110px" type="date" id="takeoffDate1" name="takeoffDate1" class="input"style="width:354px;"> <span style="position: absolute;left: 410px;top: 22px">出发时间:</span>')
-                $('#cont').append(' <input style="margin-top:0px;margin-left:50px;margin-top:-5px;width: 150px;padding-left: 12px;line-height: 36px; color:white;" type="button" value="查&nbsp;&nbsp;询" id="findFlightByDate_0" class="btn" onclick="city_search()">')
-        		var date3=$('#takeoffDate1').val();
+                var date3=$('#takeoffDate1').val();
         		var begin=$('#sl_start').val();
         		var end=$('#sl_end').val();
+                first_datetime=date3;
+                first_city_from=begin;
+                first_city_to=end;
         		$.get("/airplane/getSearchFlightByCity/?city_from="+begin+"&city_to="+end+"&datetime="+date3+"&is_detail="+0+"&detail_url="+"--",function(data,status){
-        		    console.log(data);
-					if(data.is_exist==1)
+					console.log(data);
+        		    if(data.is_exist==1)
 					{
+                        $('#my_header').css('display','none');
+                        $('#my_section').css('width','1200px');
+                        if(city_flag==1)
+                        {
+                            $('#my_all').empty();
+                            $('#my_all').css('width','1200px');
+                            $('#my_all').css('height','64px');
+                            $('#my_all').append('<div class="contentbox" style="width:1200px;height:64px" id="my_search"></div>');
+                            $('#my_search').append('<div class="box active" style="width:1200px ;height:64px;margin:0 auto;text-align:left"  id="my_box"></div>');
+                            $('#my_box').append('<div class="cont-1" id="cont" style="position: relative;background-color:#88b7e4">');
+                            $('#cont').append('<input style="width: 250px ;margin: 0px 20px 0px 42px;color: black;padding-left:100px;" value="'+first_city_from+'" id="sl_start" autocomplete="off" type="text" class="icon email" placeholder="输入出发城市"><span style="position: absolute;left: 62px;top: 21px">出发地:</span>');
+                            $('#cont').append('<input style="width: 250px ;margin: 10px 15px ;color: black;padding-left:100px;"value="'+first_city_to+'" id="sl_end" autocomplete="off" type="text" class="icon email"  placeholder="输入目的城市"><span style="position: absolute;left: 342px;top: 21px">目的地:</span>')
+                            $('#cont').append(' <input style="width :350px;padding-left: 110px;color: black;margin-left:20px" type="date" value="'+first_datetime+'" id="takeoffDate1" name="takeoffDate1" class="input"style="width:354px;"> <span style="position: absolute;left: 637px;top: 21px">出发时间:</span>')
+                            $('#cont').append(' <input style="margin-top:0px;margin-left:35px;margin-top:-5px;width: 150px;padding-left: 12px;line-height: 36px; color:white;" type="button" value="查&nbsp;&nbsp;询" id="findFlightByDate_0" class="btn" onclick="city_search()">')
+                            city_flag=0;
+
+                        }
 						printfight(data.flight,1);
 					}
 					else{
@@ -334,24 +382,39 @@
         function printfight(data,type)//type==0 by id     type ==1 by city
         {
         	data1=data;
-        	$('#container_demo').empty();
-        	$('#container_demo').append('<table id="mytable"> <tr> <th>航班信息</th> <th>计划起飞</th> <th>实际起飞</th> <th>出发地</th> <th>计划到达</th> <th>实际到达</th> <th>到达地</th> <th>准点率</th> <th>状态</th> <th>添加行程</th> <th>查看详情</th> </tr> </table>');
-        	var i,j;
+        	console.log(data1);
+        	$('#fly_list').empty();
+        	if(type==0)
+            {
+                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#flightNo').val()+"</h1>"+"</div>");
+                $('#fly_list').append("<div class='li_box' id='li_box'></div>")
+            }
+        	else
+            {
+                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#sl_start').val()+"----"+$('#sl_end').val()+"</h1>"+"</div>");
+                $('#fly_list').append("<div class='li_box' id='li_box'></div>")
+            }
+        	$('#li_box').append('<div class="t_tit" id="t_tit"> <p class="w260">航班信息</p> <p class="w150">计划起飞</p> <p class="w150">实际起飞</p> <p class="w150">出发地</p> <p class="w150">计划到达</p> <p class="w150">实际到达</p> <p class="w150">到达地</p> <p class="w150">准点率</p> <p class="w150">状态</p> <p class="w150">添加行程</p> <div class="clear"></div></div>')
+        	$('#li_box').append('<ul id="list"></ul>');
+            var i;
         	for(i=0;i<data.length;i++)
         	{
-        		var $trTemp = $("<tr></tr>");
-        		$trTemp.append("<td>"+ data[i].flight_id +"</td>");
-        		$trTemp.append("<td>"+ data[i].plan_departure_time +"</td>");
-        		$trTemp.append("<td>"+ data[i].actual_departure_time +"</td>");
-        		$trTemp.append("<td>"+ data[i].departure +"</td>");
-        		$trTemp.append("<td>"+ data[i].plan_arrival_time +"</td>");
-        		$trTemp.append("<td>"+ data[i].actual_arrival_time +"</td>");
-        		$trTemp.append("<td>"+ data[i].arrival +"</td>");
-        		$trTemp.append("<td>"+ data[i].punctuality_rate +"</td>");
-        		$trTemp.append("<td>"+ data[i].flight_status +"</td>");
-        		$trTemp.append("<td >"+"<input type='button' value='添加行程' onclick='trip("+i+','+type+")' />" +"</td>");
-        		$trTemp.append("<td >"+"<input type='button' value='查看详情' onclick='detail("+i+','+type+")' />" +"</td>");
-        		$trTemp.appendTo("#mytable");
+                var $trTemp = $('<li style="position: relative;" ></li>');
+                $trTemp.append('<a class="searchlist_innerli" href="javascript:;" onclick="detail('+i+','+type+')"></a>');
+                var $trTemp_son=$('<div class="li_com" ></div>');
+                $trTemp_son.append('<span class="w260"><b><a>'+data[i].company+"|"+'</a><a>'+data[i].flight_id+'</a></b></span>');
+                $trTemp_son.append('<span class="w150">'+data[i].plan_departure_time+'</span>');
+                $trTemp_son.append('<span class="w150 ">'+data[i].actual_departure_time+'</span>');
+                $trTemp_son.append('<span class="w150">'+data[i].departure+'</span>');
+                $trTemp_son.append('<span class="w150">'+data[i].plan_arrival_time+'</span>');
+                $trTemp_son.append('<span class="w150 ">'+data[i].actual_arrival_time+'</span>');
+                $trTemp_son.append('<span class="w150">'+data[i].arrival+'</span>');
+                $trTemp_son.append('<span class="w150">'+data[i].punctuality_rate+'</span>');
+                $trTemp_son.append('<span class="w150 ">'+data[i].flight_status+'</span>');
+                $trTemp_son.append('<span class="fob"><a onclick="trip('+i+','+type+')" href="javascript:;" style="color:green;z-index:6;position: relative;">加入行程</a></span>');
+                $trTemp_son.append('<div class="clear"></div>');
+                $trTemp_son.appendTo($trTemp);
+                $trTemp.appendTo('#list');
         	}
         }
 		 function detail(id,type)
@@ -385,16 +448,15 @@
 		function printdetail(data2)
         {
             var data=data2[0];
-           for(x in data)
+            for(x in data)
             {
                 if(data[x]=="")
 	        		{
 	        			data[x]="未知";
 	        		}
 	        }
-           alert(data.age);
-           alert(data.plane);
-            var searchUrl = encodeURI("/airplane/detail/?searchText=" + data.flight_id+' '+data.company+' '+data.real_flight_id+' '+data.datetime+' '+data.plan_departure_time+' '+data.plan_arrival_time+' '+data.actual_departure_time+' '+data.actual_arrival_time+' '+data.flight_status+' '+data.departure+' '+data.arrival+' '+data.punctuality_rate+' '+data.delay_time+' '+data.check_in+' '+data.boarding_port+' '+data.arriving_port+' '+data.Baggage_num+' '+data.length+' '+data.time+' '+data.proc+' '+data.plane+' '+data.age+' '+data.forecast+' '+data.old_state+' '+data.d_weather+' '+data.d_pm+' '+data.d_state+' '+data.a_weather+' '+data.a_pm+' '+data.a_state+' '+data.detail_url); //使用encodeURI编码
+            console.log(data);
+            var searchUrl = encodeURI("/airplane/detail/?searchText=" + data.flight_id+'~'+data.company+'~'+data.real_flight_id+'~'+data.datetime+'~'+data.plan_departure_time+'~'+data.plan_arrival_time+'~'+data.actual_departure_time+'~'+data.actual_arrival_time+'~'+data.flight_status+'~'+data.departure+'~'+data.arrival+'~'+data.punctuality_rate+'~'+data.delay_time+'~'+data.check_in+'~'+data.boarding_port+'~'+data.arriving_port+'~'+data.Baggage_num+'~'+data.length+'~'+data.time+'~'+data.proc+'~'+data.plane+'~'+data.age+'~'+data.forecast+'~'+data.old_state+'~'+data.d_weather+'~'+data.d_pm+'~'+data.d_state+'~'+data.a_weather+'~'+data.a_pm+'~'+data.a_state+'~'+data.detail_url); //使用encodeURI编码
             location.href = searchUrl;
         }
 		function trip(id,type)
@@ -412,7 +474,7 @@
                                 alert('添加失败');
                         });
         }
-	//	alert(124);
+
 </script>
 </body>
 </html>

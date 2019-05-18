@@ -32,10 +32,10 @@
 	<div class="detail_main">
 	<div class="tit">
 		<div class="state">
-			<div class="reg gre_cor " id='flight_status'>到达</div>		</div>
+			<div class="reg gre_cor " id='flight_status'></div>		</div>
 		<span>
 				<b id = 'flight_name_number'>
-					中国国航 CA111				</b>
+					 				</b>
 				<p id="order">
 				<!--
                 	作者：offline
@@ -43,7 +43,7 @@
                 	描述：定制系统
                <a class="forbiddenBtn" onclick="forbiddenJump('到达')" href="javascript:;" style="color:#e1e5e6;font-size:14px;">[订制该航班动态]</a>
 				 -->
-                <a href="javascript:;" style="text-decoration: none; cursor: default; font-size: 14px;"><span id="real_f">实际承运CA1883</a>
+                    <a href="javascript:;" style="text-decoration: none; cursor: default; font-size: 14px;"><span id="real_f"></span></a>
                 </p>
 				<input type="hidden" id="fdate" value="2019-04-20">
 				<input type="hidden" id="depTime" value="09:30">
@@ -55,14 +55,14 @@
 	<div class="flyProc">
 		<div id="p_box" class="p_box">
 			<div class="p_ti">
-				<span id="length" class="ti">全程1994公里</span>
-				<span id="time" class="ti">时长3小时39分</span>
+				<span id="length" class="ti"></span>
+				<span id="time" class="ti"></span>
 			</div>
 			<div class="cir_l curr"><!-- 行程大于 0% 添加样式 curr -->
-				<span ><b id="departure_city">北京1</b></span>
+				<span ><b id="departure_city"></b></span>
 			</div>
 			<div class="cir_r" style="left:100%;"><!-- 行程等于 100% 添加样式 curr -->
-				<span id='arrive_city'>香港</span>
+				<span id='arrive_city'></span>
 			</div>
 			<div class="line_com" style="width:100%">
 				<span style="width:100%">有色线</span>
@@ -71,32 +71,32 @@
 		</div>
 		<div class="p_info">
 			<ul>
-				<li class="mileage">机型：<span id='planetype'>AIRBUSA330-343E</span></li>
-				<li class="time">机龄：<span id='planeage'>1.8年</span></li>
+				<li class="mileage">机型：<span id='planetype'></span></li>
+				<li class="time">机龄：<span id='planeage'></span></li>
 				<li class="per">历史准点率：<span id='punctuality_rate'class="lchIMG">
 											</span>
 				</li>
-				<li class="age"><span id="forecast">比计划晚点35分钟到达</span></li>
+				<li class="age"><span id="forecast"></span></li>
 			</ul>
 			<div class="clear"></div>
 		</div>
 	</div>
 	    <div class="clear"></div>
-        <div id="old_state"></div>
+        <div ><b id="old_state" style="font-size: 14px;"></b></div>
 	<!-- 出发 -->
 			<div class="fly_mian">
 			<div class="f_title f_title_a">
 				<!-- 出发右上角的出发计划时间 -->
 				<span id='departure_data'>
-						2019-04-20 周六计划起飞09:30		</span>
-				<h2 title="北京首都T3" id='departure_jc'>
-					<em></em>北京首都T3</h2>
+								</span>
+				<h2 title="" id='departure_jc'>
+					<em></em></h2>
 			</div>
 			<ul class="f_common rand_ul_dep">
 				<li class="weather">
-					<p id="d_weather">10°/13°							C 阴天</p>
-					<p id="d_pm">PM2.5：44</p>
-					<p id="d_state">小面积延误</p>
+					<p id="d_weather"></p>
+					<p id="d_pm"></p>
+					<p id="d_state"></p>
 				</li>
 
 				<li class="time">
@@ -127,19 +127,19 @@
 			<div class="fly_mian">
 			<div class="f_title f_title_c">
 				<span  id='arrive_data'>
-					2019-04-20 周六计划到达13:05				</span>
+								</span>
 				<h2 title="香港赤鱲角T1"  id='arrive_jc'>
-					<em></em>香港赤鱲角T1</h2>
+					<em></em></h2>
 			</div>
 			<ul class="f_common rand_ul_arr">
 				<li class="weather">
-					<p id="a_weather">23°/29°							C中雨</p>
-					<p id="a_pm">PM2.5：--</p>
-					<p id="a_state">小面积延误</p>
+					<p id="a_weather"></p>
+					<p id="a_pm"></p>
+					<p id="a_state"></p>
 				</li>
 				<li class="time">
 					<p class="gray_t">实际到达</p>
-					<p class="com rand_p" id='actual_arrive_time'>							</p>
+					<p class="com rand_p" id='actual_arrive_time'></p>
 					<p class="com">
 						<em style="display:block; background-color:white; color:#2987c7; font-size:10px;">
 													</em>
@@ -166,7 +166,7 @@
     		var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数  
     		// searchData = searchData.split(" ");
     		var searchText = decodeURI(searchData[1]); //decodeURI解码  
-    		var infor = searchText.split(' ');
+    		var infor = searchText.split('~');
 	    		$('#flight_name_number').html(infor[1]+' '+infor[0]);//打印company和flight_id
                 $('#real_flight').html(infor[2]);
                 $('#departure_data').html("计划起飞"+infor[4]);

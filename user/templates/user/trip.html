@@ -10,7 +10,16 @@
     <link rel="stylesheet" href="{% static 'css/float.css'%}"/>
 
     <script src="{% static 'js/jquery.min.js'%}"></script>
-
+    <style>
+        .fc_tableLi2:hover{
+            font-size: 16px;
+            text-decoration: underline;
+        }
+        .fc_tableLi9:hover{
+             font-size: 16px;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
@@ -51,7 +60,7 @@
                             <div class="fc_tableHead">
                                 <ul>
                                     <li class="fc_tableLi1" id="fc_tableLi1" style="width:107px; cursor:default;">日期</li>
-                                    <li class="fc_tableLi2" style="width:110px;">航班号</li>
+                                    <li class="fc_tableLi3" style="width:110px;">航班号</li>
                                     <li class="fc_tableLi3" style="width:165px;">出发地</li>
                                     <li class="fc_tableLi4" style="width:107px;">计划出发时间</li>
                                     <li class="fc_tableLi5" style="width:170px;">到达地</li>
@@ -60,10 +69,11 @@
                                         <span id="orderName">订制身份</span>
                                     </li>
                                     <li class="fc_tableLi7" style="width:125px; display:none;">手机号</li>
-                                    <li class="fc_tableLi9" style="width:100px;">是否取消</li>
+                                    <li class="fc_tableLi7" style="width:100px;">是否取消</li>
                                 </ul>
-                            <div class="fc_tableContent" id="recordTable">
-                            </div>
+                                <div class="fc_tableContent" id="recordTable">
+                                </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -71,9 +81,11 @@
         </div>
     </div>
 <script>
+    var tripdata
     $(document).ready(function(){
         $.get("/user/getFavorateFlight/?user_id="+ 1,function(data,status){
             console.log(data);
+            tripdata=data;
             print(data.trips);
         })
     })
@@ -88,14 +100,14 @@
             var $trTemp = $("<ul></ul>");
         		//$trTemp.append("<li class='fc_tableLi1'>"+ data[i].flight.datetime +"</li>");
                 $trTemp.append("<li class='fc_tableLi1'>"+ data[i].flight.datetime+"</li>");
-        		$trTemp.append("<li class='fc_tableLi2' style='cursor:pointer;'>"+ data[i].flight.flight_id +"</li>");
+        		$trTemp.append("<li class='fc_tableLi2' style='cursor:pointer;color:blue;' onclick='detail("+i+")'>"+ data[i].flight.flight_id +"</li>");
         		$trTemp.append("<li class='fc_tableLi3'>"+data[i].flight.departure+"</li>");
         		$trTemp.append("<li class='fc_tableLi4'>"+data[i].flight.plan_departure_time+"</li>");
         		$trTemp.append("<li class='fc_tableLi5'>"+ data[i].flight.arrival+"</td>");
         		$trTemp.append("<li class='fc_tableLi6'>"+  data[i].flight.plan_arrival_time +"</td>");
         		var user_type=judge_user(data[i].user_type);
         		$trTemp.append("<li class='fc_tableLi8'>"+user_type+"</td>");
-        		$trTemp.append("<li class='fc_tableLi9'style='width:100px;'>"+ "<a href='javascript:;' class='fc_handle_cancel'>"+"删除"+"</a>"+"</li>");
+        		$trTemp.append("<li class='fc_tableLi9'style='width:100px;'>"+ "<a href='javascript:;' class='fc_handle_cancel' onclick='deletetrip("+i+")'>"+"删除"+"</a>"+"</li>");
         		//$trTemp.appendTo('#son_div');
                 $trTemp.appendTo('#recordTable').children('div').eq(i);
         }
@@ -112,12 +124,36 @@
 
     function deletetrip(i)
     {
-         $.post("/user/postDelete/",{user_id:my_id,trip_id:my_trip_id},function(data,status) {
+         var trip = tripdata.trips;
+         $.post("/user/postDelete/",{user_id:1,trip_id:trip[i].trip_id},function(data,status) {
              if (data.issucceed == 1)
-                 alert("删除成功");
+             {
+                  alert("删除成功");
+                  window.location.reload();
+             }
              else
                  alert("删除失败")
          })
+    }
+    function detail(i)
+    {
+        var data=tripdata.trips;
+        console.log(data);
+        console.log(data[i].flight.flight_id);
+        console.log(data[i].flight.datetime);
+        console.log(data[i].flight.detail_url);
+        $.get("/airplane/getSearchFlightById/?flight_id="+data[i].flight.flight_id+"&datetime="+data[i].flight.datetime+"&is_detail="+1+"&detail_url="+data[i].flight.detail_url,function(data,status) {
+            if (data.issucceed == 1)
+                printdetail(data.flight);
+            else
+                alert("不存在");
+        })
+    }
+    function printdetail(data2)
+    {
+        var data=data2[0];
+        var searchUrl = encodeURI("/airplane/detail/?searchText=" + data.flight_id+'~'+data.company+'~'+data.real_flight_id+'~'+data.datetime+'~'+data.plan_departure_time+'~'+data.plan_arrival_time+'~'+data.actual_departure_time+'~'+data.actual_arrival_time+'~'+data.flight_status+'~'+data.departure+'~'+data.arrival+'~'+data.punctuality_rate+'~'+data.delay_time+'~'+data.check_in+'~'+data.boarding_port+'~'+data.arriving_port+'~'+data.Baggage_num+'~'+data.length+'~'+data.time+'~'+data.proc+'~'+data.plane+'~'+data.age+'~'+data.forecast+'~'+data.old_state+'~'+data.d_weather+'~'+data.d_pm+'~'+data.d_state+'~'+data.a_weather+'~'+data.a_pm+'~'+data.a_state+'~'+data.detail_url); //使用encodeURI编码
+        location.href = searchUrl;
     }
 </script>
 </body>

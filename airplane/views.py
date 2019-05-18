@@ -94,7 +94,8 @@ def getSearchFlightById(request):
         detail_url = request.GET.get('detail_url')
 
         today = date.today()
-        askdate = DT.strptime(dtime, '%Y-%m-%d')
+        print(dtime);
+        askdate = DT.strptime(dtime,'%Y-%m-%d')
         askdate = askdate.date()
         # askdate = date(askdate.year,askdate.month,askdate.day)
         # dtime.strptime('%Y-%m-%d')
@@ -130,7 +131,7 @@ def getSearchFlightById(request):
             ret_msg['issucceed'] = 1
             if is_detail:
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
-                ret_flight["datetime"] = datetime
+        #        ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
@@ -219,7 +220,7 @@ def getSearchFlightByCity(request):
             if is_detail:
                 print("come here if is_detail")
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
-                ret_flight["datetime"] = datetime
+            #    ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:

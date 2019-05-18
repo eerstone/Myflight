@@ -190,29 +190,25 @@
         var my_id;
         var my_phone;
         var initial_pwd;
+        var if_first=1;
 			$(document).ready(function(){
-			var searchUrl = window.location.href;
-    		var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数
-  		// searchData = searchData.split("~");
-
-    		var searchText = decodeURI(searchData[1]); //decodeURI解码
-    		var infor = searchText.split('~')
-                my_id=infor[0];
-    		    my_phone=infor[1];
-	    		$('#chNickName').attr("value",infor[2]);//name
-	    		if(infor[3]=='male')
-	    		{
-	    			$('#gender').attr("value","男");
-	    		}
-	    		if(infor[3]=='female')
-	    		{
-	    			$('#gender').attr("value","女");
-	    		}
-	    		$('#chMail').attr("value",infor[4]);
-	    		var bir=infor[5].split('-');
-	    		$('#chYear').val(bir[0]);
-                $('#chMonth').val(bir[1]);
-                $('#chDay').val(bir[2]);
+                    var searchUrl = window.location.href;
+    		        var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数
+  		            // searchData = searchData.split("~");
+                    var searchText = decodeURI(searchData[1]); //decodeURI解码
+    		        var infor = searchText.split('~')
+                    my_id=infor[0];
+                    my_phone=infor[1];
+                    $('#chNickName').attr("value",infor[2]);//name
+                    if(infor[3]=='male')
+                        $('#gender').attr("value","男");
+                    if(infor[3]=='female')
+                        $('#gender').attr("value","女");
+                    $('#chMail').attr("value",infor[4]);
+                    var bir=infor[5].split('-');
+                    $('#chYear').val(bir[0]);
+                    $('#chMonth').val(bir[1]);
+                    $('#chDay').val(bir[2]);
 	   });
 		function change_infor()
 		{
@@ -227,7 +223,12 @@
 				alert('性别有误');
 			else
 			{
-			    $.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:my_gender,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
+			    var sex;
+			    if(my_gender=='男')
+			        sex='male';
+			    else
+			        sex='female';
+			    $.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:sex,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
 			    if(data.issucceed==1)
                 {
                     alert("修改成功");
