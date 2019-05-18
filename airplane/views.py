@@ -136,7 +136,7 @@ def getSearchFlightById(request):
                 return JsonResponse(ret_msg, safe=False)
             else:
                 ret_flight = vf.search_num(askflight_id,datetime)
-                if ret_flight == None:
+                if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
@@ -226,7 +226,7 @@ def getSearchFlightByCity(request):
             else:
                 print("come here else is_detail")
                 ret_flight = vf.search_seg(city_from, city_to,datetime)
-                if ret_flight == None:
+                if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
