@@ -35,6 +35,32 @@ $(function() {
 			return false;
 		return true;
 	}
+	function dateToString(d)
+    {
+    	var y= d.getFullYear();
+    	var m= d.getMonth() + 1;
+    	var d=d.getDate();
+      //把日期2017-1-6 格式化为标准的 2017-01-06
+      //判断数字的长度是否是1，如果是1那么前面加上字符0
+		if(m.toString().length == 1) m= "0" + m;
+		if(d.toString().length == 1) d= "0" + d;
+		return y+"-"+m+"-"+d;
+    }
+	function datediff(inputdate)
+    {
+    	var d = new Date();
+	    var nowdate = dateToString(d);
+	    var d1 = nowdate.split('-');
+		var d2 = inputdate.split('-');
+		var date1 = new Date(d1[0],d1[1],d1[2]);
+		var date2 = new Date(d2[0],d2[1],d2[2]);
+		var dt1 = date1.getTime();
+		var dt2 = date2.getTime();
+		console.log(d1[0],d1[1],d1[2]);
+		console.log(d2[0],d2[1],d2[2]);
+		console.log(dt1,dt2,(dt2-dt1) / (24*60*60*1000));
+		return (dt2-dt1) / (24*60*60*1000)
+    }
 	//错误提示
 	function errors() {
 		//从这里 开始
@@ -208,6 +234,11 @@ $(function() {
 			$(".errors").text("请选择日期!").css("color","black");
 			return false;
 		}
+		if (datediff(date) <= 0 || datediff(date) > 31){
+			errors();
+			$(".errors").text("只能添加未来30天范围的航班！请重新选择查询日期!").css("color","black");
+			return false;
+		}
 		else {
 			//success();
 			var post_data = {};
@@ -311,6 +342,11 @@ $(function() {
 			$(".errors").text("请选择日期!").css("color","black");
 			return false;
 		}
+		if (datediff(date) <= 0 || datediff(date) > 31){
+			errors();
+			$(".errors").text("只能修改未来30天范围的数据！请重新选择查询日期!").css("color","black");
+			return false;
+		}
 		else {
 			//success();
 			var post_data = {};
@@ -341,6 +377,11 @@ $(function() {
 		if (date == ""){
 			errors();
 			$(".errors").text("请选择日期!").css("color","black");
+			return false;
+		}
+		if (datediff(date) <= 0 || datediff(date) > 31){
+			errors();
+			$(".errors").text("只能修改未来30天范围的数据！请重新选择查询日期!").css("color","black");
 			return false;
 		}
 		else {
