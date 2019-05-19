@@ -94,7 +94,7 @@ def getSearchFlightById(request):
         detail_url = request.GET.get('detail_url')
 
         today = date.today()
-        print(dtime);
+        print(dtime)
         askdate = DT.strptime(dtime,'%Y-%m-%d')
         askdate = askdate.date()
         # askdate = date(askdate.year,askdate.month,askdate.day)
@@ -282,6 +282,7 @@ def future2normalization(flight):
     flight["a_weather"] = "--"
     flight["a_pm"] = "--"
     flight["a_state"] = "--"
+    flight["detail_url"] = "--"
     del flight["id"]
     del flight["is_mon"]
     del flight["is_tue"]
