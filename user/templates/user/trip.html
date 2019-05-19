@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/widget_new.css'%}">
     <link rel="stylesheet" href="{% static 'css/base.css'%}"/>
     <link rel="stylesheet" href="{% static 'css/float.css'%}"/>
-
     <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
     <style>
         .fc_tableLi2:hover{
             font-size: 16px;
@@ -20,19 +20,26 @@
             text-decoration: underline;
         }
     </style>
+    <script>
+        if($.cookie("is_log_in")!=1)
+                {
+                    alert('尚未登录，无法查看，请去登录');
+                    window.location.href='/user/login/';
+                }
+    </script>
 </head>
 <body>
     <div class="header">
 			<div class="topMenu clearfix">
 				<ul class="menu item pull-left">
 					<li class="top-menu-item  ">
-						<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
+						<a href="/airplane/index/" class="menu-hd"><span style="font-size: 22px">首页</span></a>
 					</li>
 					<li class="top-menu-item  top-menu-curr ">
-						<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+						<a href="/airplane/trip/" class="menu-hd"><span style="font-size: 22px">出行管理</span></a>
 					</li>
 					<li class="top-menu-item   ">
-						<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+						<a href="/user/person/" class="menu-hd cur_pointer" id="log_person"><span style="font-size: 22px" id="log_or_person">个人中心</span></a>
 					</li>
 				</ul>
 			</div>
@@ -42,6 +49,8 @@
             <div class="personInfo clear" style="background-color: ghostwhite">
                 <div class="flightCustomize" id="parentd" style="width: 1100px">
                     <div class="pcbox_head">
+                        <div class="pcbox_head_text" style="color: black" id="hello"></div>
+                        <br>
                         <div class="pcbox_head_text" style="color: black">我的航班 &nbsp| &nbsp行程管理</div>
         {% comment %}                <div class="pcIcon_tip" id="pcIcon_tip2">
                             <div class="pcIcon_tipBox" id="pcIconTipBox2" style="">
@@ -83,7 +92,8 @@
 <script>
     var tripdata
     $(document).ready(function(){
-        $.get("/user/getFavorateFlight/?user_id="+ 1,function(data,status){
+        $('#hello').html('你好！尊贵的   '+$.cookie("user_name"));
+        $.get("/user/getFavorateFlight/?user_id="+$.cookie("user_id"),function(data,status){
             console.log(data);
             tripdata=data;
             print(data.trips);
@@ -125,7 +135,7 @@
     function deletetrip(i)
     {
          var trip = tripdata.trips;
-         $.post("/user/postDelete/",{user_id:1,trip_id:trip[i].trip_id},function(data,status) {
+         $.post("/user/postDelete/",{user_id:$.cookie("user_id"),trip_id:trip[i].trip_id},function(data,status) {
              if (data.issucceed == 1)
              {
                   alert("删除成功");

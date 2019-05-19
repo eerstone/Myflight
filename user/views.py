@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from . import models
+
+
 import requests
 import hashlib
 import json
@@ -22,6 +24,9 @@ from rest_framework.response import Response
 import random
 
 from airplane import models as airplanemodels
+
+from django.template import loader ,Context
+
 
 #index
 def home(request):
@@ -71,12 +76,13 @@ def postlogin(request):
         # # VerifiedCode TBD
         # psw = data['psw']
         ltype = request.POST.get('type')
-        print(ltype)
         phone_num = request.POST.get('phone_num')
         psw = request.POST.get('pwd')
         verifiedcode = request.POST.get('VerifiedCode')
+        print(ltype)
         print(phone_num)
         print(psw)
+
         basicinfo ={'user_id':-1,'phone_num':"",'user_name':"",'gender':"",'email':"",'birthday':"",'icon':""}
         ifexist = models.User_Auth.objects.filter(identifier=phone_num).count()
         if ifexist:
@@ -89,6 +95,14 @@ def postlogin(request):
             try:
                 if user.credential == psw:
                     ret_msg = {'user':basicinfo, 'login_status':0}
+                    response = HttpResponse('user')
+                    response.set_cookie('user_id', 'ret_msg["user"]["user_id"]')
+                    response.set_cookie('is_login','true')
+                    print('这里')
+             #       request.session['is_login'] = True
+             #       request.set_cookie['user_id'] = ret_msg["user"]["user_id"]
+              #      print(basicinfo)
+              #      request.session['user_name'] = psw
                     return JsonResponse(ret_msg,safe=False)
                 else:
                     ret_msg = {'user':{}, 'login_status':3}

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 LOGIN_URL = '/Myflightadmin/login/'
+user_login_url = '/user/login/'
 APIKEY='5aa19590f824fcaf4a76f9039c812da6'
 
 CACHES = {
