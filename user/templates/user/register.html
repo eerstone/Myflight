@@ -4,8 +4,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script src="{% static 'js/jquery.min.js'%}"></script>
 		<script src="{% static 'js/jquery-3.1.0.min.js'%}"></script>
+        <script src="{% static 'js/jquery.cookie.js' %}"></script>
 		<title>注册</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css'%}" />
         <link rel="stylesheet" type="text/css" href="{% static 'css/style3.css'%}" />
@@ -20,9 +20,10 @@
 			}
 		</style>
 	
-		<script>//用于检验提交登陆信息的正确性
+		<script>//用于检验提交登录信息的正确性
         	function login_onclick_by_pass()
         	{
+
         		var dataObj;
         		var regularPhone=/^1[34578]\d{9}$/;
         		var phonenumber=$('#username1').val();
@@ -45,9 +46,8 @@
         			$.post("/user/postRegister/",{phone_num:phonenumber,pwd:passwordNumber,VerifiedCode:VCode},
 				        function(data,status) {
                             if (data.register_status == 1) {
-                                alert('注册成功');
-                                var searchUrl = encodeURI("/user/person/?searchText=" + phonenumber); //使用encodeURI编码
-                                location.href = searchUrl;
+                                alert('注册成功,请前往登录');
+                                window.location.href = "/user/login/"
                             } else if (data.register_status == 2) {
                                 alert('验证码错误');
                             } else {
@@ -91,13 +91,13 @@
             <div class="topMenu clearfix">
                 <ul class="menu item pull-left">
                     <li class="top-menu-item  ">
-                        <a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
+                        <a href="/airplane/index/" class="menu-hd"><span style="font-size: 22px">首页</span></a>
                     </li>
                     <li class="top-menu-item ">
-                        <a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+                        <a href="/airplane/trip/" class="menu-hd"><span style="font-size: 22px">出行管理</span></a>
                     </li>
                     <li class="top-menu-item  top-menu-curr ">
-                        <a href="/user/log in/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+                        <a href="/user/login/" class="menu-hd cur_pointer"><span style="font-size: 22px">登录/注册</span></a>
                     </li>
                 </ul>
             </div>

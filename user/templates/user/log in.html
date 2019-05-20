@@ -4,9 +4,9 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script src="{% static 'js/jquery.min.js' %}"></script>
 		<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
-		<title>登陆/注册</title>
+        <script src="{% static 'js/jquery.cookie.js' %}"></script>
+		<title>登录/注册</title>
 
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}" />
@@ -27,6 +27,7 @@
 		</style>
 		<script >//用于检验输入的电话号码是否符合要求
 			var regular=/^1[34578]\d{9}$/;
+			var this_id;
 			$(function () {
      			$("#username1").on('blur', function () {
         			var phonenumber=$('#username1').val();
@@ -59,7 +60,7 @@
       			});
    			});
 		</script>
-		<script>//密码登陆
+		<script>//密码登录
         	function login_onclick_by_pass()
         	{
         		var regularPhone=/^1[34578]\d{9}$/;
@@ -97,7 +98,7 @@
         			alert("输入的手机号不对");
         		}
 			}
-        	function login_onclick_by_yzm()//验证码登陆
+        	function login_onclick_by_yzm()//验证码登录
         	{
         		var regularPhone=/^1[34578]\d{9}$/;
         		var phonenumber=$('#username2').val();
@@ -129,6 +130,14 @@
         	}
         	function judge(data)
         	{
+                $.cookie("is_log_in",1,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_id",data.user_id ,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_phone_num",data.phone_num ,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_name",data.user_name,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_gender",data.gender ,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_email",data.email ,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_birthday",data.birthday ,{ expires: 1 ,path: '/' ,secure: false });
+                $.cookie("user_icon",data.icon ,{ expires: 1 ,path: '/' ,secure: false });
         		var searchUrl = encodeURI("/user/person/?searchText=" + data.user_id+'~'+data.phone_num+'~'+data.user_name+'~'+data.gender+'~'+data.email+'~'+data.birthday+'~'+data.icon); //使用encodeURI编码
 		    	location.href = searchUrl;
         	}
@@ -150,13 +159,13 @@
             <div class="topMenu clearfix" >
                 <ul class="menu item pull-left" >
                     <li class="top-menu-item ">
-                        <a href="/airplane/index/" class="menu-hd"><span  >首页</span></a>
+                        <a href="/airplane/index/" class="menu-hd"><span  style="font-size: 22px">首页</span></a>
                     </li>
                     <li class="top-menu-item " >
-                        <a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+                        <a href="/airplane/trip/" class="menu-hd"><span style="font-size: 22px">出行管理</span></a>
                     </li>
                     <li class="top-menu-item   top-menu-curr">
-                        <a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+                        <a href="/user/login/" class="menu-hd cur_pointer"><span style="font-size: 22px">登录/注册</span></a>
                     </li>
                 </ul>
             </div>
@@ -169,7 +178,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form" style="margin-top: 50px">
-                                <h1>登陆</h1> 
+                                <h1>登录</h1>
                                 <p> 
                                     <label id="labelPhoneNumber" for="username1" class="uname" data-icon="n" > 手机号 </label>
                                     <input id="username1" name="username"  type="text" placeholder="手机号"/>
@@ -179,13 +188,13 @@
                                     <input id="password1" name="password" required="required" type="password" placeholder="密码"/>
                                 </p>
                                 <p class="login button"> 
-                                    <input type="button" value="登陆"  onclick="login_onclick_by_pass()"/> 
+                                    <input type="button" value="登录"  onclick="login_onclick_by_pass()"/>
 								</p>
 								<p class="change_link">
 								</p>
                                 <p class="change_link">	
-									手机验证码登陆
-									<a href="#toregister" class="to_register"> 验证码登陆</a>
+									手机验证码登录
+									<a href="#toregister" class="to_register"> 验证码登录</a>
                               		&nbsp &nbsp&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp
 									还没注册 ?
 									<a href="/user/register/" >注册</a>
@@ -194,7 +203,7 @@
                         </div>
 
                         <div id="register" class="animate form" style="margin-top: 50px">
-                                <h1> 登陆 </h1> 
+                                <h1> 登录 </h1>
                               	<p> 
                                     <label id="labelPhoneNumber2" for="username2" class="uname" > 手机号 </label>
                                     <input id="username2" name="username"  type="text" placeholder="手机号"/>
@@ -207,11 +216,11 @@
 
                                 </p>
                                 <p class="signin button"> 
-									<input type="button" value="登陆" onclick="login_onclick_by_yzm()"/> 
+									<input type="button" value="登录" onclick="login_onclick_by_yzm()"/>
 								</p>
                                 <p class="change_link">  
-									密码登陆
-									<a href="#tologin" class="to_register"> 密码登陆</a>
+									密码登录
+									<a href="#tologin" class="to_register"> 密码登录</a>
                               		&nbsp &nbsp&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp
 									还没注册 ?
 									<a href="/user/register/" >注册</a>
@@ -220,6 +229,5 @@
                     </div>
                 </div>
         </div>
-
 	</body>
 </html>

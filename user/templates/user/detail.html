@@ -9,7 +9,7 @@
 		 	<link rel="stylesheet" href="{% static 'css/base.css'%}"/>
 		 	<link rel="stylesheet" href="{% static 'css/float.css'%}"/>
 			<script src="{% static 'js/jquery.min.js'%}"></script>
-
+            <script src="{% static 'js/jquery.cookie.js' %}"></script>
 	</head>
 	<body>
 		<div class="usernamer_login">
@@ -17,13 +17,13 @@
 			<div class="topMenu clearfix">
 				<ul class="menu item pull-left">
 					<li class="top-menu-item  top-menu-curr ">
-						<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
+						<a href="/airplane/index/" class="menu-hd"><span  style="font-size: 22px">首页</span></a>
 					</li>
 					<li class="top-menu-item ">
-						<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+						<a href="/airplane/trip/" class="menu-hd"><span style="font-size: 22px">出行管理</span></a>
 					</li>
 					<li class="top-menu-item   ">
-						<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+						<a href="/user/login/" class="menu-hd cur_pointer" id="log_person"><span style="font-size: 22px" id="log_or_person">登录/注册</span></a>
 					</li>
 				</ul>
 			</div>

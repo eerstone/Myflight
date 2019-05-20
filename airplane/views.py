@@ -25,6 +25,8 @@ import random
 from datetime import datetime as DT
 from datetime import date
 from datetime import time
+from Myflight import settings
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 # detail
@@ -42,6 +44,8 @@ def index(request):
 # trip
 def trip(request):
     if request.method == 'GET':
+        if not request.session.get("is_login", None):
+            return HttpResponseRedirect('%s?next=%s' % (settings.user_login_url, request.path))
         return render(request, 'user/trip.html')
 
 
@@ -374,6 +378,8 @@ def scan_trip():
                 # print(datetime.__str__())
                 vf = data_get.variflight()
                 new_flight = vf.search_num(flight_id, datetime.__str__())
+                print(new_flight)
+                print(flight_id,datetime.__str__())
                 new_flight = new_flight[0]
                 if new_flight["flight_status"] == "延误" and status == "计划":
                     jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)

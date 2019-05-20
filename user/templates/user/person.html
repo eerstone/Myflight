@@ -1,14 +1,22 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="zh"><head>
+<html lang="zh"  style="width: 1536px">
+<head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta charset="utf-8">
 
 	<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/widget_new.css'%}"/>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/personCenter.css'%}"/>
-
+    <script>
+            if($.cookie("is_log_in")!=1)
+                {
+                    alert('尚未登录，请去登录');
+                    window.location.href='/user/login/';
+                }
+    </script>
 </head>
 <body>
 	<div class="usernamer_login">
@@ -16,13 +24,13 @@
 				<div class="topMenu clearfix">
 					<ul class="menu item pull-left">
 						<li class="top-menu-item  top-menu-curr ">
-							<a href="/airplane/index/" class="menu-hd"><span>首页</span></a>
+							<a href="/airplane/index/" class="menu-hd"><span  style="font-size: 22px">首页</span></a>
 						</li>
 						<li class="top-menu-item ">
-							<a href="/airplane/trip/" class="menu-hd"><span>出行管理</span></a>
+							<a href="/airplane/trip/" class="menu-hd"><span style="font-size: 22px">出行管理</span></a>
 						</li>
 						<li class="top-menu-item   ">
-							<a href="/user/login/" class="menu-hd cur_pointer"><span>登录/注册</span></a>
+							<a href="/user/login/" class="menu-hd cur_pointer" id="log_person"><span style="font-size: 22px" id="log_or_person">登录/注册</span></a>
 						</li>
 					</ul>
 				</div>
@@ -106,8 +114,8 @@
                     <span id="chBar"></span>
                 </div>
                 <div class="changeDataBody">
-                    <div class="changeDataTog1">
-                        <div class="changeDataPersonPic" id="changePic">
+                    <div class="changeDataTog1" >
+                        <div class="changeDataPersonPic" id="changePic" style="display: none">
                             <div class="changeHeadText">
                                 <label for="changeHead">更换头像</label>
                             </div>
@@ -129,7 +137,9 @@
                                 </li>
                                 <li>
                                     <label for="">性别</label>
-                                    <input type="text" name="" id="gender" value="男" />
+                           {% comment %}         <input type="text" name="" id="gender" value="男" />{% endcomment %}
+                                    <select id="gender" name="gender" value=""  style="text-align:center;"><option value="男" selected="selected">男</option><option value="女">女</option></select>
+
                                 </li>
                                 <li>
                                     <label for="">生日</label>
@@ -149,7 +159,7 @@
                                 </li>
                                 <li class="chBtnWrap">
                                     <a href="javascript:;" id="chSave" class="chSave" onclick="change_infor()">保存</a>
-                                    <a href="/user/login/" class="chBack">退出登陆</a>
+                                    <a href="javascript:;" class="chBack" onclick="logout()">退出登录</a>
                                 </li>
                             </ul>
                         </form>
@@ -174,7 +184,7 @@
                             <label for=""></label>
 
                             <a href="javascript:;" class="chSure" onclick="change_pwd()">确定</a>
-                            <a href="/user/login/" class="chBack">退出登录</a>
+                            <a href="javascript:;" class="chBack" onclick="logout()">退出登录</a>
                         </div>
                     </div>
                 </div>
@@ -192,23 +202,31 @@
         var initial_pwd;
         var if_first=1;
 			$(document).ready(function(){
-                    var searchUrl = window.location.href;
-    		        var searchData = searchUrl.split("="); //截取 url中的“=”,获得“=”后面的参数
-  		            // searchData = searchData.split("~");
-                    var searchText = decodeURI(searchData[1]); //decodeURI解码
-    		        var infor = searchText.split('~')
-                    my_id=infor[0];
-                    my_phone=infor[1];
-                    $('#chNickName').attr("value",infor[2]);//name
-                    if(infor[3]=='male')
-                        $('#gender').attr("value","男");
-                    if(infor[3]=='female')
-                        $('#gender').attr("value","女");
-                    $('#chMail').attr("value",infor[4]);
-                    var bir=infor[5].split('-');
-                    $('#chYear').val(bir[0]);
-                    $('#chMonth').val(bir[1]);
-                    $('#chDay').val(bir[2]);
+{% comment %}			    if($.cookie("is_log_in")!=1)
+                {
+                    alert('尚未登录，请去登录');
+                    window.location.href='/user/login/';
+                }
+			    else
+                {{% endcomment %}
+                $('#log_person').attr('href',"user/person");
+                $('#log_or_person').html('个人中心');
+                my_id= $.cookie("user_id");
+                my_phone=$.cookie("user_phone_num");
+                $('#chNickName').val($.cookie("user_name"));
+                if($.cookie("user_gender")=='男'||$.cookie("user_gender")=='male')
+                {
+                    $('#gender').val('男');
+                }
+                else
+                {
+                      $('#gender').val('女');
+                }
+                $('#chMail').val($.cookie("user_email"));
+                var bir=$.cookie("user_birthday").split('-');
+                $('#chYear').val(bir[0]);
+                $('#chMonth').val(bir[1]);
+                $('#chDay').val(bir[2]);
 	   });
 		function change_infor()
 		{
@@ -219,7 +237,7 @@
 			var month=$('#chMonth').val();
 			var day=$('#chDay').val();
 			var mail=$('#chMail').val();
-			if(my_gender!='男'&&my_gender!='女')
+			if(my_gender!='男'&&my_gender!='女'&&my_gender!='male'&&my_gender!='female')
 				alert('性别有误');
 			else
 			{
@@ -231,7 +249,17 @@
 			    $.post("/user/postBasicInfo/",{user_id:my_id,user_name:name,phone_num:my_phone,gender:sex,email:mail,birthday:year+"-"+month+"-"+day},function(data,status){
 			    if(data.issucceed==1)
                 {
+                    $.cookie("user_name",'',{ expires: -1 ,path: '/' ,secure: false });
+                    $.cookie("user_gender",'',{ expires: -1 ,path: '/' ,secure: false });
+                    $.cookie("user_email",'',{ expires: -1 ,path: '/' ,secure: false });
+                    $.cookie("user_birthday",'',{ expires: -1 ,path: '/' ,secure: false });
+
+                    $.cookie("user_name",name,{ expires: 1 ,path: '/' ,secure: false });
+                    $.cookie("user_gender",my_gender,{ expires: 1 ,path: '/' ,secure: false });
+                    $.cookie("user_email",mail,{ expires: 1 ,path: '/' ,secure: false });
+                    $.cookie("user_birthday",year+"-"+month+"-"+day,{ expires: 1 ,path: '/' ,secure: false });
                     alert("修改成功");
+
                 }
 			    else
                 {
@@ -263,6 +291,17 @@
                         alert('修改失败');
                 });
             }
+        }
+        function logout() {
+            $.cookie("is_log_in",'', { expires: -1 ,path: '/' ,secure: false});
+            $.cookie("user_id",'', { expires: -1 ,path: '/' ,secure: false});
+            $.cookie("user_phone_num",'',{ expires: -1 ,path: '/' ,secure: false });
+            $.cookie("user_name",'',{ expires: -1 ,path: '/' ,secure: false });
+            $.cookie("user_gender",'',{ expires: -1 ,path: '/' ,secure: false });
+            $.cookie("user_email",'',{ expires: -1 ,path: '/' ,secure: false });
+            $.cookie("user_birthday",'',{ expires: -1 ,path: '/' ,secure: false });
+            $.cookie("user_icon",'',{ expires: -1 ,path: '/' ,secure: false });
+           window.location.href='/user/login/';
         }
 	</script>
 </body><!--[if lt IE 9]>
