@@ -153,7 +153,7 @@
         console.log(data[i].flight.datetime);
         console.log(data[i].flight.detail_url);
         $.get("/airplane/getSearchFlightById/?flight_id="+data[i].flight.flight_id+"&datetime="+data[i].flight.datetime+"&is_detail="+1+"&detail_url="+data[i].flight.detail_url,function(data,status) {
-            if (data.issucceed == 1)
+            if (data.is_exist == 1)
                 printdetail(data.flight);
             else
                 alert("不存在");

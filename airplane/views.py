@@ -44,8 +44,6 @@ def index(request):
 # trip
 def trip(request):
     if request.method == 'GET':
-        if not request.session.get("is_login", None):
-            return HttpResponseRedirect('%s?next=%s' % (settings.user_login_url, request.path))
         return render(request, 'user/trip.html')
 
 

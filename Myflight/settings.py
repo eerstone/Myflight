@@ -160,14 +160,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static") # 收集Django的静态文件到同一个static中
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "/static/"),
-    BASE_DIR+"/user/"+"static/",
-    BASE_DIR+"/Myflightadmin/"+"static/",
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, "static") # 收集Django的静态文件到同一个static中
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "/static/"),
+#     BASE_DIR+"/user/"+"static/",
+#     BASE_DIR+"/Myflightadmin/"+"static/",
+#
+# ]
 
-]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 SESSION_COOKIE_NAME = "sessionid"       # Session的cookie保存在浏览器上时的key
 SESSION_COOKIE_PATH = "/"               # Session的cookie保存的路径(默认)

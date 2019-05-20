@@ -399,13 +399,18 @@
         }
 		 function detail(id,type)
         {
+            if(data1[id].detail_url==null)
+            {
+                data1[id].detail_url='--';
+            }
+            console.log(data1[id].detail_url);
             if(type==0)
             {
                 var flight_number=$('#flightNo').val();
                 var  my_data ;
                 my_data= $('#takeoffDate2').val();
                 $.get("/airplane/getSearchFlightById/?flight_id="+flight_number+"&datetime="+my_data+"&is_detail="+1+"&detail_url="+data1[id].detail_url,function(data,status){
-                    if(data.issucceed==1)
+                    if(data.is_exist==1)
                         printdetail(data.flight);
                     else
                         alert("不存在");
@@ -417,7 +422,7 @@
         		var begin=$('#sl_start').val();
         		var end=$('#sl_end').val();
                 $.get("/airplane/getSearchFlightByCity/?city_from="+begin+"&city_to="+end+"&datetime="+date3+"&is_detail="+1+"&detail_url="+data1[id].detail_url,function(data,status){
-                    if(data.issucceed==1)
+                    if(data.is_exist==1)
                         printdetail(data.flight);
                     else
                         alert("不存在");
@@ -427,6 +432,7 @@
 		function printdetail(data2)
         {
             var data=data2[0];
+
             for(x in data)
             {
                 if(data[x]=="")
