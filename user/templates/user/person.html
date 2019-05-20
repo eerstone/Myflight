@@ -137,7 +137,9 @@
                                 </li>
                                 <li>
                                     <label for="">性别</label>
-                                    <input type="text" name="" id="gender" value="男" />
+                           {% comment %}         <input type="text" name="" id="gender" value="男" />{% endcomment %}
+                                    <select id="gender" name="gender" value=""  style="text-align:center;"><option value="男" selected="selected">男</option><option value="女">女</option></select>
+
                                 </li>
                                 <li>
                                     <label for="">生日</label>
@@ -212,7 +214,14 @@
                 my_id= $.cookie("user_id");
                 my_phone=$.cookie("user_phone_num");
                 $('#chNickName').val($.cookie("user_name"));
-                $('#gender').val($.cookie("user_gender"));
+                if($.cookie("user_gender")=='男'||$.cookie("user_gender")=='male')
+                {
+                    $('#gender').val('男');
+                }
+                else
+                {
+                      $('#gender').val('女');
+                }
                 $('#chMail').val($.cookie("user_email"));
                 var bir=$.cookie("user_birthday").split('-');
                 $('#chYear').val(bir[0]);

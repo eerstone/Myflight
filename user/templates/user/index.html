@@ -439,42 +439,45 @@
         }
 		function trip(id,type)
         {
-            var index1=id;
-            var u_type;
-            console.log(index1);
-            console.log($("select:eq(0)").val());
-            console.log($("select:eq(1)").val());
-            console.log($("select:eq(2)").val());
-            console.log($("select:eq(index1)").val());
-            if($("select:eq(id)").val()=='接机人')
-                u_type=0;
-            else if($("select:eq(id)").val()=='乘机人')
-                u_type=1;
-            else
-                u_type=2;
-            console.log(u_type);
-            console.log(data1[id]);
-            console.log(data1[id]);
-            console.log(data1[id].datetime);
-            console.log(data1[id].flight_id);
-            console.log(data1[id].detail_url);
-            if(data1[id].detail_url==null)
+            if($.cookie("is_log_in")==1)
             {
-                 $.post("/airplane/postFavoriteFlight/",{user_id:$.cookie("user_id"),user_type:u_type,flight_id:data1[id].flight_id,detail_url:"--",datetime:data1[id].datetime},
-				        function(data,status){
-                            if(data.issucceed==1)
-                                alert('添加成功');
-                            else
-                                alert('添加失败');
-                        });
+                var index1=id;
+                var u_type;
+                if($("select").eq(index1).val()=='接机人')
+                    u_type=0;
+                else if($("select").eq(index1).val()=='乘机人')
+                    u_type=1;
+                else
+                    u_type=2;
+                console.log(u_type);
+                console.log(data1[id]);
+                console.log(data1[id]);
+                console.log(data1[id].datetime);
+                console.log(data1[id].flight_id);
+                console.log(data1[id].detail_url);
+                if(data1[id].detail_url==null)
+                {
+                     $.post("/airplane/postFavoriteFlight/",{user_id:$.cookie("user_id"),user_type:u_type,flight_id:data1[id].flight_id,detail_url:"--",datetime:data1[id].datetime},
+                            function(data,status){
+                                if(data.issucceed==1)
+                                    alert('添加成功');
+                                else
+                                    alert('添加失败');
+                            });
+                }
+               $.post("/airplane/postFavoriteFlight/",{user_id:$.cookie("user_id"),user_type:u_type,flight_id:data1[id].flight_id,detail_url:data1[id].detail_url,datetime:data1[id].datetime},
+                            function(data,status){
+                                if(data.issucceed==1)
+                                    alert('添加成功');
+                                else
+                                    alert('添加失败');
+                            });
             }
-           $.post("/airplane/postFavoriteFlight/",{user_id:$.cookie("user_id"),user_type:u_type,flight_id:data1[id].flight_id,detail_url:data1[id].detail_url,datetime:data1[id].datetime},
-				        function(data,status){
-                            if(data.issucceed==1)
-                                alert('添加成功');
-                            else
-                                alert('添加失败');
-                        });
+            else
+            {
+                alert('登陆后才能添加航班');
+            }
+
         }
 </script>
 </body>
