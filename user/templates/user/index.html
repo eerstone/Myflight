@@ -365,12 +365,12 @@
         	$('#fly_list').empty();
         	if(type==0)
             {
-                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#flightNo').val()+"</h1>"+"</div>");
+                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#flightNo').val()+"航班     "+data[0].datetime+"日出行情况"+"</h1>"+"</div>");
                 $('#fly_list').append("<div class='li_box' id='li_box'></div>")
             }
         	else
             {
-                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#sl_start').val()+"----"+$('#sl_end').val()+"</h1>"+"</div>");
+                $('#fly_list').append("<div class='tit'>"+"<h1>"+$('#sl_start').val()+"----"+$('#sl_end').val()+"     "+data[0].datetime+"日共"+data.length+"趟航班"+"</h1>"+"</div>");
                 $('#fly_list').append("<div class='li_box' id='li_box'></div>")
             }
         	$('#li_box').append('<div class="t_tit" id="t_tit"> <p class="w260">航班信息</p> <p class="w150">计划起飞</p> <p class="w150">实际起飞</p> <p class="w150">出发地</p> <p class="w150">计划到达</p> <p class="w150">实际到达</p> <p class="w150">到达地</p> <p class="w150">准点率</p> <p class="w150">状态</p> <p class="w150">添加行程</p><p class="w150">身份</p> <div class="clear"></div></div>')
