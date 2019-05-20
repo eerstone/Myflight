@@ -137,7 +137,7 @@ def getSearchFlightById(request):
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
-            		ret_msg['issucceed'] = 0	
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
         #        ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
@@ -146,7 +146,7 @@ def getSearchFlightById(request):
                 ret_flight = vf.search_num(askflight_id,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
-            		ret_msg['issucceed'] = 0	
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = ret_flight
@@ -231,7 +231,7 @@ def getSearchFlightByCity(request):
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
-            		ret_msg['issucceed'] = 0	
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
             #    ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
@@ -241,7 +241,7 @@ def getSearchFlightByCity(request):
                 ret_flight = vf.search_seg(city_from, city_to,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
-            		ret_msg['issucceed'] = 0	
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = ret_flight
