@@ -503,10 +503,11 @@ def postaddfl(flight):  # ok
 
     # flight = request.POST.get('flight')
     flight_dict = flight
-    am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
+    am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'],
+                  flight_dict['plan_departure_time'],
                   flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
                   flight_dict['departure_terminal'], flight_dict['arrival_terminal'],
-                  flight_dict['punctuality_rate'],flight_dict['delay_time'], flight_dict['company'],
+                  flight_dict['punctuality_rate'], flight_dict['delay_time'], flight_dict['company'],
                   flight_dict['is_mon'], flight_dict['is_tue'], flight_dict['is_wed'], flight_dict['is_thr'],
                   flight_dict['is_fri'], flight_dict['is_sat'], flight_dict['is_sun'])
     ret_msg['issucceed'] = 1

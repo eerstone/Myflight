@@ -19,11 +19,12 @@ def all():
     except common.APIConnectionException:
         raise common.APIConnectionException("conn")
     except common.JPushFailure:
-        print ("JPushFailure")
+        print("JPushFailure")
     except:
-        print ("Exception")
+        print("Exception")
 
-def push_msg(message,user_id,trip_id):
+
+def push_msg(message, user_id, trip_id):
     push = _jpush.create_push()
     # push.audience = jpush.all_
     push.audience = {"alias":[user_id]}
