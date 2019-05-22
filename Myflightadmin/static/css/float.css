@@ -10,7 +10,7 @@
 .li_box .t_tit p{float:left;line-height:56px;color:#333;font-size:14px;text-align:center}
 .w260{width:260px}
 .w260 img{float:left}
-.w150{width:99px;text-align:center;line-height:32px}
+.w150{width:120px;text-align:center;line-height:32px}
 .li_box li{margin-top:10px;padding:20px 0 0;cursor:pointer;background-color:#fff;border:1px solid #e1e5e6}
 .li_box li:hover{box-shadow:0 2px 5px #e6e6e6;transform:scale(1.02);transition:all .3s ease-in 0s;z-index:10}
 .li_box li:hover a{z-index:5}.li_box.li_box_pad{padding-top:56px}.li_box li:active{background-color:#f8f8f8}

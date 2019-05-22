@@ -61,6 +61,13 @@ $(function() {
 		console.log(dt1,dt2,(dt2-dt1) / (24*60*60*1000));
 		return (dt2-dt1) / (24*60*60*1000)
     }
+    function lettertest(str) {
+		var reg = /^[a-z]{3}$/;
+		if (!reg.test(str)) {
+			return 0;
+		}
+		return 1;
+	}
 	//错误提示
 	function errors() {
 		//从这里 开始
@@ -98,7 +105,7 @@ $(function() {
 					alert("未知错误，添加失败!")
 			},
 			error: function(xhr, type) {
-				alert("添加失败!")
+				alert("与服务器连接失败!")
 			}
 		});
 	}
@@ -260,6 +267,8 @@ $(function() {
 		var airport_city = $(".order-airport_city").val();
 		var airport_tem = $(".order-airport_tem").val();
 		var airport_wea = $(".order-airport_wea").val();
+		var airport3 = $(".order-airport_airport3").val();
+		var city3 = $(".order-airport_city3").val();
 		if (airport_name == "") {
 			errors();
 			$(".errors").text("请输入机场名称!").css("color","black");
@@ -280,6 +289,26 @@ $(function() {
 			$(".errors").text("请输入机场天气").css("color","black");
 			return false;
 		}
+		if (airport3 == ""){
+			errors();
+			$(".errors").text("请输入机场三字码").css("color","black");
+			return false;
+		}
+		if (lettertest(airport3) == 0){
+			errors();
+			$(".errors").text("请输入正确的机场三字码(机场三字码由三位小写字母组成）").css("color","black");
+			return false;
+		}
+		if (city3 == ""){
+			errors();
+			$(".errors").text("请输入城市三字码").css("color","black");
+			return false;
+		}
+		if (lettertest(city3) == 0){
+			errors();
+			$(".errors").text("请输入正确的城市三字码(城市三字码由三位小写字母组成）").css("color","black");
+			return false;
+		}
 		else {
 			var post_data = {};
 			var url = '/Myflightadmin/add_airport/';
@@ -287,6 +316,8 @@ $(function() {
 			post_data['city'] = airport_city;
 			post_data['temperature'] = parseInt(airport_tem) ;
 			post_data['weather'] = airport_wea;
+			post_data['city_3_letter'] = city3;
+			post_data['airport_3_letter'] = airport3;
 			add_submit(post_data,url);
  			//success();
 			//$(".success").text("添加成功!").css("color","black");

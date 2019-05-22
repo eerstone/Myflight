@@ -269,3 +269,1242 @@ Traceback (most recent call last):
   File "D:\DEMO\Python_demo\Django_demo\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
     % (filename if filename else fp))
 OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UHJlVTViOGtPb28xeE9Nd3VVVEhGckVQTkNVPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UHJlVTViOGtPb28xeE9Nd3VVVEhGckVQTkNVPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=K2NodC9OLzdvWE1nWGxYaU52R3o2MGZRTnpoTEd3Zms=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=K2NodC9OLzdvWE1nWGxYaU52R3o2MGZRTnpoTEd3Zms=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 309, in image_to_string
+    }[output_type]()
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 308, in <lambda>
+    Output.STRING: lambda: run_and_get_output(*args),
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 218, in run_and_get_output
+    run_tesseract(**kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 194, in run_tesseract
+    raise TesseractError(status_code, get_errors(error_string))
+pytesseract.pytesseract.TesseractError: (3221225786, 'ObjectCache(00000000630B3D20)::~ObjectCache(): WARNING! LEAK! object 0000000003333560 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-punc-dawg) ObjectCache(00000000630B3D20)::~ObjectCache(): WARNING! LEAK! object 0000000003333620 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-word-dawg) ObjectCache(00000000630B3D20)::~ObjectCache(): WARNING! LEAK! object 0000000002ACE890 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-number-dawg)')
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='117.191.11.77', port=8080): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UmRoYjljMDlQdWRHblNlMkt0UWk4cGFlQjBzPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='117.191.11.77', port=8080): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UmRoYjljMDlQdWRHblNlMkt0UWk4cGFlQjBzPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=YVd0UkZNQjZHNlpwREluSE5ZS3BtVVBlQU40PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=YVd0UkZNQjZHNlpwREluSE5ZS3BtVVBlQU40PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=T0RkbFRpTUJwNzlGUk9zSlZzYXJtUUtpa3R0WUQ1OGs=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=T0RkbFRpTUJwNzlGUk9zSlZzYXJtUUtpa3R0WUQ1OGs=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bGRObnBXZEVzaHVvYVhVVjJUOHZ3cU00Wms0PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 397, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bGRObnBXZEVzaHVvYVhVVjJUOHZ3cU00Wms0PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TE9IZkpTRVJPd3h6cXhSK1RCZGIwaTVyckRzPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TE9IZkpTRVJPd3h6cXhSK1RCZGIwaTVyckRzPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SEFBVDdaZGFJdnJkZUZYR3oyTTFHT3BEOFI5R0txUTM=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SEFBVDdaZGFJdnJkZUZYR3oyTTFHT3BEOFI5R0txUTM=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=OXBHOVFaTUl5MXQ0N1cwcWJ3c3RYeTFibzJZPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=OXBHOVFaTUl5MXQ0N1cwcWJ3c3RYeTFibzJZPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TEp1OFVhbXVra1piY3FIZjVpbTZkTGpnUHVURkdCNFE=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TEp1OFVhbXVra1piY3FIZjVpbTZkTGpnUHVURkdCNFE=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SENLVDJhaS9EZklOVkhxMzhLckhtTE00dlRJPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SENLVDJhaS9EZklOVkhxMzhLckhtTE00dlRJPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=OTc5VzZPeklIRlF2WEF4UUpPbUp3V2ozVFJoU2RwUi8=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=OTc5VzZPeklIRlF2WEF4UUpPbUp3V2ozVFJoU2RwUi8=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=alZSc1FpVVoyUkg0VDlLU0ZOV3hjUXkvTG04PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=alZSc1FpVVoyUkg0VDlLU0ZOV3hjUXkvTG04PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bEwvUjVtMlZyQ2llNXlUU1FBcnNvdnIvZkllWkxLY04=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bEwvUjVtMlZyQ2llNXlUU1FBcnNvdnIvZkllWkxLY04=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=blkwa2RnUUhMTHd4U3o0MjA2dGRkbGNWaW9NPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=blkwa2RnUUhMTHd4U3o0MjA2dGRkbGNWaW9NPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SVhVK283SHZBTGIwQjRxVjhYVlMwR1NwZTg5YkVzTXo=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=SVhVK283SHZBTGIwQjRxVjhYVlMwR1NwZTg5YkVzTXo=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 309, in image_to_string
+    }[output_type]()
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 308, in <lambda>
+    Output.STRING: lambda: run_and_get_output(*args),
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 218, in run_and_get_output
+    run_tesseract(**kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 194, in run_tesseract
+    raise TesseractError(status_code, get_errors(error_string))
+pytesseract.pytesseract.TesseractError: (3221225786, 'ObjectCache(0000000062FD3D20)::~ObjectCache(): WARNING! LEAK! object 00000000033B3560 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-punc-dawg) ObjectCache(0000000062FD3D20)::~ObjectCache(): WARNING! LEAK! object 00000000033B3620 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-word-dawg) ObjectCache(0000000062FD3D20)::~ObjectCache(): WARNING! LEAK! object 0000000002B5E890 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-number-dawg)')
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 309, in image_to_string
+    }[output_type]()
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 308, in <lambda>
+    Output.STRING: lambda: run_and_get_output(*args),
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 218, in run_and_get_output
+    run_tesseract(**kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\pytesseract\pytesseract.py", line 194, in run_tesseract
+    raise TesseractError(status_code, get_errors(error_string))
+pytesseract.pytesseract.TesseractError: (3221225786, 'ObjectCache(0000000062483D20)::~ObjectCache(): WARNING! LEAK! object 0000000003313560 still has count 1 (id C:\\Program Files\\Tesseract-OCR\\/tessdata/eng.traineddatalstm-punc-dawg)')
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 266, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='183.129.207.89', port=28080): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UUk0MjlvUTloSVVacUh4UEVTNkNrazg5eS9zPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='183.129.207.89', port=28080): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=UUk0MjlvUTloSVVacUh4UEVTNkNrazg5eS9zPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', RemoteDisconnected('Remote end closed connection without response',)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TnA4RGNIV2dJYXc2aURwcGtjbGxvS0p4ZHlBPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=TnA4RGNIV2dJYXc2aURwcGtjbGxvS0p4ZHlBPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=MXBoaEVlMkZXMnFqU010dHFpc3lQVlBVMHI3bHN4NWw=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=MXBoaEVlMkZXMnFqU010dHFpc3lQVlBVMHI3bHN4NWw=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=eGEvSkd0U2liRUN0WXRqckZmMFd4a1ZIZzN3PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 397, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=eGEvSkd0U2liRUN0WXRqckZmMFd4a1ZIZzN3PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=WTZkaWxEVnloUmc1WkpSeS8xTks2WWtnd0E4PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=WTZkaWxEVnloUmc1WkpSeS8xTks2WWtnd0E4PQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bndMbURzUGx0em1leTNaSWRIQk85MFd6RmFPM3I3SEk=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 422, in get_mesbyurl
+    q = r.get(ac)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='119.97.237.74', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=bndMbURzUGx0em1leTNaSWRIQk85MFd6RmFPM3I3SEk=&w=63&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 600, in urlopen
+    chunked=chunked)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 384, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 2, in raise_from
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 380, in _make_request
+    httplib_response = conn.getresponse()
+  File "E:\college\Python\Lib\http\client.py", line 1331, in getresponse
+    response.begin()
+  File "E:\college\Python\Lib\http\client.py", line 297, in begin
+    version, status, reason = self._read_status()
+  File "E:\college\Python\Lib\http\client.py", line 258, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "E:\college\Python\Lib\socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [WinError 10054] 远程主机强迫关闭了一个现有的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 449, in send
+    timeout=timeout
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\connectionpool.py", line 638, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "E:\college\软工\Myflight\venv\lib\site-packages\urllib3\util\retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='117.191.11.77', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=N0FBQnREUUZkb3NhZzliWUhZM3hkcGJ1RWMwPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 372, in get_mesbyurl
+    resp = r.get(url)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 546, in get
+    return self.request('GET', url, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "E:\college\软工\Myflight\venv\lib\site-packages\requests\adapters.py", line 510, in send
+    raise ProxyError(e, request=request)
+requests.exceptions.ProxyError: HTTPConnectionPool(host='117.191.11.77', port=80): Max retries exceeded with url: http://www.variflight.com/flight/detail/productImg&s=N0FBQnREUUZkb3NhZzliWUhZM3hkcGJ1RWMwPQ==&w=50&h=28&fontSize=13&fontColor=2f3032&background=ffffff?AE71649A58c77= (Caused by ProxyError('Cannot connect to proxy.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)))
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 376, in get_mesbyurl
+    real_up = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_up.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 401, in get_mesbyurl
+    real_down = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './real_down.png'
+Traceback (most recent call last):
+  File "E:\college\软工\Myflight\utils\data_get.py", line 425, in get_mesbyurl
+    ac = pytesseract.image_to_string(Image.open(filename))
+  File "E:\college\软工\Myflight\venv\lib\site-packages\PIL\Image.py", line 2705, in open
+    % (filename if filename else fp))
+OSError: cannot identify image file './ac.png'

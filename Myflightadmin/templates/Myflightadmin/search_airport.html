@@ -88,6 +88,8 @@
 								"<span  title='"+data[i].airport+"' id='t"+(index++)+"'>" +data[i].airport+"</span>"+
 							"</b>"+
 						"</span>"
+                        +"<span class='w150' id='t"+(index++)+"'>"+data[i].airport_3_letter+"</span>"
+                        +"<span class='w150' id='t"+(index++)+"'>"+data[i].city_3_letter+"</span>"
                 +"<span class='w150' id='t"+(index++)+"'>"+data[i].temperature+"</span>"
         		+"<span class='w150' id='t"+(index++)+"'>"+data[i].weather+"</span>"
                 +"<span class='w150'><a href='javascript:;' id='"+str_index+"' onclick='cg(this)'>"+"修改"+"</a></span>"+
@@ -112,6 +114,8 @@
 		<div class="li_box" id="li_box">
 			<div class="t_tit" id="t_tit">
 				<p class="w260">机场信息</p>
+                <p class="w150">机场三字码</p>
+				<p class="w150">城市三字码</p>
 				<p class="w150">机场温度</p>
 				<p class="w150">机场天气</p>
 				<p class="w150">修改/保存</p>
@@ -125,8 +129,13 @@
 	</div>
 <script>
     var zero = "a";
-    var num = 4;
+    var num = 6;
 del_submit = function(data){
+    if(confirm("确认删除吗")){
+    }
+    else{
+        return;
+    }
     var index = data.charCodeAt(0) - zero.charCodeAt(0);
     index = index*num + 1;
     var o = document.getElementById("t" + String(index));
@@ -150,13 +159,13 @@ del_submit = function(data){
             }
         });
 }
-var msg = ['city','airport','temperature','weather'];
+var msg = ['city','airport','airport_3_letter','city_3_letter','temperature','weather'];
 cg = function (obj) {
 	var post_data ={};
 	var issubmit = 0;
 	var index = obj.id.toString().substr(0).charCodeAt(0)  - zero.charCodeAt(0);
 	if (obj.innerHTML == '保存') {
-		for (var i = index*num+2;i<index*num+num;i++){
+		for (var i = index*num+4;i<index*num+num;i++){
 			var o = document.getElementById("t" + String(i));
 			if (o.childNodes[0].value) {
 				issubmit = 1;
@@ -170,7 +179,7 @@ cg = function (obj) {
 		    var i;
 			for ( i = index*num;i<index*num+num;i++){
 				var o = document.getElementById("t" + String(i));
-				if (i>=index*num+2)
+				if (i>=index*num+4)
 				    o.innerHTML = o.childNodes[0].value;
 				post_data[msg[i-index*num]] = o.innerHTML;
 			}
@@ -200,7 +209,7 @@ cg = function (obj) {
 		}
 	}
 	else{
-		for (var i = index*num+2;i<index*num+num;i++){
+		for (var i = index*num+4;i<index*num+num;i++){
 			var o = document.getElementById("t" + String(i));
 			o.innerHTML = "<input type='text' value='" + document.getElementById("t" + String(i)).innerHTML + "' />";
 		}

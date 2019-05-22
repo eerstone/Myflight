@@ -144,6 +144,11 @@
 var num = 10;
 var zero = "a";
 del_submit = function(data){
+    if(confirm("确认删除吗")){
+    }
+    else{
+        return;
+    }
     var index = data.charCodeAt(0) - zero.charCodeAt(0);
     index = index*num + 1;
     var o = document.getElementById("t" + String(index));

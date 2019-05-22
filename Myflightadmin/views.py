@@ -164,6 +164,8 @@ def admin_add_flight(request):
         flight['plan_arrival_time'] = request.POST['plan_arrival_time']
         flight['company'] = request.POST['company']
         flight['datetime'] = request.POST['datetime']
+        flight['departure_terminal'] = "--"
+        flight['arrival_terminal'] = "--"
         flight['flight_status'] = "计划"
         flight['mileage'] = 0
         flight['aircraft_models'] = ""
@@ -260,6 +262,8 @@ def admin_mod_flight(request):  # ok
         flight['boarding_port'] = ofl['boarding_port']
         flight['arriving_port'] = ofl['arriving_port']
         flight['Baggage_num'] = ofl['Baggage_num']
+        flight['departure_terminal'] = ofl['departure_terminal']
+        flight['arrival_terminal'] = ofl['arrival_terminal']
         flight['is_mon'] = ofl['is_mon']
         flight['is_tue'] = ofl['is_tue']
         flight['is_wed'] = ofl['is_wed']
@@ -302,13 +306,15 @@ def admin_add_airport(request):
     city = request.POST.get('city')
     tem = request.POST.get('temperature')
     wea = request.POST.get('weather')
-
+    city_3_letter = request.POST.get('city_3_letter')
+    airport_3_letter = request.POST.get('airport_3_letter')
+    print(city_3_letter, airport_3_letter)
     origin = apm.airport.objects.filter(airport=name)
     if origin.exists():
         ret_msg['issucceed'] = 2
         return JsonResponse(ret_msg, safe=False)
 
-    apm.add_airport(name, city, tem, wea)
+    apm.add_airport(name, city, city_3_letter, airport_3_letter, tem, wea)
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 
@@ -499,7 +505,8 @@ def postaddfl(flight):  # ok
     flight_dict = flight
     am.add_Flight(flight_dict['flight_id'], flight_dict['mileage'], flight_dict['aircraft_models'], flight_dict['plan_departure_time'],
                   flight_dict['plan_arrival_time'], flight_dict['departure'], flight_dict['arrival'],
-                  flight_dict['punctuality_rate'], flight_dict['delay_time'], flight_dict['company'],
+                  flight_dict['departure_terminal'], flight_dict['arrival_terminal'],
+                  flight_dict['punctuality_rate'],flight_dict['delay_time'], flight_dict['company'],
                   flight_dict['is_mon'], flight_dict['is_tue'], flight_dict['is_wed'], flight_dict['is_thr'],
                   flight_dict['is_fri'], flight_dict['is_sat'], flight_dict['is_sun'])
     ret_msg['issucceed'] = 1
