@@ -5,7 +5,7 @@ from django.forms.models import model_to_dict
 class airport(models.Model):
     airport = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    temperature = models.IntegerField()
+    temperature = models.IntegerField(default=23)
     weather_status = (
         ("0","晴"),
         ("1","多云"),
@@ -13,16 +13,15 @@ class airport(models.Model):
         ("3","阴"),
         ("4","雾"),
     )
-    weather = models.CharField(max_length=10,choices=weather_status)
+    weather = models.CharField(max_length=10,choices=weather_status,default="晴")
+    airport_3_letter = models.CharField(max_length = 10,default="--")
+    city_3_letter = models.CharField(max_length = 10,default="--")
 
 
-def add_airport( newairport, city, temperature, weather=None):
-    temperature = int(temperature)
 
-    if temperature >= 100 or temperature < -100:
-        return None
-    print(temperature)
-    ap = airport.objects.get_or_create(airport=newairport, city=city, temperature=temperature, weather="晴")
+def add_airport( newairport, city,city_3_letter,airport_3_letter, temperature, weather=None):
+    ap = airport.objects.get_or_create(airport=newairport, city=city,
+                                       airport_3_letter=airport_3_letter,city_3_letter=city_3_letter)
 
 
 def airport2info(port):
