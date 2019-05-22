@@ -19,6 +19,8 @@ from django.contrib import admin
 from login import views
 from user import  views as userviews
 
+
+
 urlpatterns = [
     url(r'^$', userviews.home),
     url(r'^user/', include('user.urls')),
@@ -31,7 +33,12 @@ urlpatterns = [
     url(r'^register/', views.register),
     url(r'^logout/', views.logout),
     url(r'^captcha', include('captcha.urls')),
+
+    # url(r'^static/(?P<path>.*)$', static.serve,
+    #     {'document_root': settings.STATIC_ROOT}, name='static')  # 解决静态文件加载失败问题
+
 ]
+
 
 from apscheduler.scheduler import Scheduler
 from airplane.views import scan_trip

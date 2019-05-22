@@ -25,6 +25,8 @@ import random
 from datetime import datetime as DT
 from datetime import date
 from datetime import time
+from Myflight import settings
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 # detail
@@ -131,6 +133,10 @@ def getSearchFlightById(request):
             ret_msg['issucceed'] = 1
             if is_detail:
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
+                if ret_flight.__len__()==0:
+                    ret_msg['is_exist'] = 0
+                    ret_msg['issucceed'] = 0	
+                    return JsonResponse(ret_msg, safe=False)
         #        ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
@@ -138,6 +144,7 @@ def getSearchFlightById(request):
                 ret_flight = vf.search_num(askflight_id,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = ret_flight
@@ -220,6 +227,10 @@ def getSearchFlightByCity(request):
             if is_detail:
                 print("come here if is_detail")
                 ret_flight = vf.get_detail_mes(detail_url,datetime)
+                if ret_flight.__len__()==0:
+                    ret_msg['is_exist'] = 0
+                    ret_msg['issucceed'] = 0	
+                    return JsonResponse(ret_msg, safe=False)
             #    ret_flight["datetime"] = datetime
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
@@ -228,6 +239,7 @@ def getSearchFlightByCity(request):
                 ret_flight = vf.search_seg(city_from, city_to,datetime)
                 if ret_flight.__len__()==0:
                     ret_msg['is_exist'] = 0
+                    ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
                 ret_msg['is_exist'] = 1
                 ret_msg['flight'] = ret_flight
@@ -360,11 +372,15 @@ def scan_trip():
         if datetime > today:
             weekday = datetime.weekday()
             new_flight = week2flightid(flight_id, weekday)
+            # print(flight_id,user_id,datetime)
             new_flight = new_flight.first()
             # print(new_flight)
-            if new_flight.flight_status == "延误" and status == "计划":
-                jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
-                trip.flight_status = "延误"
+            # print(new_flight)
+            if new_flight==None:
+                continue
+            if new_flight.flight_status  != status:
+                jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化"%flight_id%new_flight.flight_status,user_id,trip_id)
+                trip.flight_status = new_flight.flight_status
                 trip.save()
         else:
             if trip.detail_url == "--":
@@ -374,10 +390,12 @@ def scan_trip():
                 # print(datetime.__str__())
                 vf = data_get.variflight()
                 new_flight = vf.search_num(flight_id, datetime.__str__())
+                # print(new_flight)
+                # print(flight_id,datetime.__str__())
                 new_flight = new_flight[0]
-                if new_flight["flight_status"] == "延误" and status == "计划":
-                    jiguang.push_msg("尊敬的乘客，您关注的航班%s已延误，请您稍安勿躁"%flight_id,user_id,trip_id)
-                    trip.flight_status = "延误"
+                if new_flight["flight_status"]  != status:
+                    jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化"%flight_id%new_flight["flight_status"],user_id,trip_id)
+                    trip.flight_status = new_flight["flight_status"]
                     trip.save()
 
 
