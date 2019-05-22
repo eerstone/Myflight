@@ -47,43 +47,45 @@ def trip(request):
         return render(request, 'user/trip.html')
 
 
-def week2flightid(askflight_id,weekday):
-    if weekday>6 or weekday<0:
+def week2flightid(askflight_id, weekday):
+    if weekday > 6 or weekday < 0:
         return None
-    if weekday==0:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_mon=1)
-    elif weekday==1:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_tue=1)
-    elif weekday==2:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_wed=1)
-    elif weekday==3:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_thr=1)
-    elif weekday==4:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_fri=1)
-    elif weekday==5:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_sat=1)
-    elif weekday==6:
-        flights = models.Flight.objects.filter(flight_id=askflight_id,is_sun=1)
+    if weekday == 0:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_mon=1)
+    elif weekday == 1:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_tue=1)
+    elif weekday == 2:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_wed=1)
+    elif weekday == 3:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_thr=1)
+    elif weekday == 4:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_fri=1)
+    elif weekday == 5:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_sat=1)
+    elif weekday == 6:
+        flights = models.Flight.objects.filter(flight_id=askflight_id, is_sun=1)
     return flights
 
-def week2flightcity(d_airport,a_airport,weekday):
-    if weekday>6 or weekday<0:
+
+def week2flightcity(d_airport, a_airport, weekday):
+    if weekday > 6 or weekday < 0:
         return None
-    if weekday==0:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_mon=1)
-    elif weekday==1:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_tue=1)
-    elif weekday==2:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_wed=1)
-    elif weekday==3:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_thr=1)
-    elif weekday==4:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_fri=1)
-    elif weekday==5:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_sat=1)
-    elif weekday==6:
-        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport,is_sun=1)
+    if weekday == 0:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_mon=1)
+    elif weekday == 1:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_tue=1)
+    elif weekday == 2:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_wed=1)
+    elif weekday == 3:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_thr=1)
+    elif weekday == 4:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_fri=1)
+    elif weekday == 5:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_sat=1)
+    elif weekday == 6:
+        flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_sun=1)
     return flights
+
 
 # search
 def getSearchFlightById(request):
@@ -97,15 +99,18 @@ def getSearchFlightById(request):
 
         today = date.today()
         print(dtime)
-        askdate = DT.strptime(dtime,'%Y-%m-%d')
+        askdate = DT.strptime(dtime, '%Y-%m-%d')
         askdate = askdate.date()
         # askdate = date(askdate.year,askdate.month,askdate.day)
         # dtime.strptime('%Y-%m-%d')
-
+        #print(askdate)
         if askdate > today:
+            print("future")
             weekday = askdate.weekday()
-            flights = week2flightid(askflight_id,weekday)
+            print(weekday)
+            flights = week2flightid(askflight_id, weekday)
             if not flights.exists():
+                print("future not exists")
                 ret_msg['is_exist'] = 0
                 ret_flight = []
                 ret_msg['flight'] = ret_flight
@@ -132,8 +137,8 @@ def getSearchFlightById(request):
             ret_msg['is_exist'] = 1
             ret_msg['issucceed'] = 1
             if is_detail:
-                ret_flight = vf.get_detail_mes(detail_url,datetime)
-                if ret_flight.__len__()==0:
+                ret_flight = vf.get_detail_mes(detail_url, datetime)
+                if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
@@ -141,8 +146,8 @@ def getSearchFlightById(request):
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
-                ret_flight = vf.search_num(askflight_id,datetime)
-                if ret_flight.__len__()==0:
+                ret_flight = vf.search_num(askflight_id, datetime)
+                if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
@@ -195,8 +200,10 @@ def getSearchFlightByCity(request):
         if askdate > today:
             d_airport = airportmodels.city2airport(city_from)
             a_airport = airportmodels.city2airport(city_to)
+            print(d_airport)
+            print(a_airport)
             weekday = askdate.weekday()
-            flights = week2flightcity(d_airport,a_airport,weekday)
+            flights = week2flightcity(d_airport, a_airport, weekday)
 
             if not flights.exists():
                 ret_msg['is_exist'] = 0
@@ -226,8 +233,8 @@ def getSearchFlightByCity(request):
             ret_msg['issucceed'] = 1
             if is_detail:
                 print("come here if is_detail")
-                ret_flight = vf.get_detail_mes(detail_url,datetime)
-                if ret_flight.__len__()==0:
+                ret_flight = vf.get_detail_mes(detail_url, datetime)
+                if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
@@ -236,8 +243,8 @@ def getSearchFlightByCity(request):
                 return JsonResponse(ret_msg, safe=False)
             else:
                 print("come here else is_detail")
-                ret_flight = vf.search_seg(city_from, city_to,datetime)
-                if ret_flight.__len__()==0:
+                ret_flight = vf.search_seg(city_from, city_to, datetime)
+                if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
@@ -270,8 +277,8 @@ def getSearchFlightByCity(request):
         return JsonResponse(ret_msg, safe=False)
 
 def future2normalization(flight):
-    flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"],"%H:%M")
-    flight["plan_arrival_time"] = time.strftime(flight["plan_arrival_time"],"%H:%M")
+    flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"], "%H:%M")
+    flight["plan_arrival_time"] = time.strftime(flight["plan_arrival_time"], "%H:%M")
     # flight["actual_departure_time"] = time.strftime(flight["actual_departure_time"],"%H:%M")
     # flight["actual_arrival_time"] = time.strftime(flight["actual_arrival_time"],"%H:%M")
     flight["actual_departure_time"] = "--"
@@ -320,7 +327,8 @@ def postFavoriteFlight(request):
         if "T16:00:00Z" in datetime:
             datetime = datetime[0:10]
         #行程是否存在判断
-        istrip = um.mytrip.objects.filter(user_ID_id=user_id,user_trip=user_type,flight_id=flight_id,datetime=datetime,detail_url=detail_url)
+        istrip = um.mytrip.objects.filter(user_ID_id=user_id, user_trip=user_type, flight_id=flight_id,
+                                          datetime=datetime, detail_url=detail_url)
         if istrip.exists():
             ret_msg['issucceed'] = 0
             return JsonResponse(ret_msg, safe=False)
@@ -329,9 +337,9 @@ def postFavoriteFlight(request):
         askdate = askdate.date()
         today = date.today()
         #如果关注行程为未来，则存储未来航班状态至库
-        if askdate>today:
+        if askdate > today:
             weekday = askdate.weekday()
-            flights = week2flightid(flight_id,weekday)
+            flights = week2flightid(flight_id, weekday)
             if not flights.exists():
                 ret_msg['issucceed'] = 0
                 return JsonResponse(ret_msg, safe=False)
@@ -341,7 +349,7 @@ def postFavoriteFlight(request):
         else:
             vf = data_get.variflight()
             print(detail_url)
-            flight_msg = vf.get_detail_mes(detail_url,datetime)
+            flight_msg = vf.get_detail_mes(detail_url, datetime)
             flight_msg = flight_msg[0]
             flight_msg["delay_time"] = flight_msg["forecast"]
         flight_msg["user_id"] = user_id
@@ -376,9 +384,9 @@ def scan_trip():
             new_flight = new_flight.first()
             # print(new_flight)
             # print(new_flight)
-            if new_flight==None:
+            if new_flight is None:
                 continue
-            if new_flight.flight_status  != status:
+            if new_flight.flight_status != status:
                 jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化"%flight_id%new_flight.flight_status,user_id,trip_id)
                 trip.flight_status = new_flight.flight_status
                 trip.save()
@@ -394,7 +402,8 @@ def scan_trip():
                 # print(flight_id,datetime.__str__())
                 new_flight = new_flight[0]
                 if new_flight["flight_status"] != status:
-                    jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化" % (flight_id, new_flight["flight_status"]), user_id, trip_id)
+                    jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化" % (flight_id, new_flight["flight_status"]),
+                                     user_id, trip_id)
                     trip.flight_status = new_flight["flight_status"]
                     trip.save()
 

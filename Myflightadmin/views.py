@@ -8,6 +8,9 @@ from airplane import views as av
 from airplane import models as am
 from airport import models as apm
 from airport import views as apv
+from datetime import datetime as DT
+from datetime import date
+from datetime import time
 # from Myflightadmin import administerMagemnet
 # from Myflightadmin import flightManagement
 # from Myadmin import airportManagement
@@ -155,6 +158,7 @@ def admin_add_flight(request):
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
     flight = {}
+    week = ['is_mon', 'is_tue', 'is_wed', 'is_thr', 'is_fri', 'is_sat', 'is_sun']
     if request.method == 'POST':
         #flight = {}
         flight['departure'] = request.POST['departure']
@@ -177,6 +181,9 @@ def admin_add_flight(request):
         flight['boarding_port'] = "H0"
         flight['arriving_port'] = "C13"
         flight['Baggage_num'] = "X3"
+        askdate = DT.strptime(flight['datetime'], '%Y-%m-%d')
+        askdate = askdate.date()
+        weekday = askdate.weekday()
         flight['is_mon'] = False
         flight['is_tue'] = False
         flight['is_wed'] = False
@@ -184,6 +191,7 @@ def admin_add_flight(request):
         flight['is_fri'] = False
         flight['is_sat'] = False
         flight['is_sun'] = False
+        flight[week[weekday]] = True
         name = request.POST['flight_id']
         origin = am.Flight.objects.filter(flight_id=name)
         if origin.exists():

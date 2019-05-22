@@ -40,6 +40,7 @@ def airport2info(port):
     else:
         return None
 
+
 def city2airport(city):
     """
     :param city:
