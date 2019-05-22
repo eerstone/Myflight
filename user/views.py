@@ -294,7 +294,11 @@ def postUpdatePassword(request):
             return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/log in.html')
-    
+
+def tripsort(elem):
+    # print(elem)
+    return elem["flight"]["datetime"]
+
 #mytrip
 def getFavorateFlight(request):
     ret_msg = {}
@@ -309,6 +313,7 @@ def getFavorateFlight(request):
         # ret_msg['flight'] = flights
         # ret_msg['user_type'] = trip.user_trip
         ret_msg = models.search_trip(user_id)
+        ret_msg.sort(key = tripsort)
         return JsonResponse({"trips":ret_msg},safe=False)
     else:
         pass

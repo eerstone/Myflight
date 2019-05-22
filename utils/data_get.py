@@ -317,11 +317,12 @@ class variflight(object):
     def __init__(self):
         self.base_url = 'http://www.variflight.com' # 飞常准官网
         
-        self.ip_pool = []                           # ip池
-        file = open('pool.txt','r')
-        for line in file:
-            line = line.split()
-            self.ip_pool.append(line[0])
+        self.ip_pool = []
+        # ip池
+        with open('pool.txt','r') as file:
+            for line in file:
+                line = line.split()
+                self.ip_pool.append(line[0])
 
 
     # 结果检查   
