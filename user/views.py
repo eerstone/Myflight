@@ -197,13 +197,16 @@ class ForCodeView(View):  # 调试成功
                 code = VerifyCode()
                 code.mobile = mobile
                 code.code = str(c)
-                code.save()
-                code = VerifyCode.objects.filter(mobile=mobile).last().code
+                vcode = code.code
                 yunpian = YunPian(APIKEY)
-                sms_status = yunpian.send_sms(code=code, mobile=mobile)
+                sms_status = yunpian.send_sms(code=vcode, mobile=mobile)
                 sms_status = sms_status.json()
                 msg = sms_status["msg"]
-                ret_msg["CodeStatus"] = 0
+                if sms_status["code"]==0:
+                    code.save()
+                    ret_msg["CodeStatus"] = 0
+                else:
+                    ret_msg["CodeStatus"] = 0
                 ret_msg["msg"] = msg
                 return JsonResponse(ret_msg, safe=False)
             else:
