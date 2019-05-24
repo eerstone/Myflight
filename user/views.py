@@ -3,12 +3,9 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from . import models
-
-
 import requests
 import hashlib
 import json
-
 
 import re
 import random
@@ -18,15 +15,16 @@ from django.views import View
 from .models import VerifyCode
 from django_redis import get_redis_connection
 
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 import random
 
 from airplane import models as airplanemodels
-
 from django.template import loader ,Context
 
+from datetime import datetime as DT
+from datetime import date
+from datetime import time
 
 #index
 def home(request):
@@ -135,11 +133,13 @@ def postregister(request):#调试成功
         passwd = request.POST.get('pwd')
         verifycode = request.POST.get('VerifiedCode')
         ret_msg = {}
+        ret_msg["msg"]=""
         flag = (phone_num!=None and passwd!=None and verifycode!=None)
         print(flag)
         if not flag:
             ret_msg['register_status'] = 3
             ret_msg['user_id']=None
+            ret_msg["msg"]="手机号、密码与验证码中存在空值"
             return JsonResponse(ret_msg,safe=False)
         else:
             #判断手机号是否已经存在
@@ -147,17 +147,20 @@ def postregister(request):#调试成功
             if phone.count()>0:
                 ret_msg['register_status'] = 1
                 ret_msg['user_id']=None
+                ret_msg["msg"]="手机号已存在"
                 return JsonResponse(ret_msg,safe=False)
             #手机号与验证码匹配验证
             vcode = VerifyCode.objects.filter(mobile=phone_num)
             if not vcode.exists():
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
+                ret_msg["msg"] = "验证码不正确"
                 return JsonResponse(ret_msg,safe=False)
             code = VerifyCode.objects.filter(mobile=phone_num).last().code
             if code!=verifycode:
                 ret_msg['register_status'] = 2
                 ret_msg['user_id']=None
+                ret_msg["msg"] = "验证码不正确"
                 return JsonResponse(ret_msg,safe=False)
             #验证成功，添加该字段进数据库
             one_user = models.User.objects.create()
@@ -258,18 +261,52 @@ def postBasicInfo(request):
         newgender = request.POST.get('gender')
         newemail = request.POST.get('email')
         newbirthday = request.POST.get('birthday')
-        
+
+        user_id_check = models.User.objects.filter(id=user_id)
+        if not user_id_check.exists():
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "该用户不存在"
+            return JsonResponse(ret_msg,safe=False)
         #try:
         user = models.User.objects.get(id=user_id)
         # models.User.objects.filter(id=user_id).update()
+        if len(newemail)>320:
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "邮箱长度大于320位"
+            return JsonResponse(ret_msg,safe=False)
+        else:
+            email_pat = re.compile("^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$ ")
+            res  = re.search(email_pat,newemail)
+            if not res:
+                ret_msg['issucceed'] = 0
+                ret_msg["msg"] = "请检查输入的邮箱格式"
+                return JsonResponse(ret_msg,safe=False)
+
+        birthdate = DT.strptime(newbirthday, '%Y-%m-%d')
+        birthdate = birthdate.date()
+        today =  date.today()
+
+        if birthdate>today:
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "请输入正确的出生日期"
+            return JsonResponse(ret_msg, safe=False)
+
+        user_auth = models.User_Auth.objects.get(user_id_id=user_id,identity_type="手机")
+        user_auth_check = models.User_Auth.objects.filter(identity_type="手机",identifier=newphone_num)
+        if user_auth_check.exists():
+            #此处默认手机号仅有一条记录信息
+            newphone_userid = user_auth_check[0].user_id_id
+            if newphone_userid != user_id:
+                ret_msg['issucceed'] = 0
+                ret_msg["msg"] = "该手机号已被其他用户注册"
+                return JsonResponse(ret_msg, safe=False)
+        user_auth.identifier = newphone_num
+        user_auth.save()
         user.nickname=newuser_name
         user.sex=newgender
         user.email=newemail
         user.birthday=newbirthday
         user.save()
-        user_auth = models.User_Auth.objects.get(user_id_id=user_id)
-        user_auth.identifier=newphone_num
-        user_auth.save()
         ret_msg['issucceed'] = 1
         return JsonResponse(ret_msg,safe=False)
         # except:
@@ -284,16 +321,29 @@ def postUpdatePassword(request):
         user_id = request.POST.get('user_id')
         oldpsw = request.POST.get('oldpsw')
         newpsw = request.POST.get('psw')
-        
+
+        user_id_check = models.User.objects.filter(id = user_id)
+        if not user_id_check.exists():
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "该用户不存在"
+            return JsonResponse(ret_msg,safe=False)
+
+
         user_auth = models.User_Auth.objects.get(user_id=user_id)
-        
+        if newpsw == None :
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "新密码不能为空"
+            return JsonResponse(ret_msg,safe=False)
+
         if user_auth.credential == oldpsw:
             user_auth.credential=newpsw
             user_auth.save()
             ret_msg['issucceed'] = 1
+            ret_msg["msg"] = "注册成功"
             return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "原密码与新密码不相同"
             return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/log in.html')
