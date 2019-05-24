@@ -174,6 +174,7 @@ def postregister(request):#调试成功
                                                         ,identifier=phone_num,credential=passwd)
             ret_msg['register_status']=0
             ret_msg['user_id']=user_id
+            ret_msg["msg"] = "注册成功"
             return JsonResponse(ret_msg,safe=False)
     return render(request, 'user/log in.html')
 
