@@ -210,7 +210,7 @@
             <label class="container datepicker_r left">
                 <div class="text">出发时间</div>
                 <span class="datepic"></span>
-                <input type="text" maxlength="10" id="numDatepicker" value="2019-05-17" class="index_date"
+                <input type="text" maxlength="10" id="numDatepicker" value="2019-05-24" class="index_date"
                        readonly>
                 <div class="clear"></div>
             </label>
@@ -306,7 +306,7 @@
             <label class="container left datepicker_l">
                 <div class="text">出发时间</div>
                 <span class="datepic"></span>
-                <input type="text" maxlength="10" id="cityDatepicker" value="2019-05-17" class="index_date"
+                <input type="text" maxlength="10" id="cityDatepicker" value="2019-05-24" class="index_date"
                        readonly>
                 <div class="clear"></div>
             </label>
