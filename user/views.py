@@ -358,7 +358,7 @@ def postUpdatePassword(request):
             return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
-            ret_msg["msg"] = "原密码与新密码不相同"
+            ret_msg["msg"] = "旧密码错误"
             return JsonResponse(ret_msg,safe=False)
     else:
         return render(request, 'user/log in.html')
