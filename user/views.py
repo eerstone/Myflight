@@ -141,6 +141,11 @@ def postregister(request):#调试成功
             ret_msg['user_id']=None
             ret_msg["msg"]="手机号、密码与验证码中存在空值"
             return JsonResponse(ret_msg,safe=False)
+        elif passwd.__len__() > 50:
+            ret_msg['register_status'] = 3
+            ret_msg['user_id']=None
+            ret_msg["msg"] = "密码长度不能大于50个字符"
+            return JsonResponse(ret_msg, safe=False)
         else:
             #判断手机号是否已经存在
             phone = models.User_Auth.objects.filter(identifier=phone_num)
@@ -338,6 +343,10 @@ def postUpdatePassword(request):
         if newpsw == None :
             ret_msg['issucceed'] = 0
             ret_msg["msg"] = "新密码不能为空"
+            return JsonResponse(ret_msg,safe=False)
+        if newpsw.__len__()>50:
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "密码长度不能大于50个字符"
             return JsonResponse(ret_msg,safe=False)
 
         if user_auth.credential == oldpsw:
