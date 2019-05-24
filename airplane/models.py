@@ -45,9 +45,11 @@ def add_Flight(flight_id, mileage, aircraft_models, plan_departure_time,
                plan_arrival_time, departure, arrival,
                departure_terminal, arrival_terminal,
                punctuality_rate, delay_time, company,
-               is_mon, is_tue, is_wed, is_thr, is_fri, is_sat, is_sun):
+               is_mon, is_tue, is_wed, is_thr, is_fri, is_sat, is_sun
+               , flight_status):
     # print(delay_time)
-    flight = Flight.objects.get_or_create(flight_id=flight_id, mileage=mileage, flight_status="计划", aircraft_models=aircraft_models,
+    flight = Flight.objects.get_or_create(flight_id=flight_id, mileage=mileage, flight_status=flight_status,
+                                          aircraft_models=aircraft_models,
                                           plan_departure_time=plan_departure_time, plan_arrival_time=plan_arrival_time,
                                           actual_departure_time=plan_departure_time,
                                           actual_arrival_time=plan_arrival_time,
