@@ -58,6 +58,7 @@ user/
 				birthday:String
 			output:
 				issucceed:int
+				msg:String
 		postUpdatePassword/
 			input:
 				user_id:int
@@ -65,6 +66,7 @@ user/
 				psw:String
 			output:
 				issucceed:int
+				msg:String
 	mytrip/
 		getFavorateFlight/
 			input:
@@ -78,6 +80,14 @@ user/
 				trip_id:int
 			output:
 				issucceed:int
+		postUserPushStatus:
+			input: 
+				userid:int
+				user_status:int
+			output:
+				is_succeed:int 0,1
+				msg:string
+
 
 
 airport/
