@@ -275,8 +275,9 @@ def postBasicInfo(request):
             ret_msg["msg"] = "邮箱长度大于320位"
             return JsonResponse(ret_msg,safe=False)
         else:
-            email_pat = re.compile("^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$ ")
-            res  = re.search(email_pat,newemail)
+            email_pat = re.compile(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}')
+            res  = email_pat.match(newemail)
+            # print(res)
             if not res:
                 ret_msg['issucceed'] = 0
                 ret_msg["msg"] = "请检查输入的邮箱格式"
@@ -296,7 +297,10 @@ def postBasicInfo(request):
         if user_auth_check.exists():
             #此处默认手机号仅有一条记录信息
             newphone_userid = user_auth_check[0].user_id_id
-            if newphone_userid != user_id:
+            print(type(newphone_userid))
+            print(type(user_id))
+            print(newphone_userid,int(user_id))
+            if newphone_userid != int(user_id):
                 ret_msg['issucceed'] = 0
                 ret_msg["msg"] = "该手机号已被其他用户注册"
                 return JsonResponse(ret_msg, safe=False)
@@ -308,6 +312,7 @@ def postBasicInfo(request):
         user.birthday=newbirthday
         user.save()
         ret_msg['issucceed'] = 1
+        ret_msg["msg"] = "信息修改成功"
         return JsonResponse(ret_msg,safe=False)
         # except:
         #     ret_msg['issucceed'] = 0
