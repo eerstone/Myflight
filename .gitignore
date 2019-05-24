@@ -14,3 +14,4 @@ build
 venv/
 *.png
 utils/*.png
+error.txt
