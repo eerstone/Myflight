@@ -293,6 +293,12 @@ def getSearchFlightByCity(request):
         return JsonResponse(ret_msg, safe=False)
 
 def future2normalization(flight):
+    d_terminal = flight["departure_terminal"]
+    if d_terminal != "--":
+        flight["departure"] = flight["departure"]+d_terminal
+    l_terminal = flight["arrival_terminal"]
+    if l_terminal != "--":
+        flight["arrival"] = flight["arrival"]+l_terminal
     flight["plan_departure_time"] = time.strftime(flight["plan_departure_time"], "%H:%M")
     flight["plan_arrival_time"] = time.strftime(flight["plan_arrival_time"], "%H:%M")
     # flight["actual_departure_time"] = time.strftime(flight["actual_departure_time"],"%H:%M")
@@ -317,7 +323,7 @@ def future2normalization(flight):
     flight["a_weather"] = "--"
     flight["a_pm"] = "--"
     flight["a_state"] = "--"
-    flight["detail_url"] = "--"
+    # flight["detail_url"] = "--"
     del flight["id"]
     del flight["is_mon"]
     del flight["is_tue"]
