@@ -32,6 +32,8 @@ class Flight(models.Model):
     arriving_port = models.CharField(max_length=30, default="--")
     Baggage_num = models.CharField(max_length=30, default="--")
     company = models.CharField(max_length=20)
+
+    detail_url = models.CharField(max_length=200,default="--")
     is_mon = models.BooleanField()
     is_tue = models.BooleanField()
     is_wed = models.BooleanField()
@@ -39,6 +41,7 @@ class Flight(models.Model):
     is_fri = models.BooleanField()
     is_sat = models.BooleanField()
     is_sun = models.BooleanField()
+
 
 
 def add_Flight(flight_id, mileage, aircraft_models, plan_departure_time,
@@ -59,7 +62,7 @@ def add_Flight(flight_id, mileage, aircraft_models, plan_departure_time,
                                           delay_time=delay_time, check_in="--", boarding_port="--", arriving_port="--",
                                           Baggage_num="--", company=company,
                                           is_mon=is_mon, is_tue=is_tue, is_wed=is_wed, is_thr=is_thr, is_fri=is_fri,
-                                          is_sat=is_sat, is_sun=is_sun
+                                          is_sat=is_sat, is_sun=is_sun,
                                           )
     return 1
 

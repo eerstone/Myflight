@@ -317,12 +317,13 @@ class variflight(object):
     def __init__(self):
         self.base_url = 'http://www.variflight.com' # 飞常准官网
         
-        self.ip_pool = []
-        # ip池
-        with open('pool.txt','r') as file:
-            for line in file:
-                line = line.split()
-                self.ip_pool.append(line[0])
+        self.ip_pool = []                           # ip池
+        file = open('pool.txt','r')
+        for line in file:
+            line = line.split()
+            self.ip_pool.append(line[0])
+            
+        self.key =['ccc3b9d25a0f1271a5c828d0836c0a03',]
 
 
     # 结果检查   
@@ -518,7 +519,7 @@ class variflight(object):
             if test:
                 continue
             break
-        
+       
         BS = BeautifulSoup(resp.text,'html.parser')
         selector = etree.HTML(resp.text)       
         mylist = selector.xpath('//div[@class="detail_main"]')
@@ -588,20 +589,24 @@ class variflight(object):
                 a_weather = a_weather[0]
             else:
                 a_weather = a_weather[0] + a_weather[1]
-
-            #获取图片信息列表
-            src = selector.xpath('//p[@class="com rand_p"]/img[1]/@src')
+            
+            # 获取图片信息列表
             test = BS.find_all('p',class_ = 'com rand_p')
+            if(len(test)>6):
+                del(test[3:9])
+            src_dep = selector.xpath('//ul[@class="f_common rand_ul_dep"]/li/p[2]/img/@src')
+            src_arr = selector.xpath('//ul[@class="f_common rand_ul_arr"]/li/p[2]/img/@src')
+            src = src_dep + src_arr
             for num in range(6):
                 if(len(test[num].text.split())!=0):
-                    src.insert(num,'--')
+                    src.insert(num,'--')               
                     
             #获取图片信息顺序
             data = str(selector.xpath('//div[@class="f_content"]/script/text()')[1])
             l1 = re.search("func\('rand_ul_dep', \d,\d,\d",data,flags=0).group().replace(' ','').split(',')
             l2 = re.search("func\('rand_ul_arr', \d,\d,\d",data,flags=0).group().replace(' ','').split(',')
-            data = [l1[1],l1[2],l1[3],l2[1],l2[2],l2[3]]          
-
+            data = [l1[1],l1[2],l1[3],l2[1],l2[2],l2[3]]
+            
             #解析图片信息
             for num in range(3):
                 if(src[num]!='--'):
@@ -690,7 +695,7 @@ class variflight(object):
                                 f.write(resp.content)
                             arrive_e = pytesseract.image_to_string(Image.open(filename))
                             if(len(arrive_e) == 0):
-                                arrive_s = '--'
+                                arrive_e = '--'
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             arrive_e = '--'
@@ -769,41 +774,59 @@ class variflight(object):
     def quick_get_mesbyurl(self,depart,arrive,dt):
 
         result = []
+
+        if(depart == '北京'):
+            dep = ['PEK','NAY']
+        elif(depart == '上海'):
+            dep = ['SHA','PVG']
+        else:
+            dep = [airport_dict[depart]]
         
-        # 生成api的url
-        url = 'http://op.juhe.cn/flight/df/fs?key=ccc3b9d25a0f1271a5c828d0836c0a03&orgCity='+airport_dict[depart]+'&dstCity='+airport_dict[arrive]+'&flightNo&dtype=json'
-        r = requests.get(url)
+        if(arrive == '北京'):
+            arr = ['PEK','NAY']
+        elif(arrive == '上海'):
+            arr = ['SHA','PVG']
+        else:
+            arr = [airport_dict[arrive]]
 
-        '''
-        with open("test.json",'w',encoding='utf-8') as json_file:
-            json.dump(r.text,json_file,ensure_ascii=False)
-        open('test.txt','w').write(r.text)
-        '''
-        
-        js = json.loads(r.text)        
-        for each in js['result']:
+        url = []
+        for d in dep:
+            for a in arr:
+                url.append('http://op.juhe.cn/flight/df/fs?key=' + random.choice(self.key) + '&orgCity=' + d + '&dstCity=' + a + '&flightNo&dtype=json')
+
+        for u in url:
             
-            # 生成detail_url
-            detail_url = 'http://www.variflight.com/schedule/'+each['DepCode']+'-'+each['ArrCode']+'-'+each['FlightNo']+'.html?AE71649A58c77='
+            r = requests.get(u)
+            js = json.loads(r.text)
 
-            if each['Rate'] == '0.00':
-                ac = '--'
-            else:
-                ac = each['Rate'] + '%'
+            if(js['error_code'] == 10012):
+                print('请求次数超限')
+            
+            if(js['reason'] != "Success"):
+                continue
+            for each in js['result']:
+            
+                # 生成detail_url
+                detail_url = 'http://www.variflight.com/schedule/'+each['DepCode']+'-'+each['ArrCode']+'-'+each['FlightNo']+'.html?AE71649A58c77='
 
-            if str(each['DepActual'])[-8:-3] == '00:00':
-                real_up = '--'
-            else:
-                real_up = str(each['DepActual'])[-8:-3]
+                if each['Rate'] == '0.00':
+                    ac = '--'
+                else:
+                    ac = each['Rate'] + '%'
 
-            if str(each['ArrActual'])[-8:-3] == '00:00':
-                real_down = '--'
-            else:
-                real_down = str(each['ArrActual'])[-8:-3]
+                if str(each['DepActual'])[-8:-3] == '00:00':
+                    real_up = '--'
+                else:
+                    real_up = str(each['DepActual'])[-8:-3]
+
+                if str(each['ArrActual'])[-8:-3] == '00:00':
+                    real_down = '--'
+                else:
+                    real_down = str(each['ArrActual'])[-8:-3]
             
 
-            # 每个航班的信息字典
-            mydict = {
+                # 每个航班的信息字典
+                mydict = {
                     # 基本信息
                     'flight_id': each['FlightNo'],              # 航班号
                     'company':company_dict[each['FlightNo'][0:2]],
@@ -856,10 +879,11 @@ class variflight(object):
 
                     'datetime':dt,
                     "detail_url":detail_url,                    # 获取详细信息url
-                }
-            result.append(mydict)        
+                    }
+                result.append(mydict)
+                
         return result
-
+        
 
     
     '''
@@ -944,19 +968,19 @@ def main():
     vf = variflight()
 
     # api快速访问查找
-    l1 = vf.quick_get_mesbyurl('北京','包头','2019-05-10')
-    print(json.dumps(l1,indent=2,ensure_ascii=False))
+    #l1 = vf.quick_get_mesbyurl('包头','大连','2019-05-24')
+    #print(json.dumps(l1,indent=2,ensure_ascii=False))
     
     # 通过航班号查询，返回字典列表
     #l1=vf.search_num('CZ9120','2019-05-19')
     #print(json.dumps(l1,indent=2,ensure_ascii=False))
     
     # 通过起降地查询，返回字典列表
-    #l2=vf.search_seg('北京','包头','2019-05-20')
+    #l2=vf.search_seg('北京首都','上海浦东','2019-05-24')
     #print(json.dumps(l2,indent=2,ensure_ascii=False))
     
     # 通过detai_url查询详细信息，返回字典列表,列表只有一个元素
-    #l3=vf.get_detail_mes('http://www.variflight.com/schedule/PEK-BAV-CA1107.html?AE71649A58c77=','2019-05-20')
+    #l3=vf.get_detail_mes('http://www.variflight.com/schedule/BHY-CSX-CZ3147.html?AE71649A58c77=','2019-05-20')
     #print(json.dumps(l3,indent=2,ensure_ascii=False))
     
 if __name__ == '__main__':
