@@ -15,6 +15,7 @@ class User(models.Model):
     birthday = models.DateField(default="2000-01-01")
     access = models.IntegerField(default=1)
     icon = models.ImageField(null=True)
+    user_status = models.BooleanField(default=True)
     def __str__(self):
         return self.id
     def create_newuser(self,i_type,identifier,pwd):

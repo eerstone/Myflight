@@ -53,10 +53,15 @@ def getAirportInfo(request):
 
             if departure_flights.exists():
                 for item in departure_flights:
-                    departure_flights_dicts.append(model_to_dict(item))
+                    flight = model_to_dict(item)
+                    flight["depTB"] = flight["departure_terminal"]
+                    flight["arrTB"] = flight["arrival_terminal"]
+                    departure_flights_dicts.append(flight)
 
             if arrival_flights.exists():
                 for item in arrival_flights:
+                    flight["depTB"] = flight["departure_terminal"]
+                    flight["arrTB"] = flight["arrival_terminal"]
                     arrival_flights_dicts.append(model_to_dict(item))
 
             ret_msg['weather'] = weather

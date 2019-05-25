@@ -1,10 +1,6 @@
 '''
-相比1.2
-修复基础信息实际起降时间顺序问题
-增加快速访问功能
-增加容错功能 并将错误信息输出至'error.txt'
-增加ip池防止ip被封
-使用更全的城市三字码表
+相比1.3.1
+修改时间顺序问题
 '''
 
 import requests
@@ -309,39 +305,46 @@ company_dict={
 'SQ': '新加坡航空公司',
 'LT': '龙江航空',
 }
-    
+
 
 
 class variflight(object):
 
     def __init__(self):
         self.base_url = 'http://www.variflight.com' # 飞常准官网
-        
+
         self.ip_pool = []                           # ip池
         file = open('pool.txt','r')
         for line in file:
             line = line.split()
             self.ip_pool.append(line[0])
-            
+
         self.key =['ccc3b9d25a0f1271a5c828d0836c0a03',]
 
 
-    # 结果检查   
+    # 结果检查
     def check(self,obj):
         if(len(obj)==0):
             return '--'
         else:
-            return obj[0]   
+            return obj[0]
 
     # 时间检查
     def time_check(self,obj):
         if obj[0:2].isdigit() and obj[3:5].isdigit():
             return obj
         return '--'
-    
+
+    def check_time(self,obj):
+        if len(obj) != 5:
+            return '--'
+        if obj[0].isdigit() and obj[1].isdigit() and obj[3].isdigit() and obj[4].isdigit():
+            return obj
+        return '--'
+
     # 通过url获取信息列表(航段或航班号)
     def get_mesbyurl(self, url, dt):
-        
+
         result=[]
         r = requests.Session()
         while(1):
@@ -357,7 +360,10 @@ class variflight(object):
             if test:
                 continue
             break
-        
+
+        # 实际起降时间顺序
+        l = re.search("b\(\d,\d\);",str(resp.text),flags=0).group()
+
         mylist = selector.xpath('//*[@id="list"]/li')
         if mylist:
             for selector in mylist:
@@ -366,7 +372,7 @@ class variflight(object):
                 plan_up = selector.xpath('div[@class="li_com"]/span[2]/@dplan')         # 计划起飞
                 depart = selector.xpath('div[@class="li_com"]/span[4]/text()')          # 出发地
                 real_up = selector.xpath('div[@class="li_com"]/span[3]/img/@src')       # 实际起飞
-                
+
                 if real_up:
                     try:
                         url = self.base_url + real_up[0]
@@ -386,15 +392,14 @@ class variflight(object):
                         real_up = '--'
                 else:
                     real_up = '--'
-                
 
                 plan_down = selector.xpath('div[@class="li_com"]/span[5]/@aplan')       # 计划到达
                 arrive = selector.xpath('div[@class="li_com"]/span[7]/text()')          # 到达地
                 real_down = selector.xpath('div[@class="li_com"]/span[6]/img/@src')     # 实际到达
-                
+
                 if real_down:
                     try:
-                        url = self.base_url + real_down[0]                    
+                        url = self.base_url + real_down[0]
                         resp = r.get(url)
                         filename = './real_down.png'
                         with open(filename, 'wb') as f:
@@ -412,13 +417,33 @@ class variflight(object):
                 else:
                     real_down = '--'
 
-                
                 state = selector.xpath('div[@class="li_com"]/span[9]/text()')           # 状态
-                ac = selector.xpath('div[@class="li_com"]/span[8]/img/@src')            # 准点率
 
+
+                # 实际起降时间修正
+                if(l[2] == '2'):
+                    temp = real_up
+                    real_up = real_down
+                    real_down = temp
+
+                real_up = self.check_time(real_up)
+                real_down = self.check_time(real_down)
+
+                if state[0] == '到达':
+                    if real_up == '--':
+                        real_up = plan_up[0]
+                    if real_down == '--':
+                        real_down = plan_down[0]
+                if state[0] == '起飞':
+                    if real_up == '--':
+                        real_up = plan_up[0]
+
+
+
+                ac = selector.xpath('div[@class="li_com"]/span[8]/img/@src')            # 准点率
                 if ac:
                     try:
-                        ac = self.base_url + ac[0]  
+                        ac = self.base_url + ac[0]
                         filename = './ac.png'
                         q = r.get(ac)
                         with open(filename, 'wb') as t:
@@ -426,22 +451,9 @@ class variflight(object):
                         ac = pytesseract.image_to_string(Image.open(filename))
                     except:
                         traceback.print_exc(file = open('error.txt','a'))
-                        ac = '--'                       
+                        ac = '--'
                 else:
                     ac = '--'
-                    
-                # 处理排序问题
-                if real_down != '--' and real_up == '--':
-                    real_up = real_down
-                    real_down = '--'
-                    
-                if real_up != '--' and real_down != '--':
-                    if real_up > real_down:
-                        temp = real_up
-                        real_up = real_down
-                        real_down = temp
-
-
 
                 detail_url = self.base_url + selector.xpath('a/@href')[0]
 
@@ -453,39 +465,39 @@ class variflight(object):
 
                     'plan_departure_time':plan_up[0],           # 计划起飞时间 只有时间
                     'plan_arrival_time':plan_down[0],           # 计划到达时间 只有时间
-                    
+
                     "actual_departure_time": real_up,           # 实际起飞时间 只有时间
                     "actual_arrival_time": real_down,           # 实际到达时间 只有时间
-                
+
                     'flight_status':state[0],                   # 航班状态
-                    
+
                     'departure':depart[0],                      # 出发地
                     'arrival':arrive[0],                        # 目的地
-                
+
                     'punctuality_rate':ac,                      # 准点率
-                    
+
                     'check_in':'--',                            # 值机柜台
                     'boarding_port':'--',                       # 登机口
                     'arriving_port':'--',                       # 到达口
                     'Baggage_num':'--',                         # 行李转盘
 
-                
+
                     # 航程信息
                     'length':'--',                              # 航线距离
                     'time':'--',                                # 飞行时间
                     'proc':'--',                                # 飞行进度（百分比）
-                
+
                     # 飞机信息
                     'plane':'--',                               # 飞机型号
                     'age':'--',                                 # 飞机机龄
                     'forecast':'--',                            # 预计是否延误
                     'old_state':'--',                           # 前序航班状态
-                
+
                     # 出发地机场信息
                     'd_weather':'--',                           # 天气
                     'd_pm':'--',                                # pm2.5
                     'd_state':'--',                             # 机场拥堵情况
-                
+
                     # 目的地机场信息
                     'a_weather':'--',                           # 天气
                     'a_pm':'--',                                # pm2.5
@@ -500,10 +512,10 @@ class variflight(object):
             open('no.txt','w',encoding='utf-8').write(resp.text)
         return result
 
-        
+
     # 通过url获取详细信息(具体航班)
     def get_detail_mes(self,url,dt):
-        
+
         result = []
         r = requests.Session()
         while(1):
@@ -519,25 +531,25 @@ class variflight(object):
             if test:
                 continue
             break
-       
+
         BS = BeautifulSoup(resp.text,'html.parser')
-        selector = etree.HTML(resp.text)       
+        selector = etree.HTML(resp.text)
         mylist = selector.xpath('//div[@class="detail_main"]')
         if mylist:
 
             #基础信息
             airline = selector.xpath('//div[@class="tit"]/span[1]/b[1]/text()')
             airline_real = selector.xpath('//p[@id="order"]/a[3]/text()')   # 实际承运
-            
+
 
             plan_up = selector.xpath('//div[@class="f_title f_title_a"]/span[1]/text()')[0].split()
             plan_down = selector.xpath('//div[@class="f_title f_title_c"]/span[1]/text()')[0].split()
             plan_up = plan_up[1][-5:]
             plan_down = plan_down[1][-5:]
-            
-            
+
+
             state = selector.xpath('//div[@class="state"]/div[1]/text()')
-            
+
             depart = selector.xpath('//div[@class="f_title f_title_a"]/h2[1]/@title')
             arrive = selector.xpath('//div[@class="f_title f_title_c"]/h2[1]/@title')
             ac = selector.xpath('//li[@class="per"]/span[1]/img[1]/@src')
@@ -552,10 +564,10 @@ class variflight(object):
                     ac = pytesseract.image_to_string(Image.open(filename))
                 except:
                     traceback.print_exc(file = open('error.txt','a'))
-                    ac = '--'   
+                    ac = '--'
             else:
                 ac = '--'
-            
+
             #航线信息
             length = selector.xpath('//div[@class="p_ti"]/span[1]/text()')  # 航程距离
             time = selector.xpath('//div[@class="p_ti"]/span[2]/text()')    # 航程所需时间
@@ -589,7 +601,7 @@ class variflight(object):
                 a_weather = a_weather[0]
             else:
                 a_weather = a_weather[0] + a_weather[1]
-            
+
             # 获取图片信息列表
             test = BS.find_all('p',class_ = 'com rand_p')
             if(len(test)>6):
@@ -599,21 +611,21 @@ class variflight(object):
             src = src_dep + src_arr
             for num in range(6):
                 if(len(test[num].text.split())!=0):
-                    src.insert(num,'--')               
-                    
+                    src.insert(num,'--')
+
             #获取图片信息顺序
             data = str(selector.xpath('//div[@class="f_content"]/script/text()')[1])
             l1 = re.search("func\('rand_ul_dep', \d,\d,\d",data,flags=0).group().replace(' ','').split(',')
             l2 = re.search("func\('rand_ul_arr', \d,\d,\d",data,flags=0).group().replace(' ','').split(',')
             data = [l1[1],l1[2],l1[3],l2[1],l2[2],l2[3]]
-            
+
             #解析图片信息
             for num in range(3):
                 if(src[num]!='--'):
-                    
+
                     url = self.base_url + src[num]
                     resp = r.get(url)
-                    
+
                     if(data[num]=='1'):
                         try:
                             filename = './depart_t.png'
@@ -625,7 +637,7 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             depart_t = '--'
-                            
+
                     elif(data[num]=='2'):
                         try:
                             filename = './depart_s.png'
@@ -637,7 +649,7 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             depart_s = '--'
-                            
+
                     elif(data[num]=='3'):
                         try:
                             filename = './depart_e.png'
@@ -649,21 +661,21 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             depart_e = '--'
-                                                               
+
                 else:
                     if(data[num] == '1'):
                         depart_t = '--'
                     elif(data[num] == '2'):
-                        depart_s = '--'                            
-                    elif(data[num] == '3'):                                    
+                        depart_s = '--'
+                    elif(data[num] == '3'):
                         depart_e = '--'
-                        
+
             for num in range(3,6):
                 if(src[num]!='--'):
-                    
+
                     url = self.base_url + src[num]
                     resp = r.get(url)
-                    
+
                     if(data[num]=='1'):
                         try:
                             filename = './arrive_t.png'
@@ -675,7 +687,7 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             arrive_t = '--'
-                            
+
                     elif(data[num]=='2'):
                         try:
                             filename = './arrive_s.png'
@@ -687,7 +699,7 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             arrive_s = '--'
-                            
+
                     elif(data[num]=='3'):
                         try:
                             filename = './arrive_e.png'
@@ -699,17 +711,17 @@ class variflight(object):
                         except:
                             traceback.print_exc(file = open('error.txt','a'))
                             arrive_e = '--'
-                                                               
+
                 else:
                     if(data[num] == '1'):
                         arrive_t = '--'
                     elif(data[num] == '2'):
-                        arrive_s = '--'                            
-                    elif(data[num] == '3'):                                    
+                        arrive_s = '--'
+                    elif(data[num] == '3'):
                         arrive_e = '--'
 
             airline = airline[0].split()
-            
+
             mydict = {
                 # 基本信息
                 'flight_id':airline[1],                     # 航班号
@@ -720,57 +732,57 @@ class variflight(object):
                 'plan_arrival_time':plan_down,              # 计划到达时间 只有时间
                 "actual_departure_time": depart_t,          # 实际起飞或预计起飞时间 只有时间
                 "actual_arrival_time": arrive_t,            # 实际到达或预计到达时间 只有时间
-                
+
                 'flight_status':state[0],                   # 航班状态
                 'departure':depart[0],                      # 出发地
                 'arrival':arrive[0],                        # 目的地
-                
+
                 'punctuality_rate':ac,                      # 准点率
                 'check_in':depart_s,                        # 值机柜台
                 'boarding_port':depart_e,                   # 登机口
                 'arriving_port':arrive_e,                   # 到达口
                 'Baggage_num':arrive_s,                     # 行李转盘
 
-                
+
                 # 航程信息
                 'length':self.check(length),                # 航线距离
                 'time':self.check(time),                    # 飞行时间
                 'proc':proc,                                # 飞行进度（百分比）
-                
+
                 # 飞机信息
                 'plane':self.check(plane),                  # 飞机型号
                 'age':self.check(age),                      # 飞机机龄
                 'forecast':self.check(forecast),            # 预计是否延误
                 'old_state':self.check(old_state),          # 前序航班状态
-                
+
                 # 出发地机场信息
                 'd_weather':d_weather,                      # 天气
                 'd_pm':self.check(d_pm),                    # pm2.5
                 'd_state':self.check(d_state),              # 机场拥堵情况
-                
+
                 # 目的地机场信息
                 'a_weather':a_weather,                      # 天气
                 'a_pm':self.check(a_pm),                    # pm2.5
                 'a_state':self.check(a_state),              # 机场拥堵情况
-                
+
                 'datetime':dt,
-                'detail_url':'--',                          
-                
+                'detail_url':'--',
+
                 }
 
-            
+
             result.append(mydict)
         else:
             print("航班不存在信息")
         return result
-    
-                        
+
+
     def fix(self,obj):
         if(str(obj)=='[]'):
             return ''
         return obj
 
-    # 快速航段信息获取     
+    # 快速航段信息获取
     def quick_get_mesbyurl(self,depart,arrive,dt):
 
         result = []
@@ -781,7 +793,7 @@ class variflight(object):
             dep = ['SHA','PVG']
         else:
             dep = [airport_dict[depart]]
-        
+
         if(arrive == '北京'):
             arr = ['PEK','NAY']
         elif(arrive == '上海'):
@@ -795,17 +807,17 @@ class variflight(object):
                 url.append('http://op.juhe.cn/flight/df/fs?key=' + random.choice(self.key) + '&orgCity=' + d + '&dstCity=' + a + '&flightNo&dtype=json')
 
         for u in url:
-            
+
             r = requests.get(u)
             js = json.loads(r.text)
 
             if(js['error_code'] == 10012):
                 print('请求次数超限')
-            
+
             if(js['reason'] != "Success"):
                 continue
             for each in js['result']:
-            
+
                 # 生成detail_url
                 detail_url = 'http://www.variflight.com/schedule/'+each['DepCode']+'-'+each['ArrCode']+'-'+each['FlightNo']+'.html?AE71649A58c77='
 
@@ -823,7 +835,7 @@ class variflight(object):
                     real_down = '--'
                 else:
                     real_down = str(each['ArrActual'])[-8:-3]
-            
+
 
                 # 每个航班的信息字典
                 mydict = {
@@ -837,41 +849,41 @@ class variflight(object):
                                                                 # 计划起飞时间 只有时间
                     'plan_arrival_time': str(each['ArrScheduled'])[-8:-3],
                                                                 # 计划到达时间 只有时间
-                    
+
                     "actual_departure_time": real_up,           # 实际起飞时间 只有时间
                     "actual_arrival_time": real_down,           # 实际到达时间 只有时间
-                
+
                     'flight_status': each['FlightState'],       # 航班状态
-                    
+
                     'departure': self.fix(each['DepCity']) + self.fix(each['DepTerminal']),
                                                                 # 出发地
                     'arrival': self.fix(each['ArrCity']) + self.fix(each['ArrTerminal']),
                                                                 # 目的地
-                
+
                     'punctuality_rate': ac,                     # 准点率
-                    
+
                     'check_in':'--',                            # 值机柜台
                     'boarding_port':'--',                       # 登机口
                     'arriving_port':'--',                       # 到达口
                     'Baggage_num':'--',                         # 行李转盘
 
-                
+
                     # 航程信息
                     'length':'--',                              # 航线距离
                     'time':'--',                                # 飞行时间
                     'proc':'--',                                # 飞行进度（百分比）
-                
+
                     # 飞机信息
                     'plane':'--',                               # 飞机型号
                     'age':'--',                                 # 飞机机龄
                     'forecast':'--',                            # 预计是否延误
                     'old_state':'--',                           # 前序航班状态
-                
+
                     # 出发地机场信息
                     'd_weather':'--',                           # 天气
                     'd_pm':'--',                                # pm2.5
                     'd_state':'--',                             # 机场拥堵情况
-                
+
                     # 目的地机场信息
                     'a_weather':'--',                           # 天气
                     'a_pm':'--',                                # pm2.5
@@ -881,11 +893,11 @@ class variflight(object):
                     "detail_url":detail_url,                    # 获取详细信息url
                     }
                 result.append(mydict)
-                
-        return result
-        
 
-    
+        return result
+
+
+
     '''
     通过航班号获取航班信息，返回字典列表
     参数num为航班号字符串,参数date为日期字符串,如2019-05-07
@@ -893,7 +905,7 @@ class variflight(object):
     def search_num(self,num,date):
 
         dt=date
-        
+
         #获取今日日期
         localtime  =time.localtime(time.time())
 
@@ -904,13 +916,13 @@ class variflight(object):
             mon = '0' + mon
         if(len(day)==1):
             day = '0' + day
-        
+
         today = year + mon + day
 
-        #整理传入日期格式 
+        #整理传入日期格式
         date=date.split('-')
         date=date[0]+date[1]+date[2]
-        
+
         #获取当天信息
         if(int(date)==int(today)):
             url = 'http://www.variflight.com/flight/fnum/' + num + '.html?AE71649A58c77'
@@ -918,7 +930,7 @@ class variflight(object):
         #获取历史信息
         if(int(date)<int(today)):
             url = 'http://www.variflight.com/flight/fnum/' + num + '.html?AE71649A58c77&fdate=' + date
-            
+
         return self.get_mesbyurl(url,dt)
 
 
@@ -940,10 +952,10 @@ class variflight(object):
             mon = '0' + mon
         if(len(day)==1):
             day = '0' + day
-        
+
         today = year + mon + day
 
-        #整理传入日期格式 
+        #整理传入日期格式
         date=date.split('-')
         date=date[0]+date[1]+date[2]
 
@@ -952,17 +964,17 @@ class variflight(object):
 
             # api快速访问
             #return self.quick_get_mesbyurl(depart,arrive,dt)
-            
+
             url = 'http://www.variflight.com/flight/' + airport_dict[depart] + '-' + airport_dict[arrive] + '.html?AE71649A58c77'
-            
+
         #获取历史信息
         if(int(date)<int(today)):
             url = 'http://www.variflight.com/flight/' + airport_dict[depart] + '-' + airport_dict[arrive] + '.html?AE71649A58c77&fdate=' + date
-        
+
         return self.get_mesbyurl(url,dt)
 
-    
-    
+
+
 def main():
     # 初始化
     vf = variflight()
@@ -970,9 +982,9 @@ def main():
     # api快速访问查找
     #l1 = vf.quick_get_mesbyurl('包头','大连','2019-05-24')
     #print(json.dumps(l1,indent=2,ensure_ascii=False))
-    
+
     # 通过航班号查询，返回字典列表
-    #l1=vf.search_num('CZ9120','2019-05-19')
+    #l1=vf.search_num('ca1151','2019-05-25')
     #print(json.dumps(l1,indent=2,ensure_ascii=False))
     
     # 通过起降地查询，返回字典列表
