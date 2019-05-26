@@ -178,6 +178,32 @@ def postregister(request):#调试成功
             return JsonResponse(ret_msg,safe=False)
     return render(request, 'user/log in.html')
 
+def postUserPushStatus(request):
+    user_id = request.POST.get("userid")
+    user_status = request.POST.get("user_status")
+
+    ret_msg = {}
+    if user_id==None or user_status==None:
+        ret_msg['issucceed'] = 0
+        ret_msg["msg"] = "无效查询，存在字段为空"
+        return JsonResponse(ret_msg,safe=False)
+    user_id_check = models.User.objects.filter(id=user_id)
+    if not user_id_check.exists():
+        ret_msg['issucceed'] = 0
+        ret_msg["msg"] = "该用户不存在"
+        return JsonResponse(ret_msg,safe=False)
+    user = user_id_check[0]
+    user_status = int(user_status)
+    if user_status!=0  and user_status!=1:
+        ret_msg['issucceed'] = 0
+        ret_msg["msg"] = "用户状态为非法输入"
+        return JsonResponse(ret_msg,safe=False)
+    user.user_status = user_status
+    user.save()
+    ret_msg['issucceed'] = 1
+    ret_msg["msg"] = "用户消息推送状态变更成功"
+    return JsonResponse(ret_msg, safe=False)
+
 def getVerifiedCode(request):
     print("get")
     example =  {'String':'wejfwi'}
