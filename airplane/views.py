@@ -46,6 +46,11 @@ def trip(request):
     if request.method == 'GET':
         return render(request, 'user/trip.html')
 
+#printflight
+def printflight(request):
+    if request.method == 'GET':
+        return render(request, 'user/printflight.html')
+
 
 def week2flightid(askflight_id, weekday):
     if weekday > 6 or weekday < 0:
@@ -96,6 +101,14 @@ def getSearchFlightById(request):
         datetime = dtime#String
         is_detail = int(request.GET.get('is_detail'))
         detail_url = request.GET.get('detail_url')
+
+        askflight_id_exist = models.Flight.objects.filter(flight_id=askflight_id)
+        if not askflight_id_exist:
+            ret_msg['is_exist'] = 0
+            ret_flight = []
+            ret_msg['flight'] = ret_flight
+            return JsonResponse(ret_msg, safe=False)
+
 
         today = date.today()
         print(dtime)
@@ -192,8 +205,16 @@ def getSearchFlightByCity(request):
         is_detail = int(request.GET.get('is_detail'))
         detail_url = request.GET.get('detail_url')
 
-        today = date.today()
+        city_from_exist = airportmodels.airport.objects.filter(city=city_from)
+        city_to_exist = airportmodels.airport.objects.filter(city=city_to)
+        if  (not city_from_exist.exists() ) or ( not city_to_exist.exists()):
+            ret_msg["is_exist"] = 0
+            ret_flights = []
+            ret_msg['flight'] = ret_flights
 
+            return JsonResponse(ret_msg, safe=False)
+
+        today = date.today()
         askdate = DT.strptime(dtime, '%Y-%m-%d')
         askdate = askdate.date()
 

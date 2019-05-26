@@ -263,6 +263,7 @@ def admin_mod_flight(request):  # ok
         flight['arrival'] = request.POST['arrival']
         flight['punctuality_rate'] = request.POST['punctuality_rate']
         flight['flight_status'] = request.POST['flight_status']
+        print(flight['flight_status'])
         flight['mileage'] = ofl['mileage']
         flight['aircraft_models'] = ofl['aircraft_models']
         flight['delay_time'] = ofl['delay_time']
@@ -517,7 +518,7 @@ def postaddfl(flight):  # ok
                   flight_dict['departure_terminal'], flight_dict['arrival_terminal'],
                   flight_dict['punctuality_rate'], flight_dict['delay_time'], flight_dict['company'],
                   flight_dict['is_mon'], flight_dict['is_tue'], flight_dict['is_wed'], flight_dict['is_thr'],
-                  flight_dict['is_fri'], flight_dict['is_sat'], flight_dict['is_sun'])
+                  flight_dict['is_fri'], flight_dict['is_sat'], flight_dict['is_sun'], flight_dict['flight_status'])
     ret_msg['issucceed'] = 1
     return JsonResponse(ret_msg, safe=False)
 

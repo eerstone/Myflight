@@ -45,14 +45,11 @@
         		else{
         			$.post("/user/postRegister/",{phone_num:phonenumber,pwd:passwordNumber,VerifiedCode:VCode},
 				        function(data,status) {
-                            if (data.register_status == 1) {
-                                alert('注册成功,请前往登录');
+                            if (data.register_status == 0) {
+                                alert(data.msg);
                                 window.location.href = "/user/login/"
-                            } else if (data.register_status == 2) {
-                                alert('验证码错误');
-                            } else {
-                                alert("未知错误");
-
+                            } else{
+                                alert(data.msg);
                             }
                         });
         		}

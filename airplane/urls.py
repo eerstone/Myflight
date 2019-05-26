@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^detail/',views.detail),
     url(r'^index/',views.index),
     url(r'^trip/',views.trip),
+    url(r'^printflight/', views.printflight),
 ]

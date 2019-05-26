@@ -258,12 +258,12 @@
                     $.cookie("user_gender",my_gender,{ expires: 1 ,path: '/' ,secure: false });
                     $.cookie("user_email",mail,{ expires: 1 ,path: '/' ,secure: false });
                     $.cookie("user_birthday",year+"-"+month+"-"+day,{ expires: 1 ,path: '/' ,secure: false });
-                    alert("修改成功");
+                    alert(data.msg);
 
                 }
 			    else
                 {
-                    alert("修改失败");
+                    alert(data.msg);
                 }
             });
 
@@ -286,9 +286,9 @@
             {
                 $.post("/user/postUpdatePassword/" ,{user_id:my_id,oldpsw:opwd,psw:npwd},function (data,status) {
                     if(data.issucceed==1)
-                        alert('修改成功');
+                        alert(data.msg);
                     else
-                        alert('修改失败');
+                        alert(data.msg);
                 });
             }
         }
