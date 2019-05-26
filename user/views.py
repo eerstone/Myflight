@@ -354,7 +354,7 @@ def postUpdatePassword(request):
             user_auth.credential=newpsw
             user_auth.save()
             ret_msg['issucceed'] = 1
-            ret_msg["msg"] = "注册成功"
+            ret_msg["msg"] = "修改密码成功"
             return JsonResponse(ret_msg,safe=False)
         else:
             ret_msg['issucceed'] = 0
