@@ -371,6 +371,10 @@ def postUpdatePassword(request):
             ret_msg['issucceed'] = 0
             ret_msg["msg"] = "新密码不能为空"
             return JsonResponse(ret_msg,safe=False)
+        if newpsw.__len__() == 0 :
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "新密码不能为空"
+            return JsonResponse(ret_msg,safe=False)
         if newpsw.__len__()>50:
             ret_msg['issucceed'] = 0
             ret_msg["msg"] = "密码长度不能大于50个字符"
