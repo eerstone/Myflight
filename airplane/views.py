@@ -27,6 +27,7 @@ from datetime import date
 from datetime import time
 from Myflight import settings
 from django.http import HttpResponseRedirect, HttpResponse
+from delay_prediction import views as dv
 
 
 # detail
@@ -511,4 +512,3 @@ def gS_FC(request):
             ]
     }
     return json
-

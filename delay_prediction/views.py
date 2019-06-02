@@ -8,8 +8,8 @@ model_path = 'model.m'
 airport_status = {'流量正常':0, '小面积延误':1, '大面积延误':2}
 weather = {'晴天':0, '多云':1, '阴天':2, '小雨':3, '中雨':4, '大雨':5}
 
-at = [6, 11]
-wt = [4, 9]
+at = [4, 7]
+wt = [2, 5]
 
 def isdigit(c):
     return c >= '0' and c <= '9'
@@ -71,8 +71,10 @@ def getPredict(request):
         ret_msg['msg'] = 'N/A'
         return JsonResponse(ret_msg, safe=False)
 
-def test_predict(data):
+def predict(data):
     n = len(data)
+    if data[-1] == '-' or data[-1].count(',') != 0 or data[-1].count('，') != 0:
+        data[-1] = 50
     d2 = []
     for i in range(0, n):
         if i == 1:
@@ -85,10 +87,21 @@ def test_predict(data):
             d2.append(float(data[i]))
 
     model = joblib.load(model_path)
-    return int(model.predict([d2]))
+    try:
+        ti = int(model.predict(d2))
+        if ti < -30:
+            msg = '提前半小时以上到达'
+        elif ti > 120:
+            msg = '晚点2小时以上'
+        elif ti > 5:
+            msg = '晚点' + str(ti) + '分钟到达'
+        elif ti < -5:
+            msg = '提前' + str(ti) + '分钟到达'
+        else:
+            msg = '准点到达'
+    except:
+        msg = 'N/A'
+    return msg
 
 def main():
-    print(test_predict([1795, '1:57', 14, 30, '多云', 29, '小面积延误', 15, 31, '阴天', 12, '小面积延误', 100]))
-
-if __name__ == '__main__':
-    main()
+    print(predict([1795, '1:57', '多云', 29, '小面积延误', '阴天', 12, '小面积延误', 100]))
