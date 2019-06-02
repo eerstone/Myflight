@@ -71,37 +71,44 @@ def getPredict(request):
         ret_msg['msg'] = 'N/A'
         return JsonResponse(ret_msg, safe=False)
 
-def predict(data):
-    n = len(data)
-    if data[-1] == '-' or data[-1].count(',') != 0 or data[-1].count('，') != 0:
-        data[-1] = 50
-    d2 = []
-    for i in range(0, n):
-        if i == 1:
-            d2.append(parse(data[i])[0])
-        elif i in at:
-            d2.append(airport_status[data[i]])
-        elif i in wt:
-            d2.append(weather[data[i]])
-        else:
-            d2.append(float(data[i]))
+def predict(datas):
+    d2s = []
+    l = len(datas)
+    for data in datas:
+        n = len(data)
+        if data[-1] == '-' or data[-1].count(',') != 0 or data[-1].count('，') != 0:
+            data[-1] = 50
+        d2 = []
+        for i in range(0, n):
+            if i == 1:
+                d2.append(parse(data[i])[0])
+            elif i in at:
+                d2.append(airport_status[data[i]])
+            elif i in wt:
+                d2.append(weather[data[i]])
+            else:
+                d2.append(float(data[i]))
+        d2s.append(d2)
 
     model = joblib.load(model_path)
+    msgs = []
     try:
-        ti = int(model.predict(d2))
-        if ti < -30:
-            msg = '提前半小时以上到达'
-        elif ti > 120:
-            msg = '晚点2小时以上'
-        elif ti > 5:
-            msg = '晚点' + str(ti) + '分钟到达'
-        elif ti < -5:
-            msg = '提前' + str(ti) + '分钟到达'
-        else:
-            msg = '准点到达'
+        tis = model.predict(d2s)
+        for ti in tis:
+            if ti < -30:
+                msg = '提前半小时以上到达'
+            elif ti > 120:
+                msg = '晚点2小时以上'
+            elif ti > 5:
+                msg = '晚点' + str(ti) + '分钟到达'
+            elif ti < -5:
+                msg = '提前' + str(ti) + '分钟到达'
+            else:
+                msg = '准点到达'
+            msgs.append(msg)
     except:
-        msg = 'N/A'
-    return msg
+        msgs = ['N/A'] * l
+    return msgs
 
 def main():
     print(predict([1795, '1:57', '多云', 29, '小面积延误', '阴天', 12, '小面积延误', 100]))

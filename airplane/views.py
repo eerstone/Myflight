@@ -92,6 +92,16 @@ def week2flightcity(d_airport, a_airport, weekday):
         flights = models.Flight.objects.filter(departure__in=d_airport, arrival__in=a_airport, is_sun=1)
     return flights
 
+pre_columns = ['length', 'time', 'd_weather', 'd_pm', 'd_state', 'a_weather', 'a_pm', 'a_state', 'punctuality_rate']
+def getpredata(ret_flight):
+    n = len(ret_flight)
+    datas = []
+    for i in range(0, n):
+        data = []
+        for item in pre_columns:
+            data.append(ret_flight[i][item])
+        datas.append(data)
+    return datas
 
 # search
 def getSearchFlightById(request):
@@ -152,11 +162,19 @@ def getSearchFlightById(request):
             ret_msg['issucceed'] = 1
             if is_detail:
                 ret_flight = vf.get_detail_mes(detail_url, datetime)
+
                 if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
         #        ret_flight["datetime"] = datetime
+                datas = getpredata(ret_flight)
+                msgs = dv.predict(datas)
+                rn = len(ret_flight)
+
+                for ci in range(0, rn):
+                    ret_flight[ci]['punctuality_rate'] = msgs[rn]
+
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
@@ -256,11 +274,19 @@ def getSearchFlightByCity(request):
             if is_detail:
                 print("come here if is_detail")
                 ret_flight = vf.get_detail_mes(detail_url, datetime)
+
                 if ret_flight.__len__() == 0:
                     ret_msg['is_exist'] = 0
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
             #    ret_flight["datetime"] = datetime
+                datas = getpredata(ret_flight)
+                msgs = dv.predict(datas)
+                rn = len(ret_flight)
+
+                for ci in range(0, rn):
+                    ret_flight[ci]['punctuality_rate'] = msgs[rn]
+
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
             else:
