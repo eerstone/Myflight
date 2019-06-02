@@ -71,6 +71,20 @@ def getPredict(request):
         ret_msg['msg'] = 'N/A'
         return JsonResponse(ret_msg, safe=False)
 
+def parse2(s):
+    n = len(s)
+    i = 0
+    num = []
+    while i < n:
+        if isdigit(s[i]):
+            cur = 0
+            while isdigit(s[i]):
+                cur = cur * 10 + int(s[i]) - int('0')
+                i += 1
+            num.append(cur)
+        i += 1
+    return num[0]
+
 def predict(datas):
     d2s = []
     l = len(datas)
@@ -87,7 +101,7 @@ def predict(datas):
             elif i in wt:
                 d2.append(weather[data[i]])
             else:
-                d2.append(float(data[i]))
+                d2.append(float(parse2(data[i])))
         d2s.append(d2)
 
     model = joblib.load(model_path)
