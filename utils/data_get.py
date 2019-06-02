@@ -16,7 +16,8 @@ from bs4 import BeautifulSoup
 
 from urllib.parse import urlencode
 from lxml import etree
-from PIL import Image'''
+from PIL import Image
+'''
 相比1.3.1
 修改时间顺序问题
 '''

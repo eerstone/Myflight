@@ -168,12 +168,13 @@ def getSearchFlightById(request):
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
         #        ret_flight["datetime"] = datetime
-                datas = getpredata(ret_flight)
-                msgs = dv.predict(datas)
-                rn = len(ret_flight)
+                if askdate==today:
+                    datas = getpredata(ret_flight)
+                    msgs = dv.predict(datas)
+                    rn = len(ret_flight)
 
-                for ci in range(0, rn):
-                    ret_flight[ci]['punctuality_rate'] = msgs[rn]
+                    for ci in range(0, rn):
+                        ret_flight[ci]['punctuality_rate'] = msgs[ci]
 
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
@@ -280,12 +281,13 @@ def getSearchFlightByCity(request):
                     ret_msg['issucceed'] = 0	
                     return JsonResponse(ret_msg, safe=False)
             #    ret_flight["datetime"] = datetime
-                datas = getpredata(ret_flight)
-                msgs = dv.predict(datas)
-                rn = len(ret_flight)
+                if askdate==today:
+                    datas = getpredata(ret_flight)
+                    msgs = dv.predict(datas)
+                    rn = len(ret_flight)
 
-                for ci in range(0, rn):
-                    ret_flight[ci]['punctuality_rate'] = msgs[rn]
+                    for ci in range(0, rn):
+                        ret_flight[ci]['punctuality_rate'] = msgs[ci]
 
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
