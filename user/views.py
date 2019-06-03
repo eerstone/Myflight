@@ -328,6 +328,16 @@ def postBasicInfo(request):
             ret_msg['issucceed'] = 0
             ret_msg["msg"] = "请输入正确的出生日期"
             return JsonResponse(ret_msg, safe=False)
+        if newuser_name.__len__()> 50:
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "请输入50位及以内的用户名长度"
+            return JsonResponse(ret_msg, safe=False)
+        mobile_pat = re.compile('^(13\d|14[5|7]|15\d|166|17\d|18\d)\d{8}$')
+        res = re.search(mobile_pat, newphone_num)
+        if not res:
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "请检查手机号是否正确"
+            return JsonResponse(ret_msg, safe=False)
 
         user_auth = models.User_Auth.objects.get(user_id_id=user_id,identity_type="手机")
         user_auth_check = models.User_Auth.objects.filter(identity_type="手机",identifier=newphone_num)
