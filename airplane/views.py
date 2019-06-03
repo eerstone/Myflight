@@ -29,6 +29,9 @@ from Myflight import settings
 from django.http import HttpResponseRedirect, HttpResponse
 from delay_prediction import views as dv
 
+vf = data_get.variflight()
+print("loading done")
+
 
 # detail
 def detail(request):
@@ -105,6 +108,7 @@ def getpredata(ret_flight):
 
 # search
 def getSearchFlightById(request):
+    global vf
     ret_msg = {}
     if request.method == 'GET':
         askflight_id = request.GET.get('flight_id')
@@ -157,7 +161,7 @@ def getSearchFlightById(request):
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
 
-            vf = data_get.variflight()
+            # vf = data_get.variflight()
             ret_msg['is_exist'] = 1
             ret_msg['issucceed'] = 1
             if is_detail:
@@ -217,6 +221,7 @@ def getSearchFlightById(request):
 
 
 def getSearchFlightByCity(request):
+    global vf
     ret_msg = {}
     if request.method == 'GET':
         city_from = request.GET.get('city_from')
@@ -270,7 +275,7 @@ def getSearchFlightByCity(request):
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
 
-            vf = data_get.variflight()
+            # vf = data_get.variflight()
             ret_msg['is_exist'] = 1
             ret_msg['issucceed'] = 1
             if is_detail:
@@ -374,6 +379,7 @@ def future2normalization(flight):
 
 
 def postFavoriteFlight(request):
+    global vf
     ret_msg = {}
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
@@ -405,7 +411,7 @@ def postFavoriteFlight(request):
             flight_msg = future2normalization(flight_msg)
         #否则为过去和现在，调用爬虫获取状态进行存储，（目前过去实际存储同为现在）
         else:
-            vf = data_get.variflight()
+            # vf = data_get.variflight()
             print(detail_url)
             flight_msg = vf.get_detail_mes(detail_url, datetime)
             flight_msg = flight_msg[0]
@@ -424,6 +430,7 @@ def postFavoriteFlight(request):
 
 
 def scan_trip():
+    global vf
     trips = um.mytrip.objects.filter()
     i = 0
     for trip in trips:
@@ -449,12 +456,14 @@ def scan_trip():
                 trip.flight_status = new_flight.flight_status
                 trip.save()
         else:
+            if datetime < today:
+                continue
             if trip.detail_url == "--":
                 pass
             else:
                 # datetimee = datetime.strftime("%Y-%M-%D")
                 # print(datetime.__str__())
-                vf = data_get.variflight()
+                # vf = data_get.variflight()
                 new_flight = vf.search_num(flight_id, datetime.__str__())
                 # print(new_flight)
                 # print(flight_id,datetime.__str__())
