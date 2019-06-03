@@ -11,6 +11,7 @@ weather = {'晴天':0, '多云':1, '阴天':2, '小雨':3, '中雨':4, '大雨':
 
 at = [4, 7]
 wt = [2, 5]
+pm = [3, 6]
 
 re_chn = re.compile('[\u4e00-\u9fa5]+')
 
@@ -77,19 +78,23 @@ def getPredict(request):
         ret_msg['msg'] = 'N/A'
         return JsonResponse(ret_msg, safe=False)
 
-def parse2(s):
+def parse2(s, pos):
+    print(s)
     n = len(s)
     i = 0
     num = []
     while i < n:
         if isdigit(s[i]):
             cur = 0
-            while isdigit(s[i]):
+            while i < n and isdigit(s[i]):
                 cur = cur * 10 + int(s[i]) - int('0')
                 i += 1
             num.append(cur)
         i += 1
-    return num[0]
+    print(num)
+    if len(num) == 0:
+        return 50
+    return num[pos]
 
 def predict(datas):
     d2s = []
@@ -107,8 +112,10 @@ def predict(datas):
             elif i in wt:
                 s = parsechn(data[i])
                 d2.append(weather[s])
+            elif i in pm:
+                d2.append(parse2(data[i], -1))
             else:
-                d2.append(float(parse2(data[i])))
+                d2.append(float(parse2(data[i], 0)))
         d2s.append(d2)
 
     model = joblib.load(model_path)
