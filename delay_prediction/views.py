@@ -4,8 +4,6 @@ import numpy as np
 from sklearn.externals import joblib
 import re
 
-model_path = 'model.m'
-
 airport_status = {'流量正常':0, '小面积延误':1, '大面积延误':2}
 weather = {'晴天':0, '多云':1, '阴天':2, '小雨':3, '中雨':4, '大雨':5}
 
@@ -62,8 +60,10 @@ def getPredict(request):
             elif ti > 120:
                 msg = '晚点2小时以上'
             elif ti > 5:
+                ti = int(ti)
                 msg = '晚点' + str(ti) + '分钟到达'
             elif ti < -5:
+                ti = int(ti)
                 msg = '提前' + str(ti) + '分钟到达'
             else:
                 msg = '准点到达'
@@ -79,7 +79,6 @@ def getPredict(request):
         return JsonResponse(ret_msg, safe=False)
 
 def parse2(s, pos):
-    print(s)
     n = len(s)
     i = 0
     num = []
@@ -91,12 +90,11 @@ def parse2(s, pos):
                 i += 1
             num.append(cur)
         i += 1
-    print(num)
     if len(num) == 0:
         return 50
     return num[pos]
 
-def predict(datas):
+def predict(datas, path):
     d2s = []
     l = len(datas)
     for data in datas:
@@ -118,7 +116,7 @@ def predict(datas):
                 d2.append(float(parse2(data[i], 0)))
         d2s.append(d2)
 
-    model = joblib.load(model_path)
+    model = joblib.load(path)
     msgs = []
     try:
         tis = model.predict(d2s)
@@ -128,8 +126,10 @@ def predict(datas):
             elif ti > 120:
                 msg = '晚点2小时以上'
             elif ti > 5:
+                ti = int(ti)
                 msg = '晚点' + str(ti) + '分钟到达'
             elif ti < -5:
+                ti = int(ti)
                 msg = '提前' + str(ti) + '分钟到达'
             else:
                 msg = '准点到达'
