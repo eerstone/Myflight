@@ -14,7 +14,7 @@ class airport(models.Model):
         ("3", "阴"),
         ("4", "雾"),
     )
-    weather = models.CharField(max_length=10, choices=weather_status, default="晴")
+    weather = models.CharField(max_length=10, default="晴")
     airport_3_letter = models.CharField(max_length=10, default="--")
     city_3_letter = models.CharField(max_length=10, default="--")
 

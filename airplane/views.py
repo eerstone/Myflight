@@ -452,7 +452,9 @@ def scan_trip():
             if new_flight is None:
                 continue
             if new_flight.flight_status != status:
-                jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化"%flight_id%new_flight.flight_status,user_id,trip_id)
+                msg = "尊敬的乘客，您关注的航班"+flight_id+"状态变更为"+new_flight.flight_status+"，请您及时关注状态变化"
+                print(msg)
+                jiguang.push_msg(msg,user_id,trip_id)
                 trip.flight_status = new_flight.flight_status
                 trip.save()
         else:
@@ -469,7 +471,8 @@ def scan_trip():
                 # print(flight_id,datetime.__str__())
                 new_flight = new_flight[0]
                 if new_flight["flight_status"] != status:
-                    jiguang.push_msg("尊敬的乘客，您关注的航班%s状态变更为%s，请您及时关注状态变化" % (flight_id, new_flight["flight_status"]),
+                    msg = "尊敬的乘客，您关注的航班" + flight_id + "状态变更为" + new_flight["flight_status"] + "，请您及时关注状态变化"
+                    jiguang.push_msg(msg,
                                      user_id, trip_id)
                     trip.flight_status = new_flight["flight_status"]
                     trip.save()
