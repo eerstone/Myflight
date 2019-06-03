@@ -141,6 +141,11 @@ def postregister(request):#调试成功
             ret_msg['user_id']=None
             ret_msg["msg"]="手机号、密码与验证码中存在空值"
             return JsonResponse(ret_msg,safe=False)
+        elif passwd.__len__() < 6 :
+            ret_msg['register_status'] = 3
+            ret_msg['user_id']=None
+            ret_msg["msg"] = "请设置6位及以上的密码"
+            return JsonResponse(ret_msg, safe=False)
         elif passwd.__len__() > 50:
             ret_msg['register_status'] = 3
             ret_msg['user_id']=None
@@ -374,6 +379,10 @@ def postUpdatePassword(request):
         if newpsw.__len__() == 0 :
             ret_msg['issucceed'] = 0
             ret_msg["msg"] = "新密码不能为空"
+            return JsonResponse(ret_msg,safe=False)
+        if newpsw.__len__() < 6  :
+            ret_msg['issucceed'] = 0
+            ret_msg["msg"] = "请设置6位及以上的新密码"
             return JsonResponse(ret_msg,safe=False)
         if newpsw.__len__()>50:
             ret_msg['issucceed'] = 0
