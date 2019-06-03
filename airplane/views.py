@@ -456,6 +456,8 @@ def scan_trip():
                 trip.flight_status = new_flight.flight_status
                 trip.save()
         else:
+            if datetime < today:
+                continue
             if trip.detail_url == "--":
                 pass
             else:
