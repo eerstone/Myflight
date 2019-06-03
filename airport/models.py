@@ -23,7 +23,13 @@ def add_airport(new_airport, city, city_3_letter, airport_3_letter, temperature,
     ap = airport.objects.get_or_create(airport=new_airport, city=city,
                                        airport_3_letter=airport_3_letter, city_3_letter=city_3_letter,
                                        temperature=temperature, weather=weather)
-
+def update_airport(new_airport,temperature,weather):
+    ap = airport.objects.filter(airport=new_airport)
+    if ap.count()==1:
+        ap = airport.objects.get(airport=new_airport)
+        ap.temperature = temperature
+        ap.weather = weather
+        ap.save()
 
 def airport2info(port):
     """
