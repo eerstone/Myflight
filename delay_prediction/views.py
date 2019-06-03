@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import numpy as np
 from sklearn.externals import joblib
+import re
 
 model_path = 'model.m'
 
@@ -11,8 +12,13 @@ weather = {'晴天':0, '多云':1, '阴天':2, '小雨':3, '中雨':4, '大雨':
 at = [4, 7]
 wt = [2, 5]
 
+re_chn = re.compile('[\u4e00-\u9fa5]+')
+
 def isdigit(c):
     return c >= '0' and c <= '9'
+
+def parsechn(s):
+    return re_chn.findall(s)[0]
 
 def parse(s):
     n = len(s)
@@ -99,7 +105,8 @@ def predict(datas):
             elif i in at:
                 d2.append(airport_status[data[i]])
             elif i in wt:
-                d2.append(weather[data[i]])
+                s = parsechn(data[i])
+                d2.append(weather[s])
             else:
                 d2.append(float(parse2(data[i])))
         d2s.append(d2)
