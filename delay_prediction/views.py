@@ -109,7 +109,10 @@ def predict(datas, path):
                 d2.append(airport_status[data[i]])
             elif i in wt:
                 s = parsechn(data[i])
-                d2.append(weather[s])
+                if not (s in weather):
+                    d2.append(4)
+                else:
+                    d2.append(weather[s])
             elif i in pm:
                 d2.append(parse2(data[i], -1))
             else:
