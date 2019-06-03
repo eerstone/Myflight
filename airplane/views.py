@@ -179,7 +179,7 @@ def getSearchFlightById(request):
 
                     for ci in range(0, rn):
                         if ret_flight[ci]['flight_status'] != '到达':
-                            ret_flight[ci]['punctuality_rate'] = msgs[ci]
+                            ret_flight[ci]['forecast'] = msgs[ci]
 
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
@@ -294,7 +294,7 @@ def getSearchFlightByCity(request):
 
                     for ci in range(0, rn):
                         if ret_flight[ci]['flight_status'] != '到达':
-                            ret_flight[ci]['punctuality_rate'] = msgs[ci]
+                            ret_flight[ci]['forecast'] = msgs[ci]
 
                 ret_msg['flight'] = ret_flight
                 return JsonResponse(ret_msg, safe=False)
