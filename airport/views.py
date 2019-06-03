@@ -37,6 +37,15 @@ def getAirport(request):
     return JsonResponse(ret_msg, safe=False)
 
 
+def is_airport_exist(airport):
+    one_airport = models.airport.objects.filter(airport=airport)
+    if one_airport.count() == 0:
+        print("has come exist")
+        return 1
+    else:
+        print("has come not exist")
+        return 0
+
 def getAirportInfo(request):
     ret_msg = {}
     if request.method == 'GET':

@@ -101,6 +101,8 @@ $(function() {
 					alert("添加成功!")
 				else if (data["issucceed"] == "2")
 					alert("已存在，添加失败!")
+				else if (data["issucceed"] == "3")
+					alert("不存在的起降地机场，添加失败!")
 				else
 					alert("未知错误，添加失败!")
 			},

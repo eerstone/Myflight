@@ -157,12 +157,16 @@ def admin_add_flight(request):
         output:json{
                     'status':issucceeded  1：添加成功 2：已存在添加失败 3：未知原因，添加失败 0：添加失败}
     """
+    ret_msg = {}
+    ret_msg['issucceed'] = 0
     flight = {}
     week = ['is_mon', 'is_tue', 'is_wed', 'is_thr', 'is_fri', 'is_sat', 'is_sun']
     if request.method == 'POST':
-        #flight = {}
         flight['departure'] = request.POST['departure']
         flight['arrival'] = request.POST['arrival']
+        if apv.is_airport_exist(flight['departure']) == 1 or apv.is_airport_exist(flight['arrival']) == 1:
+            ret_msg['issucceed'] = 3
+            return JsonResponse(ret_msg, safe=False)
         flight['flight_id'] = request.POST['flight_id']
         flight['plan_departure_time'] = request.POST['plan_departure_time']
         flight['plan_arrival_time'] = request.POST['plan_arrival_time']
@@ -195,13 +199,11 @@ def admin_add_flight(request):
         name = request.POST['flight_id']
         origin = am.Flight.objects.filter(flight_id=name)
         if origin.exists():
-            ret_msg = {}
             ret_msg['issucceed'] = 2
             return JsonResponse(ret_msg, safe=False)
         return postaddfl(flight)
     else:
-        ret_msg = {}
-        ret_msg['issucceed'] = 0
+
         return JsonResponse(ret_msg, safe=False)
 
 

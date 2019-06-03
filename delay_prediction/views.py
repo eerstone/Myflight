@@ -4,8 +4,8 @@ import numpy as np
 from sklearn.externals import joblib
 import re
 
-airport_status = {'流量正常':0, '小面积延误':1, '大面积延误':2}
-weather = {'晴天':0, '多云':1, '阴天':2, '小雨':3, '中雨':4, '大雨':5}
+airport_status = {'流量正常': 0, '小面积延误': 1, '大面积延误': 2}
+weather = {'晴天': 0, '多云': 1, '阴天': 2, '小雨': 3, '中雨': 4, '大雨': 5}
 
 at = [4, 7]
 wt = [2, 5]
