@@ -49,7 +49,7 @@ sched = Scheduler()
 # def my_task1():
 #     print(1)
 
-@sched.interval_schedule(seconds=100)
+@sched.interval_schedule(seconds=600)
 def my_task2():
     scan_trip()
 

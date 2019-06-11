@@ -31,7 +31,7 @@ def isNan(day):
     return day
 
 def main():
-    io = "airport.xls"
+    io = "airport2.xls"
     df = pd.read_excel(io,sheet_name="Sheet1",header=0)
     # print(df.ix[1]["departure_city"])
     # df[['mileage']].astype(int)
